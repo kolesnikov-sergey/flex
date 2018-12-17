@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'buy_sell.dart';
 
-class Security extends StatelessWidget {
+import 'buy_sell.dart';
+import 'trade.dart';
+
+class SecurityInfo extends StatelessWidget {
+  final String name;
+
+  const SecurityInfo({@required this.name});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Лукойл'),
+        leading: BackButton(),
+        title: Text(name),
         backgroundColor: Colors.red,
       ),
       body: Column(
@@ -21,7 +28,14 @@ class Security extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(20),
-            child: BuySell(),
+            child: BuySell(
+              onBuy: () => Navigator.push(context, new MaterialPageRoute(
+                builder: (BuildContext context) => Trade(name: name)
+              )),
+              onSell: () => Navigator.push(context, new MaterialPageRoute(
+                builder: (BuildContext context) => Trade(name: name)
+              ))
+            ),
           )
         ],
       ),

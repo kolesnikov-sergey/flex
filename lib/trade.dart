@@ -1,6 +1,7 @@
-import 'package:fl/number_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+
+import 'number_text_field.dart';
 import 'buy_sell.dart';
 import 'row_value.dart';
 
@@ -36,11 +37,16 @@ class Type extends StatelessWidget {
 }
 
 class Trade extends StatelessWidget {
+  final String name;
+
+  const Trade({@required this.name});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Сбербанк'),
+        leading: BackButton(),
+        title: Text(name),
         backgroundColor: Colors.green,
       ),
       body: Padding(
@@ -70,7 +76,10 @@ class Trade extends StatelessWidget {
               ),
             ),
             Padding(padding: EdgeInsets.only(top: 20)),
-            BuySell()
+            BuySell(
+              onBuy: () {},
+              onSell: () {},
+            )
           ],
         ) 
       ) 

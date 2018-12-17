@@ -1,6 +1,8 @@
-import 'package:fl/models/security.dart';
-import 'package:fl/search_text_field.dart';
 import 'package:flutter/material.dart';
+
+import 'security_info.dart';
+import 'search_text_field.dart';
+import 'models/security.dart';
 import 'services/iss_client.dart';
 
 class Quotes extends StatefulWidget {
@@ -59,7 +61,7 @@ class _State extends State<Quotes> {
                     .toList();
                   return ListView.separated(
                     itemCount: items.length,
-                    itemBuilder: (context, index) => _buildItem(index, items),
+                    itemBuilder: (context, index) => _buildItem(context, index, items),
                     separatorBuilder: (context, index) => Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Divider()
@@ -81,11 +83,13 @@ class _State extends State<Quotes> {
     );
   }
 
-  Widget _buildItem(int index, List<Security> data) {
+  Widget _buildItem(BuildContext context, int index, List<Security> data) {
     final quote = data[index];
 
     return ListTile(
-      onTap: () => this.update(index),
+      onTap: () => Navigator.push(context, new MaterialPageRoute(
+        builder: (BuildContext context) => SecurityInfo(name: quote.name)
+      )),
       leading: CircleAvatar(
         child: Text(quote.name.substring(0, 2).toUpperCase(), style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.red

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'quotes.dart';
-import 'trade.dart';
-import 'security.dart';
+import 'account.dart';
+import 'more.dart';
 
 void main() {
   runApp(new TradingApp());
@@ -12,7 +12,10 @@ class TradingApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Торговый терминал',
-      home: Home(),
+      initialRoute: '/',
+      routes: {
+        '/' : (context) => Home()
+      },
     );
   }
 }
@@ -29,8 +32,8 @@ class _HomeState extends State<Home> {
  int _selectedIndex = 0;
  final _widgetOptions = [
    Quotes(),
-   Trade(),
-   Security(),
+   Account(),
+   More(),
  ];
 
  @override
