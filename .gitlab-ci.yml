@@ -1,0 +1,11 @@
+stages:
+  - build
+
+build:
+  image: cirrusci/flutter
+  stage: build
+  script:
+    - flutter build apk
+  artifacts:
+    paths:
+      - build/app/outputs/apk
