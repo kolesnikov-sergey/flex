@@ -41,8 +41,7 @@ class _State extends State<Quotes> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text('Котировки'),
-        backgroundColor: Colors.black,
+        title: Text('Котировки')
       ),
       body: Column(
         children: <Widget>[
@@ -72,7 +71,7 @@ class _State extends State<Quotes> {
                   return Text(snapshot.error);
                 }
 
-                return CircularProgressIndicator();
+                return RefreshProgressIndicator();
               },
             )
           ),    
@@ -84,13 +83,30 @@ class _State extends State<Quotes> {
   Widget _buildItem(BuildContext context, int index, List<Security> data) {
     final quote = data[index];
 
+    Color logoColor;
+
+    switch(index % 4) {
+      case 0:
+        logoColor = Colors.red;
+        break;
+      case 1:
+        logoColor = Colors.green;
+        break;
+      case 2:
+        logoColor = Colors.blue;
+        break;
+      case 3:
+        logoColor = Colors.black;
+        break;
+    }
+
     return ListTile(
       onTap: () => Navigator.push(context, new MaterialPageRoute(
         builder: (BuildContext context) => SecurityInfo(name: quote.name)
       )),
       leading: CircleAvatar(
         child: Text(quote.name.substring(0, 2).toUpperCase(), style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.red
+        backgroundColor: logoColor
       ),
       title: Text(quote.name, style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(quote.id),

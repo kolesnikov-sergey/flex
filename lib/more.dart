@@ -6,8 +6,7 @@ class More extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Портфель'),
-        backgroundColor: Colors.black,
+        title: Text('Портфель')
       ),
       body: Center(
         child: Text('Здесь будет что-то ещё'),

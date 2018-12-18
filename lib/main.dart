@@ -12,6 +12,9 @@ class TradingApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Торговый терминал',
+      theme: ThemeData(
+        primaryColor: Colors.indigo,
+      ),
       initialRoute: '/',
       routes: {
         '/' : (context) => Home()
@@ -49,7 +52,6 @@ class _HomeState extends State<Home> {
          BottomNavigationBarItem(icon: Icon(Icons.school), title: Text('Ещё')),
        ],
        currentIndex: _selectedIndex,
-       fixedColor: Colors.redAccent,
        onTap: _onItemTapped,
      ),
    );

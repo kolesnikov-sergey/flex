@@ -8,4 +8,4 @@ build:
     - flutter build apk
   artifacts:
     paths:
-      - build/app/outputs/apk/release/
+      - build/app/outputs/apk/release/app-release.apk

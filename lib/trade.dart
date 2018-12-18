@@ -46,8 +46,7 @@ class Trade extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text(name),
-        backgroundColor: Colors.green,
+        title: Text(name)
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
@@ -76,8 +75,8 @@ class Trade extends StatelessWidget {
             ),
             Padding(padding: EdgeInsets.only(top: 20)),
             BuySell(
-              onBuy: () {},
-              onSell: () {},
+              onBuy: () => Navigator.pop(context),
+              onSell: () => Navigator.pop(context),
             )
           ],
         ) 

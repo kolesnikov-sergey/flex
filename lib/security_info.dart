@@ -14,8 +14,7 @@ class SecurityInfo extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text(name),
-        backgroundColor: Colors.red,
+        title: Text(name)
       ),
       body: Column(
         children: <Widget>[
