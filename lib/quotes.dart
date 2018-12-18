@@ -39,6 +39,7 @@ class _State extends State<Quotes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Котировки'),
         backgroundColor: Colors.black,
@@ -73,13 +74,10 @@ class _State extends State<Quotes> {
 
                 return CircularProgressIndicator();
               },
-            ),
-          )
-          
-          
+            )
+          ),    
         ],
       )
-      
     );
   }
 

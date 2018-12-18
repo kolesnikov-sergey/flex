@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+// todo make as stateful widget
 class NumberTextField extends StatelessWidget {
   final String label;
   final String placeholder;
@@ -29,22 +31,20 @@ class NumberTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: TextFormField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: label,
-          hintText: placeholder,
-          prefixIcon: IconButton(
-            icon: Icon(Icons.remove_circle_outline),
-            onPressed: down,
-          ),
-          suffixIcon: IconButton(
-            icon: Icon(Icons.add_circle_outline),
-            onPressed: up,
-          ),
-          border: OutlineInputBorder(),
-        )
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: placeholder,
+        prefixIcon: IconButton(
+          icon: Icon(Icons.remove_circle_outline),
+          onPressed: down,
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.add_circle_outline),
+          onPressed: up,
+        ),
+        border: OutlineInputBorder(),
       )
     );
   }

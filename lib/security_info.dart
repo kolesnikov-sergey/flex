@@ -19,15 +19,17 @@ class SecurityInfo extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Container(
-            height: 600,
-            color: Colors.grey[100],
-            child: Center(
-              child: Text('Тут будет график'),
-            ),
+          Expanded(
+            child: Container(
+              color: Colors.grey[100],
+              child: Center(
+                child: Text('Тут будет график'),
+              ),
+            )
+            ,
           ),
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: BuySell(
               onBuy: () => Navigator.push(context, new MaterialPageRoute(
                 builder: (BuildContext context) => Trade(name: name)

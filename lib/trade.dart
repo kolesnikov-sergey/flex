@@ -51,8 +51,7 @@ class Trade extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
+        child: ListView(
           children: <Widget>[
             Type(),
             Padding(padding: EdgeInsets.only(top: 20)),
