@@ -4,49 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'number_text_field.dart';
 import 'buy_sell.dart';
 import 'row_value.dart';
+import 'type.dart';
 
-class Type extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: CupertinoSegmentedControl(
-        groupValue: 'Лимит',
-        children: Map.fromIterable(
-          ['Лимит', 'Маркет', 'Стоп'],
-          key: (item) => item,
-          value: (item) =>
-            Container(
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  item,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    decoration: TextDecoration.none,
-                    fontWeight: FontWeight.normal
-                  )
-                ),
-              )
-            )
-        ),
-        onValueChanged: (item) => { },
-      )
-    );
-  }
-}
+import '../../models/security.dart';
 
 class Trade extends StatelessWidget {
-  final String name;
+  final Security security;
 
-  const Trade({@required this.name});
+  const Trade({@required this.security});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text(name)
+        title: Text(security.name)
       ),
       body: Padding(
         padding: EdgeInsets.all(20),

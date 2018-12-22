@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'quotes.dart';
-import 'account.dart';
-import 'more.dart';
+import 'views/quotes/quotes.dart';
+import 'views/account/account.dart';
+import 'views/more/more.dart';
 
 void main() {
   runApp(new TradingApp());

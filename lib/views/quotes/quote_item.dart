@@ -1,0 +1,89 @@
+import 'dart:math';
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+
+import '../../models/security.dart';
+import '../../models/quote.dart';
+import '../../connectors/iss_connector.dart';
+import '../security/security_info.dart';
+
+class QuoteItem extends StatefulWidget {
+  final Security security;
+  final IssConnector connector;
+
+  QuoteItem({@required this.security, @required this.connector});
+
+  @override
+  _QuoteItemState createState() => _QuoteItemState();
+}
+
+class _QuoteItemState extends State<QuoteItem> {
+  Timer _timerDelay;
+  Stream<Quote> quotes;
+
+  @override
+  void initState() {
+    super.initState();
+    _timerDelay = Timer(Duration(seconds: 1), () {
+      setState(() {
+        quotes = widget.connector.subscribeQuote(widget.security.id);
+      });   
+    });
+  }
+
+  @override
+  void dispose() {
+    _timerDelay.cancel();
+    widget.connector.unsubscribeQuote(widget.security.id);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () => Navigator.push(context, new MaterialPageRoute(
+        builder: (BuildContext context) => SecurityInfo(security: widget.security, connector: widget.connector)
+      )),
+      leading: CircleAvatar(
+        child: Text(widget.security.name.substring(0, 2).toUpperCase(), style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.red
+      ),
+      title: Text(widget.security.name, style: TextStyle(fontWeight: FontWeight.bold)),
+      subtitle: Text(widget.security.id),
+      trailing: StreamBuilder<Quote>(
+        stream: quotes,
+        builder: (context, snapshot) {
+          double last = widget.security.last;
+          double change = widget.security.change;
+
+          if(snapshot.hasData) {
+            last = snapshot.data.last;
+            change = snapshot.data.change;
+          }
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            textDirection: TextDirection.rtl,
+            children: <Widget>[
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                child: Text(
+                  '${last?.toStringAsFixed(widget.security.decimals)} \u20BD',
+                  key: ValueKey<double>(last),
+                  textAlign: TextAlign.end,
+                  style: TextStyle(fontWeight: FontWeight.bold)
+                ),
+              ),
+              Text(
+                '${change != null && change > 0 ? '+': ''}${widget.security.change?.toStringAsFixed(2)} %',
+                textAlign: TextAlign.start,
+                style: TextStyle(color: Colors.greenAccent)
+              )
+            ],
+          );
+        }
+      )
+    );
+  }
+}
