@@ -32,8 +32,8 @@ class IssConnector {
       'iss.json': 'extended',
       'sort_column': 'VALTODAY',
       'sort_order': 'desc',
-      'first': '30',
-      'securities.columns': 'SECID,SHORTNAME,DECIMALS',
+      'first': '50',
+      'securities.columns': 'SECID,SHORTNAME,DECIMALS,MINSTEP',
       'marketdata.columns': 'LAST,CHANGE'
     };
 

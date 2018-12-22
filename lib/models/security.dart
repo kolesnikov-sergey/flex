@@ -6,13 +6,17 @@ class Security {
   final double last;
   final double change;
   final int decimals;
+  final double minStep;
+  final int lotSize;
 
   Security({
     @required this.id,
     @required this.name,
     @required this.last,
     @required this.change,
-    @required this.decimals
+    @required this.decimals,
+    @required this.minStep,
+    @required this.lotSize
   });
 
   factory Security.fromJson(Map<String, dynamic> json) {
@@ -21,7 +25,9 @@ class Security {
       name: json['SHORTNAME'] as String,
       last: json['marketdata']['LAST']?.toDouble(),
       change: json['marketdata']['CHANGE']?.toDouble(),
-      decimals: json['DECIMALS']
+      decimals: json['DECIMALS'],
+      minStep: json['MINSTEP']?.toDouble(),
+      lotSize: json['LOTSIZE']
     );
   }
 }

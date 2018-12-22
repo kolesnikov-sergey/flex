@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class Type extends StatelessWidget {
+import '../../models/order_data.dart';
+
+final orderTypes = {
+  OrderType.limit: 'Лимит',
+  OrderType.market: 'Маркет',
+  OrderType.stop: 'Стоп'
+};
+
+class OrderTypeSelect extends StatelessWidget {
+  final OrderType value;
+  final ValueChanged<OrderType> onValueChanged;
+
+  OrderTypeSelect({@required this.value, @required this.onValueChanged});
+
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).primaryColor;
@@ -10,16 +23,15 @@ class Type extends StatelessWidget {
       child: CupertinoSegmentedControl(
         borderColor: color,
         selectedColor: color,
-        groupValue: 'Лимит',
-        children: Map.fromIterable(
-          ['Лимит', 'Маркет', 'Стоп'],
-          key: (item) => item,
-          value: (item) =>
+        groupValue: value,
+        children: orderTypes.map(
+          (key, value) => MapEntry(
+            key, 
             Container(
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  item,
+                  value,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -29,8 +41,9 @@ class Type extends StatelessWidget {
                 ),
               )
             )
+          )
         ),
-        onValueChanged: (item) => { },
+        onValueChanged: onValueChanged
       )
     );
   }

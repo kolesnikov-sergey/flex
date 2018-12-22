@@ -22,11 +22,11 @@ class _Button extends StatelessWidget {
   }
 }
 
-class BuySell extends StatelessWidget {
+class OrderSubmit extends StatelessWidget {
   final VoidCallback onBuy;
   final VoidCallback onSell;
 
-  const BuySell({@required this.onBuy, @required this.onSell});
+  OrderSubmit({@required this.onBuy, @required this.onSell});
 
   @override
   Widget build(BuildContext context) {

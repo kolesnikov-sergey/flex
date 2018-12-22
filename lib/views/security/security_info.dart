@@ -5,7 +5,7 @@ import 'chart.dart';
 import '../../models/security.dart';
 import '../../models/candle.dart';
 import '../../connectors/iss_connector.dart';
-import '../trade/trade.dart';
+import '../order/order.dart';
 
 class SecurityInfo extends StatelessWidget {
   final Security security;
@@ -38,13 +38,13 @@ class SecurityInfo extends StatelessWidget {
             )
           ),
           Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: SafeArea(
               child: CupertinoButton(
                 child: Text('Заявка'),
                 color: Theme.of(context).primaryColor,
                 onPressed: () => Navigator.push(context, new MaterialPageRoute(
-                  builder: (BuildContext context) => Trade(security: security)
+                  builder: (BuildContext context) => Order(security: security)
                 )),
               )
             )
