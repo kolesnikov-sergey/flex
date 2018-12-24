@@ -4,16 +4,31 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
+import 'connector.dart';
 import '../models/security.dart';
 import '../models/quote.dart';
 import '../models/candle.dart';
+import '../models/order_data.dart';
+import '../models/position.dart';
 
-class IssConnector {
+typedef T ParseFn<T>(String body);
+
+class IssConnector implements Connector {
   final String _issHost = 'iss.moex.com';
 
   final List<String> _subscribedQuotes = List<String>();
 
   Stream<Quote> _quotes;
+
+  final _startedPositions = [
+    Position(
+      id: 'SBER',
+      name: 'CБЕРБАНК',
+      qty: 10
+    )
+  ];
+
+  final StreamController<Position> _positionsController = StreamController<Position>();
 
   IssConnector() {
     _quotes = Stream.periodic(Duration(seconds: 10))
@@ -43,15 +58,7 @@ class IssConnector {
       query
     );
 
-    final response = await http.get(uri);
-
-    if(response.statusCode != 200) {
-      throw new Exception('request error, code: ${response.statusCode}');
-    }
-
-    var securities = await compute(_parseSecurities, response.body);
-
-    return securities;
+    return _get(uri, _parseSecurities);
   }
 
   Stream<Quote> subscribeQuote(String id) {
@@ -62,6 +69,15 @@ class IssConnector {
   void unsubscribeQuote(String id) {
     _subscribedQuotes.remove(id);
   }
+
+  Stream<Position> subscribePositions() {
+    _startedPositions.forEach((pos) {
+      _positionsController.add(pos);
+    });
+    return _positionsController.stream;
+  }
+
+  void unsubscribePositions() {}
 
   Future<List<Quote>> getQuotes(List<String> ids) async {
     final engine = 'stock';
@@ -81,13 +97,7 @@ class IssConnector {
       query
     );
 
-    final response = await http.get(uri);
-
-    if(response.statusCode != 200) {
-      throw new Exception('request error, code: ${response.statusCode}');
-    }
-
-    return await compute(_parseQuotes, response.body);
+    return _get(uri, _parseQuotes);
   }
 
   Future<List<Candle>> getCandles(String id) async {
@@ -109,13 +119,16 @@ class IssConnector {
       query
     );
 
-    final response = await http.get(uri);
+    return _get(uri, _parseCandles);
+  }
 
-    if(response.statusCode != 200) {
-      throw new Exception('request error, code: ${response.statusCode}');
-    }
-
-    return await compute(_parseCandles, response.body);
+  Future<void> createOrder(OrderData order) async {
+    await Future.delayed(Duration(seconds: 1));
+    _positionsController.add(Position(
+      id: order.id,
+      qty: order.qty,
+      name: 'sdfsdf'
+    ));
   }
 
   static List<Security> _parseSecurities(String responseBody) {
@@ -142,5 +155,19 @@ class IssConnector {
   static List<Candle> _parseCandles(String body) {
     final candles = json.decode(body)[1]['candles'];
     return candles.map<Candle>((item) => Candle.fromJson(item)).toList();
+  }
+
+  Future<T> _get<T>(Uri uri, ParseFn<T> parse) async {
+    final response = await http.get(uri);
+
+    if(response.statusCode != 200) {
+      throw new Exception('request error, code: ${response.statusCode}');
+    }
+
+    return await compute(parse, response.body);
+  }
+
+  void dispose() {
+    _positionsController.sink.close();
   }
 }

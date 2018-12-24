@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
+
+import 'connectors/connector.dart';
+import 'connectors/iss_connector.dart';
 import 'views/quotes/quotes.dart';
 import 'views/account/account.dart';
 import 'views/more/more.dart';
 
 void main() {
-  runApp(new TradingApp());
+  final Connector connector = IssConnector();
+  runApp(new TradingApp(connector: connector));
 }
 
 class TradingApp extends StatelessWidget {
+  final Connector connector;
+
+  TradingApp({@required this.connector});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Торговый терминал',
+      title: 'flex',
       theme: ThemeData(
         primaryColor: Colors.indigo,
       ),
       initialRoute: '/',
       routes: {
-        '/' : (context) => Home()
+        '/' : (context) => Home(connector: connector)
       },
     );
   }
@@ -25,19 +33,27 @@ class TradingApp extends StatelessWidget {
 
 
 class Home extends StatefulWidget {
- Home({Key key}) : super(key: key);
+  final Connector connector;
 
- @override
- _HomeState createState() => _HomeState();
+  Home({Key key, @required this.connector}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
  int _selectedIndex = 0;
- final _widgetOptions = [
-   Quotes(),
-   Account(),
-   More(),
- ];
+ List<Widget> _widgetOptions;
+
+ @override
+ void initState() {
+    _widgetOptions = [
+      Quotes(connector: widget.connector),
+      Account(connector: widget.connector),
+      More(),
+    ];
+    super.initState();
+   }
 
  @override
  Widget build(BuildContext context) {
@@ -47,9 +63,9 @@ class _HomeState extends State<Home> {
      ),
      bottomNavigationBar: BottomNavigationBar(
        items: <BottomNavigationBarItem>[
-         BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Котировки')),
-         BottomNavigationBarItem(icon: Icon(Icons.business), title: Text('Портфель')),
-         BottomNavigationBarItem(icon: Icon(Icons.school), title: Text('Ещё')),
+         BottomNavigationBarItem(icon: Icon(Icons.equalizer), title: Text('Котировки')),
+         BottomNavigationBarItem(icon: Icon(Icons.business_center), title: Text('Портфель')),
+         BottomNavigationBarItem(icon: Icon(Icons.menu), title: Text('Ещё')),
        ],
        currentIndex: _selectedIndex,
        onTap: _onItemTapped,

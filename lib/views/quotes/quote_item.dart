@@ -1,16 +1,16 @@
-import 'dart:math';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 
 import '../../models/security.dart';
 import '../../models/quote.dart';
-import '../../connectors/iss_connector.dart';
+import '../../connectors/connector.dart';
 import '../security/security_info.dart';
+import '../ui/number_currency.dart';
 
 class QuoteItem extends StatefulWidget {
   final Security security;
-  final IssConnector connector;
+  final Connector connector;
 
   QuoteItem({@required this.security, @required this.connector});
 
@@ -68,9 +68,10 @@ class _QuoteItemState extends State<QuoteItem> {
             children: <Widget>[
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
-                child: Text(
-                  '${last?.toStringAsFixed(widget.security.decimals)} \u20BD',
+                child: NumberCurrency(
                   key: ValueKey<double>(last),
+                  value: last,
+                  currency: 'RUB',
                   textAlign: TextAlign.end,
                   style: TextStyle(fontWeight: FontWeight.bold)
                 ),
@@ -78,7 +79,7 @@ class _QuoteItemState extends State<QuoteItem> {
               Text(
                 '${change != null && change > 0 ? '+': ''}${widget.security.change?.toStringAsFixed(2)} %',
                 textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.greenAccent)
+                style: TextStyle(color: Colors.green)
               )
             ],
           );

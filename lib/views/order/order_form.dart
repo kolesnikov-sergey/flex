@@ -48,7 +48,7 @@ class _OrderFormState extends State<OrderForm> {
           NumberTextField(
             label: 'Количество',
             placeholder: 'Количество',
-            initialValue: _orderData.qty.toString(),
+            initialValue: _orderData.qty.toDouble(),
             onSave: (value) {
               _orderData.qty = value.toInt();
             },
@@ -67,7 +67,7 @@ class _OrderFormState extends State<OrderForm> {
           NumberTextField(
             label: 'Цена',
             placeholder: 'Цена',
-            initialValue: _orderData.price.toString(),
+            initialValue: _orderData.price,
             step: widget.security.minStep,
             decimals: widget.security.decimals,
             onSave: (value) {

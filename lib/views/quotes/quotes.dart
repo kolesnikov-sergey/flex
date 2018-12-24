@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'search_text_field.dart';
 import '../../models/security.dart';
-import '../../connectors/iss_connector.dart';
+import '../../connectors/connector.dart';
 import 'quote_item.dart';
 
 class Quotes extends StatefulWidget {
+  final Connector connector;
+
+  Quotes({@required this.connector});
+
   @override
   _State createState() => _State();
 }
@@ -14,12 +18,11 @@ class _State extends State<Quotes> {
   Future<List<Security>> securities;
   String search = '';
   TextEditingController searchController = new TextEditingController();
-  IssConnector connector = IssConnector();
 
   @override
   void initState() {
     super.initState();
-    securities = connector.getSecurities();
+    securities = widget.connector.getSecurities();
     searchController.addListener(() {
       setState(() {
         search = searchController.text;
@@ -65,7 +68,7 @@ class _State extends State<Quotes> {
                     itemCount: items.length,
                     itemBuilder: (context, index) => QuoteItem(
                       security: items[index],
-                      connector: connector,
+                      connector: widget.connector,
                     ),
                     separatorBuilder: (context, index) => Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),

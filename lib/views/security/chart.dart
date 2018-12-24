@@ -15,6 +15,9 @@ class Chart extends StatelessWidget {
       child: charts.TimeSeriesChart(
         _createData(),
         animate: true,
+        primaryMeasureAxis: charts.NumericAxisSpec(
+          tickProviderSpec: charts.BasicNumericTickProviderSpec(zeroBound: false)
+        )
       ),
     );
   }

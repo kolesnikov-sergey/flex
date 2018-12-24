@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class NumberTextField extends StatefulWidget {
   final String label;
   final String placeholder;
-  final String initialValue;
+  final double initialValue;
   final double step;
   final int decimals;
   final ValueChanged<double> onSave;
@@ -28,7 +28,7 @@ class _NumberTextFieldState extends State<NumberTextField> {
 
   @override
   void initState() {
-    controller = TextEditingController(text: widget.initialValue);
+    controller = TextEditingController(text: widget.initialValue?.toStringAsFixed(widget.decimals));
     super.initState();
   }
 
