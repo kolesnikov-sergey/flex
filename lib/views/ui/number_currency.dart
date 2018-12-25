@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-final currencies = {
-  'RUB': '\u20BD',
-  'RUR': '\u20BD',
-  'USD': '\$',
-  'EUR': '€',
-};
-
+import '../../tools/currency_symbol.dart';
 
 class NumberCurrency extends StatelessWidget {
   final double value;
@@ -30,15 +23,11 @@ class NumberCurrency extends StatelessWidget {
     return Text(
       NumberFormat.currency(
         locale: 'ru',
-        symbol: _getCurrencySymbol(currency),
+        symbol: CurrencySymbol.getCurrencySymbol(currency),
         decimalDigits: decimals
       ).format(value),
       style: style,
       textAlign: textAlign,
     );
-  }
-
-  String _getCurrencySymbol(String value) {
-    return currencies[value.toUpperCase()] ?? value;
   }
 }

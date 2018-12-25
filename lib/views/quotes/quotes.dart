@@ -72,7 +72,7 @@ class _State extends State<Quotes> {
                     ),
                     separatorBuilder: (context, index) => Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Divider()
+                      child: Divider(height: 1)
                     ),
                   );
                 } else if (snapshot.hasError) {

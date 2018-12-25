@@ -10,6 +10,7 @@ class SearchTextField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: const InputDecoration(
+        isDense: true,
         hintText: 'Название или ISIN',
         suffixIcon: Icon(Icons.search),
         border: OutlineInputBorder()

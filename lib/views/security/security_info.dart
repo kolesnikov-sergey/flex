@@ -40,9 +40,11 @@ class SecurityInfo extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: SafeArea(
-              child: CupertinoButton(
+              child: MaterialButton(
+                minWidth: double.infinity,
                 child: Text('Заявка'),
                 color: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).primaryTextTheme.button.color,
                 onPressed: () => Navigator.push(context, new MaterialPageRoute(
                   builder: (BuildContext context) => Order(security: security)
                 )),

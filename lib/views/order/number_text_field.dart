@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class NumberTextField extends StatefulWidget {
   final String label;
   final String placeholder;
+  final String suffixText;
   final double initialValue;
   final double step;
   final int decimals;
@@ -12,6 +13,7 @@ class NumberTextField extends StatefulWidget {
   NumberTextField({
     this.label,
     this.placeholder,
+    this.suffixText,
     this.initialValue,
     this.step = 1,
     this.decimals = 0,
@@ -63,7 +65,12 @@ class _NumberTextFieldState extends State<NumberTextField> {
       },
       autocorrect: true,
       validator: widget.validator,
+      keyboardType: TextInputType.numberWithOptions(
+        decimal: widget.decimals > 0
+      ),
       decoration: InputDecoration(
+        isDense: true,
+        suffixText: widget.suffixText,
         labelText: widget.label,
         hintText: widget.placeholder,
         prefixIcon: IconButton(

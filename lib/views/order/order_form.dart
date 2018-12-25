@@ -6,6 +6,7 @@ import 'order_submit.dart';
 import 'row_value.dart';
 import '../../models/order_data.dart';
 import '../../models/security.dart';
+import '../../tools/currency_symbol.dart';
 
 class OrderForm extends StatefulWidget {
   final Security security;
@@ -48,6 +49,7 @@ class _OrderFormState extends State<OrderForm> {
           NumberTextField(
             label: 'Количество',
             placeholder: 'Количество',
+            suffixText: 'лот',
             initialValue: _orderData.qty.toDouble(),
             onSave: (value) {
               _orderData.qty = value.toInt();
@@ -67,6 +69,7 @@ class _OrderFormState extends State<OrderForm> {
           NumberTextField(
             label: 'Цена',
             placeholder: 'Цена',
+            suffixText: CurrencySymbol.getCurrencySymbol('RUB'),
             initialValue: _orderData.price,
             step: widget.security.minStep,
             decimals: widget.security.decimals,

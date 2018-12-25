@@ -42,6 +42,7 @@ class _QuoteItemState extends State<QuoteItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      dense: true,
       onTap: () => Navigator.push(context, new MaterialPageRoute(
         builder: (BuildContext context) => SecurityInfo(security: widget.security, connector: widget.connector)
       )),
@@ -63,23 +64,24 @@ class _QuoteItemState extends State<QuoteItem> {
           }
 
           return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             textDirection: TextDirection.rtl,
             children: <Widget>[
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
                 child: NumberCurrency(
-                  key: ValueKey<double>(last),
+                  key: ValueKey(last),
                   value: last,
                   currency: 'RUB',
                   textAlign: TextAlign.end,
-                  style: TextStyle(fontWeight: FontWeight.bold)
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)
                 ),
               ),
               Text(
                 '${change != null && change > 0 ? '+': ''}${widget.security.change?.toStringAsFixed(2)} %',
                 textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.green)
+                style: TextStyle(color: Colors.green, fontSize: 12)
               )
             ],
           );
