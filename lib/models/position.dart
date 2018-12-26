@@ -1,7 +1,7 @@
 class Position {
   final String id;
   final String name;
-  final int qty;
+  int qty; // todo make final
 
   Position({
     this.id,

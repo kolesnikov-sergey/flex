@@ -19,32 +19,28 @@ class OrderTypeSelect extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).primaryColor;
 
-    return Container(
-      child: CupertinoSegmentedControl(
-        borderColor: color,
-        selectedColor: color,
-        groupValue: value,
-        children: orderTypes.map(
-          (key, value) => MapEntry(
-            key, 
-            Container(
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  value,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    decoration: TextDecoration.none,
-                    fontWeight: FontWeight.normal
-                  )
-                ),
+    return CupertinoSegmentedControl(
+      borderColor: color,
+      selectedColor: color,
+      groupValue: value,
+      children: orderTypes.map(
+        (key, value) => MapEntry(
+          key,
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              value,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                decoration: TextDecoration.none,
+                fontWeight: FontWeight.normal
               )
-            )
+            ),
           )
-        ),
-        onValueChanged: onValueChanged
-      )
+        )
+      ),
+      onValueChanged: onValueChanged
     );
   }
 }

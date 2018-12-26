@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../connectors/connector.dart';
 import '../../models/position.dart';
 import 'position_item.dart';
 
@@ -10,35 +11,46 @@ final fakePositions = [
 ];
 
 class Positions extends StatefulWidget {
+  final Connector connector;
+
+  Positions({@required this.connector});
+
   @override
   _PositionsState createState() => _PositionsState();
 }
 
 class _PositionsState extends State<Positions> {
+  Stream<Position> stream;
+  List<Position> positions = List();
+
+  @override
+  void initState() {
+    widget.connector.subscribePositions()
+      .listen((pos) {
+        setState(() {
+          positions.add(pos);         
+        });
+      });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.connector.unsubscribePositions();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Position>>(
-      future: Future.value(fakePositions),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.separated(
-            itemCount: snapshot.data.length,
-            itemBuilder: (context, index) => PositionItem(
-              position: snapshot.data[index],
-            ),
-            separatorBuilder: (context, index) => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(height: 1)
-            ),
-          );
-        } else if (snapshot.hasError) {
-          final snackBar = SnackBar(content: Text(snapshot.error.toString()));
-          Scaffold.of(context).showSnackBar(snackBar);
-          return Text(snapshot.error.toString());
-        }
-
-        return RefreshProgressIndicator();
-      },
+    return ListView.separated(
+      itemCount: positions.length,
+      itemBuilder: (context, index) => PositionItem(
+        position: positions[index],
+      ),
+      separatorBuilder: (context, index) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Divider(height: 1)
+      ),
     );
   }
 }

@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
       More(),
     ];
     super.initState();
-   }
+  }
 
  @override
  Widget build(BuildContext context) {

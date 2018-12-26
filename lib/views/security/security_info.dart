@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'chart.dart';
 import '../../models/security.dart';
 import '../../models/candle.dart';
-import '../../connectors/iss_connector.dart';
+import '../../connectors/connector.dart';
 import '../order/order.dart';
 
 class SecurityInfo extends StatelessWidget {
   final Security security;
-  final IssConnector connector;
+  final Connector connector;
 
   const SecurityInfo({@required this.security, @required this.connector});
 
@@ -54,7 +54,7 @@ class SecurityInfo extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
                 textColor: Theme.of(context).primaryTextTheme.button.color,
                 onPressed: () => Navigator.push(context, new MaterialPageRoute(
-                  builder: (BuildContext context) => Order(security: security)
+                  builder: (BuildContext context) => Order(security: security, connector: connector)
                 )),
               )
             )

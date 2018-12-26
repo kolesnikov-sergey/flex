@@ -4,14 +4,16 @@ import 'order_type_select.dart';
 import 'number_text_field.dart';
 import 'order_submit.dart';
 import 'row_value.dart';
+import '../../connectors/connector.dart';
 import '../../models/order_data.dart';
 import '../../models/security.dart';
 import '../../tools/currency_symbol.dart';
 
 class OrderForm extends StatefulWidget {
   final Security security;
+  final Connector connector;
 
-  OrderForm({@required this.security});
+  OrderForm({@required this.security, @required this.connector});
 
   @override
   _OrderFormState createState() => _OrderFormState();
@@ -24,6 +26,8 @@ class _OrderFormState extends State<OrderForm> {
   @override
   void initState() {
     _orderData = OrderData(
+      id: widget.security.id,
+      name: widget.security.name, // todo remove
       type: OrderType.limit,
       qty: 1,
       price: widget.security.last
@@ -101,6 +105,7 @@ class _OrderFormState extends State<OrderForm> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 _orderData.side = OrderSide.buy;
+                widget.connector.createOrder(_orderData);
                 Navigator.pop(context);
               }
             },
@@ -108,6 +113,7 @@ class _OrderFormState extends State<OrderForm> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 _orderData.side = OrderSide.sell;
+                widget.connector.createOrder(_orderData);
                 Navigator.pop(context);
               }
             }

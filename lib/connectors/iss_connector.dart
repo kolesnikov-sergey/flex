@@ -21,14 +21,12 @@ class IssConnector implements Connector {
   Stream<Quote> _quotes;
 
   final _startedPositions = [
-    Position(
-      id: 'SBER',
-      name: 'CБЕРБАНК',
-      qty: 10
-    )
+    Position(id: 'SBER', name: 'Сбербанк', qty: 10),
+    Position(id: 'LKOH', name: 'ЛУКОЙЛ', qty: 20),
+    Position(id: 'GAZP', name: 'ГАЗПРОМ ао', qty: 5)
   ];
 
-  final StreamController<Position> _positionsController = StreamController<Position>();
+  final StreamController<Position> _positionsController = StreamController<Position>.broadcast();
 
   IssConnector() {
     _quotes = Stream.periodic(Duration(seconds: 10))
@@ -71,8 +69,10 @@ class IssConnector implements Connector {
   }
 
   Stream<Position> subscribePositions() {
-    _startedPositions.forEach((pos) {
-      _positionsController.add(pos);
+    Timer(Duration(seconds: 1), () {
+      _startedPositions.forEach((pos) {
+        _positionsController.add(pos);
+      });
     });
     return _positionsController.stream;
   }
@@ -124,11 +124,24 @@ class IssConnector implements Connector {
 
   Future<void> createOrder(OrderData order) async {
     await Future.delayed(Duration(seconds: 1));
-    _positionsController.add(Position(
+    final current = _startedPositions.firstWhere((pos) => pos.id == order.id, orElse: () => null);
+
+    if(current != null) {
+      current.qty = current.qty + ((order.side == OrderSide.buy ? 1 : -1) * order.qty);
+
+      if(current.qty == 0) {
+        _startedPositions.remove(current);
+      }
+
+      return;
+    }
+  
+    final pos = Position(
       id: order.id,
-      qty: order.qty,
-      name: 'sdfsdf'
-    ));
+      qty: ((order.side == OrderSide.buy ? 1 : -1) * order.qty),
+      name: order.name
+    );
+    _startedPositions.add(pos);  
   }
 
   static List<Security> _parseSecurities(String responseBody) {

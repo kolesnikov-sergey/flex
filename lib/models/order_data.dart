@@ -5,7 +5,9 @@ class OrderData {
   double price;
   int qty;
 
-  OrderData({this.id, this.type, this.side, this.price, this.qty});
+  String name; //todo remove
+
+  OrderData({this.id, this.type, this.side, this.price, this.qty, this.name});
 }
 
 enum OrderType {

@@ -15,7 +15,7 @@ class Account extends StatelessWidget {
       appBar: AppBar(
         title: Text('Портфель')
       ),
-      body: Positions(),
+      body: Positions(connector: connector),
     );
   }
 }
