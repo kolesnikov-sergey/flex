@@ -38,11 +38,19 @@ class SecurityInfo extends StatelessWidget {
             )
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            padding: EdgeInsets.only(
+              left: 10,
+              right: 10,
+              bottom: 10,
+              top: 20
+            ),
             child: SafeArea(
               child: MaterialButton(
                 minWidth: double.infinity,
-                child: Text('Заявка'),
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Text('Заявка', style: TextStyle(fontSize: 16))
+                ),
                 color: Theme.of(context).primaryColor,
                 textColor: Theme.of(context).primaryTextTheme.button.color,
                 onPressed: () => Navigator.push(context, new MaterialPageRoute(

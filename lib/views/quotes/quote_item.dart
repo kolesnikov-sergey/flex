@@ -80,7 +80,7 @@ class _QuoteItemState extends State<QuoteItem> {
               Text(
                 '${change != null && change > 0 ? '+': ''}${widget.security.change?.toStringAsFixed(2)} %',
                 textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.green, fontSize:)
+                style: TextStyle(color: Colors.green),
               )
             ],
           );
