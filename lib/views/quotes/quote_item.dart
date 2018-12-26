@@ -42,7 +42,6 @@ class _QuoteItemState extends State<QuoteItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      dense: true,
       onTap: () => Navigator.push(context, new MaterialPageRoute(
         builder: (BuildContext context) => SecurityInfo(security: widget.security, connector: widget.connector)
       )),
@@ -75,13 +74,13 @@ class _QuoteItemState extends State<QuoteItem> {
                   value: last,
                   currency: 'RUB',
                   textAlign: TextAlign.end,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)
+                  style: TextStyle(fontWeight: FontWeight.bold)
                 ),
               ),
               Text(
                 '${change != null && change > 0 ? '+': ''}${widget.security.change?.toStringAsFixed(2)} %',
                 textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.green, fontSize: 12)
+                style: TextStyle(color: Colors.green, fontSize:)
               )
             ],
           );
