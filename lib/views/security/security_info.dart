@@ -9,9 +9,14 @@ import '../order/order.dart';
 
 class SecurityInfo extends StatelessWidget {
   final Security security;
+  final SecurityType securityType;
   final Connector connector;
 
-  const SecurityInfo({@required this.security, @required this.connector});
+  const SecurityInfo({
+    @required this.security,
+    @required this.securityType,
+    @required this.connector
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class SecurityInfo extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: FutureBuilder<List<Candle>>(
-              future: connector.getCandles(security.id),
+              future: connector.getCandles(security.id, securityType),
               builder: (context, snapshot) {
                 if(snapshot.hasData) {
                   return Chart(snapshot.data);
@@ -48,8 +53,8 @@ class SecurityInfo extends StatelessWidget {
               child: MaterialButton(
                 minWidth: double.infinity,
                 child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Text('Заявка', style: TextStyle(fontSize: 16))
+                  padding: EdgeInsets.all(12),
+                  child: Text('ORDER', style: TextStyle(fontSize: 16))
                 ),
                 color: Theme.of(context).primaryColor,
                 textColor: Theme.of(context).primaryTextTheme.button.color,

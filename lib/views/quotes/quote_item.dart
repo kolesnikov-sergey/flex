@@ -10,9 +10,14 @@ import '../ui/number_currency.dart';
 
 class QuoteItem extends StatefulWidget {
   final Security security;
+  final SecurityType securityType;
   final Connector connector;
 
-  QuoteItem({@required this.security, @required this.connector});
+  QuoteItem({
+    @required this.security,
+    @required this.securityType,
+    @required this.connector
+  });
 
   @override
   _QuoteItemState createState() => _QuoteItemState();
@@ -43,23 +48,23 @@ class _QuoteItemState extends State<QuoteItem> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => Navigator.push(context, new MaterialPageRoute(
-        builder: (BuildContext context) => SecurityInfo(security: widget.security, connector: widget.connector)
+        builder: (BuildContext context) => SecurityInfo(
+          security: widget.security,
+          securityType: widget.securityType,
+          connector: widget.connector
+        )
       )),
-      leading: CircleAvatar(
-        child: Text(widget.security.name.substring(0, 2).toUpperCase(), style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.red
-      ),
       title: Text(widget.security.name, style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(widget.security.id),
       trailing: StreamBuilder<Quote>(
         stream: quotes,
         builder: (context, snapshot) {
-          double last = widget.security.last;
-          double change = widget.security.change;
+          double last = widget.security.last ?? 0;
+          double change = widget.security.change ?? 0;
 
           if(snapshot.hasData) {
-            last = snapshot.data.last;
-            change = snapshot.data.change;
+            last = snapshot.data.last ?? 0;
+            change = snapshot.data.change ?? 0;
           }
 
           return Column(

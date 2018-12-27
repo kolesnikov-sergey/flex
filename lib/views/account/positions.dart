@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../connectors/connector.dart';
@@ -22,10 +24,11 @@ class Positions extends StatefulWidget {
 class _PositionsState extends State<Positions> {
   Stream<Position> stream;
   List<Position> positions = List();
+  StreamSubscription subscription;
 
   @override
   void initState() {
-    widget.connector.subscribePositions()
+    subscription = widget.connector.subscribePositions()
       .listen((pos) {
         setState(() {
           positions.add(pos);         
@@ -37,6 +40,7 @@ class _PositionsState extends State<Positions> {
   @override
   void dispose() {
     widget.connector.unsubscribePositions();
+    subscription.cancel();
     super.dispose();
   }
 

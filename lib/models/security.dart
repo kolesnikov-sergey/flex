@@ -31,3 +31,7 @@ class Security {
     );
   }
 }
+
+enum SecurityType {
+  shares, bonds, currencies, futures
+}

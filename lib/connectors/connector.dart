@@ -7,9 +7,9 @@ import '../models/position.dart';
 import '../models/order_data.dart';
 
 abstract class Connector {
-  Future<List<Security>> getSecurities();
+  Future<List<Security>> getSecurities(SecurityType type);
 
-  Future<List<Candle>> getCandles(String id);
+  Future<List<Candle>> getCandles(String id, SecurityType type);
 
   Future<void> createOrder(OrderData order);
 

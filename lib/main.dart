@@ -21,7 +21,7 @@ class TradingApp extends StatelessWidget {
     return MaterialApp(
       title: 'flex',
       theme: ThemeData(
-        primaryColor: Colors.indigo,
+        primaryColor: Colors.indigo
       ),
       initialRoute: '/',
       routes: {

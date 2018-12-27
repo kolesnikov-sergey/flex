@@ -35,17 +35,60 @@ class IssConnector implements Connector {
       .asBroadcastStream();
   }
 
-  Future<List<Security>> getSecurities() async {
-    final engine = 'stock';
-    final market = 'shares';
-    final board = 'TQBR';
+  String _getEngineBySecurityType(SecurityType type) {
+    switch(type) {
+      case SecurityType.shares:
+      case SecurityType.bonds:
+        return 'stock';
+      case SecurityType.currencies:
+        return 'currency';
+      case SecurityType.futures:
+        return 'futures';
+      default:
+        return null;
+    }
+  }
+
+  String _getMarketBySecurityType(SecurityType type) {
+    switch(type) {
+      case SecurityType.shares:
+        return 'shares';
+      case SecurityType.bonds:
+        return 'bonds';
+      case SecurityType.currencies:
+        return 'selt';
+      case SecurityType.futures:
+        return 'forts';
+      default:
+        return null;
+    }
+  }
+
+  String _getBoardBySecurityType(SecurityType type) {
+    switch(type) {
+      case SecurityType.shares:
+        return 'TQBR';
+      case SecurityType.bonds:
+        return 'EQOB';
+      case SecurityType.currencies:
+        return 'CETS';
+      case SecurityType.futures:
+        return 'RFUD';
+      default:
+        return null;
+    }
+  }
+
+  Future<List<Security>> getSecurities(SecurityType type) async {
+    final engine = _getEngineBySecurityType(type);
+    final market = _getMarketBySecurityType(type);
+    final board = _getBoardBySecurityType(type);
 
     final query = {
       'iss.meta': 'off',
       'iss.json': 'extended',
       'sort_column': 'VALTODAY',
       'sort_order': 'desc',
-      'first': '50',
       'securities.columns': 'SECID,SHORTNAME,DECIMALS,MINSTEP',
       'marketdata.columns': 'LAST,CHANGE'
     };
@@ -69,7 +112,7 @@ class IssConnector implements Connector {
   }
 
   Stream<Position> subscribePositions() {
-    Timer(Duration(seconds: 1), () {
+    Timer(Duration(milliseconds: 100), () {
       _startedPositions.forEach((pos) {
         _positionsController.add(pos);
       });
@@ -80,9 +123,9 @@ class IssConnector implements Connector {
   void unsubscribePositions() {}
 
   Future<List<Quote>> getQuotes(List<String> ids) async {
+    //todo fix
     final engine = 'stock';
     final market = 'shares';
-    final board = 'TQBR';
 
     final query = {
       'iss.meta': 'off',
@@ -93,17 +136,16 @@ class IssConnector implements Connector {
 
     final uri = Uri.https(
       _issHost,
-      'iss/engines/$engine/markets/$market/boards/$board/securities.json',
+      'iss/engines/$engine/markets/$market/securities.json',
       query
     );
 
     return _get(uri, _parseQuotes);
   }
 
-  Future<List<Candle>> getCandles(String id) async {
-    final engine = 'stock';
-    final market = 'shares';
-    final board = 'TQBR';
+  Future<List<Candle>> getCandles(String id, SecurityType type) async {
+    final engine = _getEngineBySecurityType(type);
+    final market = _getMarketBySecurityType(type);
 
     final query = {
       'iss.meta': 'off',
@@ -115,7 +157,7 @@ class IssConnector implements Connector {
 
     final uri = Uri.https(
       _issHost,
-      'iss/engines/$engine/markets/$market/boards/$board/securities/$id/candles.json',
+      'iss/engines/$engine/markets/$market/securities/$id/candles.json',
       query
     );
 
