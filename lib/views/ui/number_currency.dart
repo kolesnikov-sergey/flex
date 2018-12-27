@@ -23,7 +23,7 @@ class NumberCurrency extends StatelessWidget {
     return Text(
       NumberFormat.currency(
         locale: 'ru',
-        symbol: CurrencySymbol.getCurrencySymbol(currency),
+        symbol: currency == null ? null : CurrencySymbol.getCurrencySymbol(currency),
         decimalDigits: decimals
       ).format(value),
       style: style,

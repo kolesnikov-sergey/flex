@@ -77,15 +77,16 @@ class _QuoteItemState extends State<QuoteItem> {
                 child: NumberCurrency(
                   key: ValueKey(last),
                   value: last,
-                  currency: 'RUB',
+                  currency: widget.security.currency,
+                  decimals: widget.security.decimals,
                   textAlign: TextAlign.end,
                   style: TextStyle(fontWeight: FontWeight.bold)
                 ),
               ),
               Text(
-                '${change != null && change > 0 ? '+': ''}${widget.security.change?.toStringAsFixed(2)} %',
+                '${change != null && change > 0 ? '+': ''}${change?.toStringAsFixed(widget.security.decimals)}',
                 textAlign: TextAlign.start,
-                style: TextStyle(color: Colors.green),
+                style: TextStyle(color: change < 0 ? Colors.red : Colors.green),
               )
             ],
           );

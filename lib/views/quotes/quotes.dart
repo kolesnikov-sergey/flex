@@ -1,76 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'search_text_field.dart';
+import '../ui/flex_dropdown.dart';
 import '../../models/security.dart';
 import '../../connectors/connector.dart';
 import 'quote_item.dart';
-
-class Drop extends StatelessWidget {
-  final SecurityType initialValue;
-  final Map<SecurityType, String> items;
-  final PopupMenuItemSelected onSelected;
-
-  Drop({@required this.initialValue, @required this.items, @required this.onSelected});
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBarDropdown(
-      initialValue: initialValue,
-      items: items,
-      onSelected: onSelected,
-    );
-  }
-
-}
-
-class AppBarDropdown extends StatefulWidget {
-  final SecurityType initialValue;
-  final Map<SecurityType, String> items;
-  final PopupMenuItemSelected onSelected;
-
-  AppBarDropdown({@required this.initialValue, @required this.items, @required this.onSelected});
-
-  @override
-  _AppBarDropdownState createState() => _AppBarDropdownState();
-}
-
-class _AppBarDropdownState extends State<AppBarDropdown> {
-  SecurityType value;
-
-  @override
-  void initState() {
-    value = widget.initialValue;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton(
-      initialValue: value,
-      child: Row(
-        mainAxisAlignment: Theme.of(context).platform == TargetPlatform.iOS
-          ? MainAxisAlignment.center
-          : MainAxisAlignment.start,
-        children: [
-          Text(widget.items[value]),
-          Icon(Icons.arrow_drop_down)
-        ],
-      ),
-      onSelected: (val) {
-        setState(() {
-          value = val;    
-        });
-        widget.onSelected(val);
-      },
-      itemBuilder: (context) => widget.items.keys
-        .map((key) => PopupMenuItem(
-          value: key,
-          child: Text(widget.items[key]),
-        ))
-        .toList(),
-    );
-  }
-}
 
 class Quotes extends StatefulWidget {
   final Connector connector;
@@ -117,7 +51,7 @@ class _State extends State<Quotes> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Drop(
+        title: FlexDropdown(
           initialValue: securityType,
           items: {
             SecurityType.shares: 'Акции',

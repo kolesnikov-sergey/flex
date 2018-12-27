@@ -15,10 +15,6 @@ class _PositionItemState extends State<PositionItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: CircleAvatar(
-        child: Text(widget.position.name.substring(0, 2).toUpperCase(), style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.red
-      ),
       title: Text(widget.position.name, style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(widget.position.id),
       trailing: Column(
@@ -28,7 +24,7 @@ class _PositionItemState extends State<PositionItem> {
           Text(
             '${widget.position.qty} шт',
             textAlign: TextAlign.start,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)
+            style: TextStyle(fontWeight: FontWeight.bold)
           )
         ],
       )

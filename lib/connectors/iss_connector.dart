@@ -35,50 +35,6 @@ class IssConnector implements Connector {
       .asBroadcastStream();
   }
 
-  String _getEngineBySecurityType(SecurityType type) {
-    switch(type) {
-      case SecurityType.shares:
-      case SecurityType.bonds:
-        return 'stock';
-      case SecurityType.currencies:
-        return 'currency';
-      case SecurityType.futures:
-        return 'futures';
-      default:
-        return null;
-    }
-  }
-
-  String _getMarketBySecurityType(SecurityType type) {
-    switch(type) {
-      case SecurityType.shares:
-        return 'shares';
-      case SecurityType.bonds:
-        return 'bonds';
-      case SecurityType.currencies:
-        return 'selt';
-      case SecurityType.futures:
-        return 'forts';
-      default:
-        return null;
-    }
-  }
-
-  String _getBoardBySecurityType(SecurityType type) {
-    switch(type) {
-      case SecurityType.shares:
-        return 'TQBR';
-      case SecurityType.bonds:
-        return 'EQOB';
-      case SecurityType.currencies:
-        return 'CETS';
-      case SecurityType.futures:
-        return 'RFUD';
-      default:
-        return null;
-    }
-  }
-
   Future<List<Security>> getSecurities(SecurityType type) async {
     final engine = _getEngineBySecurityType(type);
     final market = _getMarketBySecurityType(type);
@@ -89,7 +45,7 @@ class IssConnector implements Connector {
       'iss.json': 'extended',
       'sort_column': 'VALTODAY',
       'sort_order': 'desc',
-      'securities.columns': 'SECID,SHORTNAME,DECIMALS,MINSTEP',
+      'securities.columns': 'SECID,SHORTNAME,DECIMALS,MINSTEP,CURRENCYID',
       'marketdata.columns': 'LAST,CHANGE'
     };
 
@@ -220,6 +176,50 @@ class IssConnector implements Connector {
     }
 
     return await compute(parse, response.body);
+  }
+
+  String _getEngineBySecurityType(SecurityType type) {
+    switch(type) {
+      case SecurityType.shares:
+      case SecurityType.bonds:
+        return 'stock';
+      case SecurityType.currencies:
+        return 'currency';
+      case SecurityType.futures:
+        return 'futures';
+      default:
+        return null;
+    }
+  }
+
+  String _getMarketBySecurityType(SecurityType type) {
+    switch(type) {
+      case SecurityType.shares:
+        return 'shares';
+      case SecurityType.bonds:
+        return 'bonds';
+      case SecurityType.currencies:
+        return 'selt';
+      case SecurityType.futures:
+        return 'forts';
+      default:
+        return null;
+    }
+  }
+
+  String _getBoardBySecurityType(SecurityType type) {
+    switch(type) {
+      case SecurityType.shares:
+        return 'TQBR';
+      case SecurityType.bonds:
+        return 'EQOB';
+      case SecurityType.currencies:
+        return 'CETS';
+      case SecurityType.futures:
+        return 'RFUD';
+      default:
+        return null;
+    }
   }
 
   void dispose() {

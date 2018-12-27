@@ -2,6 +2,7 @@ class CurrencySymbol {
   static final currencies = {
     'RUB': '\u20BD',
     'RUR': '\u20BD',
+    'SUR': '\u20BD',
     'USD': '\$',
     'EUR': '€',
   };
