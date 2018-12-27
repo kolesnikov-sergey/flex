@@ -32,5 +32,3 @@ class FlexDropdown<T> extends StatelessWidget {
     );
   }
 }
-
-}
