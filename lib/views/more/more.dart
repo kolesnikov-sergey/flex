@@ -1,5 +1,5 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'option.dart';
 
@@ -12,6 +12,16 @@ class More extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
+          Option(
+            text: 'Темная тема',
+            icon: Icons.settings,
+            trailing: Switch(
+              value: Theme.of(context).brightness == Brightness.dark,
+              onChanged: (value) {
+                DynamicTheme.of(context).setBrightness(value ? Brightness.dark: Brightness.light);
+              }
+            ),
+          ),
           Option(
             text: 'Настройки',
             icon: Icons.settings,

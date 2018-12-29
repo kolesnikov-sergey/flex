@@ -1,3 +1,4 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'connectors/connector.dart';
@@ -18,16 +19,22 @@ class TradingApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'flex',
-      theme: ThemeData(
+    return new DynamicTheme(
+      defaultBrightness: Brightness.light,
+      data: (brightness) => new ThemeData(
         primarySwatch: Colors.indigo,
-        brightness: Brightness.dark
+        brightness: brightness,
       ),
-      initialRoute: '/',
-      routes: {
-        '/' : (context) => Home(connector: connector)
-      },
+      themedWidgetBuilder: (context, theme) {
+        return MaterialApp(
+          title: 'flex',
+          theme: theme,
+          initialRoute: '/',
+          routes: {
+            '/' : (context) => Home(connector: connector)
+          },
+        );
+      }
     );
   }
 }

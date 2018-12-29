@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class Option extends StatelessWidget {
   final String text;
   final IconData icon;
+  final Widget trailing;
 
-  Option({@required this.text, @required this.icon});
+  Option({@required this.text, @required this.icon, this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +17,7 @@ class Option extends StatelessWidget {
           fontWeight: FontWeight.bold
         )
       ),
+      trailing: trailing,
     );
   }
 }
