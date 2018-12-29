@@ -8,6 +8,7 @@ import '../../connectors/connector.dart';
 import '../../models/order_data.dart';
 import '../../models/security.dart';
 import '../../tools/currency_symbol.dart';
+import '../ui/number_currency.dart';
 
 class OrderForm extends StatefulWidget {
   final Security security;
@@ -58,6 +59,11 @@ class _OrderFormState extends State<OrderForm> {
             onSave: (value) {
               _orderData.qty = value.toInt();
             },
+            onChange: (value) {
+              setState(() {
+                _orderData.qty = value.toInt();           
+              });
+            },
             validator: (value) {
               if(value == null) {
                 return 'Обязательное поле';
@@ -70,7 +76,9 @@ class _OrderFormState extends State<OrderForm> {
             },
           ),
           Padding(padding: EdgeInsets.only(top: 20)),
-          NumberTextField(
+          Visibility(
+            visible: _orderData.type != OrderType.market,
+            child: NumberTextField(
             label: 'Цена',
             placeholder: 'Цена',
             suffixText: CurrencySymbol.getCurrencySymbol('RUB'),
@@ -79,6 +87,11 @@ class _OrderFormState extends State<OrderForm> {
             decimals: widget.security.decimals,
             onSave: (value) {
               _orderData.price = value;
+            },
+            onChange: (value) {
+              setState(() {
+                _orderData.price = value;           
+              });
             },
             validator: (value) {
               if(value == null) {
@@ -91,13 +104,16 @@ class _OrderFormState extends State<OrderForm> {
               return null;
             },
           ),
+          ),
           Padding(padding: EdgeInsets.only(top: 20)),
-          Container(
-            padding: EdgeInsets.only(top: 20, bottom: 20),
-            child: RowValue(
+          RowValue(
               label: 'Стоимость',
-              value: '1000 P',
-            ),
+              value: NumberCurrency(
+                value: widget.security.lotSize * _orderData.qty * (_orderData.type == OrderType.market ? widget.security.last : _orderData.price),
+                currency: widget.security.currency,
+                decimals: widget.security.decimals,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
           ),
           Padding(padding: EdgeInsets.only(top: 20)),
           OrderSubmit(

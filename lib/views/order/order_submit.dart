@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class _Button extends StatelessWidget {
@@ -12,10 +11,9 @@ class _Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 150,
-      child: CupertinoButton(
-        padding: EdgeInsets.symmetric( horizontal: 10),
+      child: RaisedButton(
         color: color,
-        child: Text(text),
+        child: Text(text, style: TextStyle(color: Colors.white)),
         onPressed: onPressed,
       ),
     );
@@ -34,12 +32,12 @@ class OrderSubmit extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         _Button(
-          text: 'Продать',
+          text: 'ПРОДАТЬ',
           color: Colors.red,
           onPressed: onSell,
         ),
         _Button(
-          text: 'Купить',
+          text: 'КУПИТЬ',
           color: Colors.blue,
           onPressed: onBuy,
         )

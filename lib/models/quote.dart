@@ -19,12 +19,12 @@ class Quote {
 
   factory Quote.fromJson(Map<String, dynamic> json) {
     return Quote(
-      id: json['SECID'] as String,
-      last: json['LAST']?.toDouble(),
-      bid: json['BID']?.toDouble(),
-      offer: json['OFFER']?.toDouble(),
-      spread: json['SPREAD']?.toDouble(),
-      change: json['CHANGE']?.toDouble()
+      id: json['SECID'] as String ?? '',
+      last: json['LAST']?.toDouble() ?? 0,
+      bid: json['BID']?.toDouble() ?? 0,
+      offer: json['OFFER']?.toDouble() ?? 0,
+      spread: json['SPREAD']?.toDouble() ?? 0,
+      change: json['CHANGE']?.toDouble() ?? 0
     );
   }
 }

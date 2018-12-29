@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FlexDropdown<T> extends StatelessWidget {
   final T initialValue;
   final Map<T, String> items;
-  final PopupMenuItemSelected onSelected;
+  final PopupMenuItemSelected<T> onSelected;
 
   FlexDropdown({@required this.initialValue, @required this.items, @required this.onSelected});
 

@@ -37,6 +37,18 @@ class _QuoteItemState extends State<QuoteItem> {
     });
   }
 
+  //todo не уверен что это должно быть здесь
+  String _getCurrency() {
+    switch(widget.securityType) {
+      case SecurityType.bonds:
+        return '%';
+      case SecurityType.futures:
+        return 'pt';
+      default:
+        return widget.security.currency;
+    }
+  }
+
   @override
   void dispose() {
     _timerDelay.cancel();
@@ -44,27 +56,31 @@ class _QuoteItemState extends State<QuoteItem> {
     super.dispose();
   }
 
+  void _navigateToSecurity() {
+    Navigator.push(context, new MaterialPageRoute(
+      builder: (BuildContext context) => SecurityInfo(
+        security: widget.security,
+        securityType: widget.securityType,
+        connector: widget.connector
+      )
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => Navigator.push(context, new MaterialPageRoute(
-        builder: (BuildContext context) => SecurityInfo(
-          security: widget.security,
-          securityType: widget.securityType,
-          connector: widget.connector
-        )
-      )),
+      onTap: _navigateToSecurity,
       title: Text(widget.security.name, style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(widget.security.id),
       trailing: StreamBuilder<Quote>(
         stream: quotes,
         builder: (context, snapshot) {
-          double last = widget.security.last ?? 0;
-          double change = widget.security.change ?? 0;
+          double last = widget.security.last;
+          double change = widget.security.change;
 
           if(snapshot.hasData) {
-            last = snapshot.data.last ?? 0;
-            change = snapshot.data.change ?? 0;
+            last = snapshot.data.last;
+            change = snapshot.data.change;
           }
 
           return Column(
@@ -77,16 +93,23 @@ class _QuoteItemState extends State<QuoteItem> {
                 child: NumberCurrency(
                   key: ValueKey(last),
                   value: last,
-                  currency: widget.security.currency,
+                  currency: _getCurrency(),
                   decimals: widget.security.decimals,
                   textAlign: TextAlign.end,
                   style: TextStyle(fontWeight: FontWeight.bold)
                 ),
               ),
-              Text(
-                '${change != null && change > 0 ? '+': ''}${change?.toStringAsFixed(widget.security.decimals)}',
-                textAlign: TextAlign.start,
-                style: TextStyle(color: change < 0 ? Colors.red : Colors.green),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                child: NumberCurrency(
+                  key: ValueKey(change),
+                  value: change,
+                  currency: _getCurrency(),
+                  decimals: widget.security.decimals,
+                  prefix: change != null && change > 0 ? '+': '',
+                  textAlign: TextAlign.end,
+                  style: TextStyle(color: change < 0 ? Colors.red : Colors.green)
+                ),
               )
             ],
           );

@@ -45,7 +45,7 @@ class IssConnector implements Connector {
       'iss.json': 'extended',
       'sort_column': 'VALTODAY',
       'sort_order': 'desc',
-      'securities.columns': 'SECID,SHORTNAME,DECIMALS,MINSTEP,CURRENCYID',
+      'securities.columns': 'SECID,SHORTNAME,DECIMALS,MINSTEP,CURRENCYID,LOTSIZE,FACEVALUE',
       'marketdata.columns': 'LAST,CHANGE'
     };
 
@@ -171,11 +171,14 @@ class IssConnector implements Connector {
   Future<T> _get<T>(Uri uri, ParseFn<T> parse) async {
     final response = await http.get(uri);
 
+    await Future.delayed(Duration(seconds: 1));
+
     if(response.statusCode != 200) {
       throw new Exception('request error, code: ${response.statusCode}');
     }
 
-    return await compute(parse, response.body);
+    // todo тут может возникать необработанное исключение
+    return compute(parse, response.body);
   }
 
   String _getEngineBySecurityType(SecurityType type) {

@@ -9,6 +9,7 @@ class Security {
   final double minStep;
   final int lotSize;
   final String currency;
+  final double faceValue;
 
   Security({
     @required this.id,
@@ -18,19 +19,21 @@ class Security {
     @required this.decimals,
     @required this.minStep,
     @required this.lotSize,
-    @required this.currency
+    @required this.currency,
+    @required this.faceValue
   });
 
   factory Security.fromJson(Map<String, dynamic> json) {
     return Security(
-      id: json['SECID'] as String,
-      name: json['SHORTNAME'] as String,
-      last: json['marketdata']['LAST']?.toDouble(),
-      change: json['marketdata']['CHANGE']?.toDouble(),
+      id: json['SECID'] as String ?? '',
+      name: json['SHORTNAME'] as String ?? '',
+      last: json['marketdata']['LAST']?.toDouble() ?? 0,
+      change: json['marketdata']['CHANGE']?.toDouble() ?? 0,
       decimals: json['DECIMALS'],
-      minStep: json['MINSTEP']?.toDouble(),
-      lotSize: json['LOTSIZE'],
-      currency: json['CURRENCYID']
+      minStep: json['MINSTEP']?.toDouble() ?? 0,
+      lotSize: json['LOTSIZE'] ?? 1,
+      currency: json['CURRENCYID'],
+      faceValue: json['FACEVALUE']?.toDouble() ?? 0
     );
   }
 }
