@@ -13,7 +13,7 @@ class Chart extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 5),
       child: charts.TimeSeriesChart(
-        _createData(),
+        _createData(context),
         animate: true,
         primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec: charts.BasicNumericTickProviderSpec(zeroBound: false)
@@ -22,11 +22,13 @@ class Chart extends StatelessWidget {
     );
   }
 
-  List<charts.Series<Candle, DateTime>> _createData() {
+  List<charts.Series<Candle, DateTime>> _createData(BuildContext context) {
     return [
       new charts.Series<Candle, DateTime>(
         id: 'Trade',
-        colorFn: (_, __) => charts.MaterialPalette.black,
+        colorFn: (_, __) => Theme.of(context).brightness == Brightness.dark
+          ? charts.MaterialPalette.green.shadeDefault
+          : charts.MaterialPalette.black,
         domainFn: (Candle candle, _) => candle.begin,
         measureFn: (Candle candle, _) => candle.open,
         data: candles,
