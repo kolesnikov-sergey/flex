@@ -19,14 +19,16 @@ class TradingApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Color(0xFF1976d2);
+
     return new DynamicTheme(
       defaultBrightness: Brightness.light,
       data: (brightness) => new ThemeData(
-        accentColor: Colors.blue,
+        accentColor: primaryColor,
         brightness: brightness,
-        primarySwatch: Colors.blue,
-        toggleableActiveColor: Colors.blue,
-        buttonColor: Colors.blue
+        primaryColor: brightness == Brightness.dark ? Colors.black : primaryColor,
+        toggleableActiveColor: primaryColor,
+        buttonColor: primaryColor
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(
