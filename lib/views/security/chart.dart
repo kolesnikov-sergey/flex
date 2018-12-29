@@ -27,7 +27,7 @@ class Chart extends StatelessWidget {
       new charts.Series<Candle, DateTime>(
         id: 'Trade',
         colorFn: (_, __) => Theme.of(context).brightness == Brightness.dark
-          ? charts.MaterialPalette.green.shadeDefault
+          ? charts.MaterialPalette.blue.shadeDefault
           : charts.MaterialPalette.black,
         domainFn: (Candle candle, _) => candle.begin,
         measureFn: (Candle candle, _) => candle.open,

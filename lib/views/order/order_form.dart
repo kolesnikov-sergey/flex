@@ -36,6 +36,14 @@ class _OrderFormState extends State<OrderForm> {
     super.initState();
   }
 
+  void submit() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      widget.connector.createOrder(_orderData);
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -68,8 +76,9 @@ class _OrderFormState extends State<OrderForm> {
               if(value == null) {
                 return 'Обязательное поле';
               }
-              if(int.tryParse(value) == null) {
-                return 'Обязательное поле';
+              final parsed = int.tryParse(value);
+              if(parsed == null || parsed < 0 || parsed > 100000) {
+                return 'Введите число от 0 до 100 000';
               }
 
               return null;
@@ -97,8 +106,9 @@ class _OrderFormState extends State<OrderForm> {
               if(value == null) {
                 return 'Обязательное поле';
               }
-              if(double.tryParse(value) == null) {
-                return 'Обязательное поле';
+              final parsed = double.tryParse(value);
+              if(parsed == null || parsed < 0 || parsed > 1000000) {
+                return 'Введите число от 0 до 1 000 000';
               }
 
               return null;
@@ -118,20 +128,12 @@ class _OrderFormState extends State<OrderForm> {
           Padding(padding: EdgeInsets.only(top: 20)),
           OrderSubmit(
             onBuy: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                _orderData.side = OrderSide.buy;
-                widget.connector.createOrder(_orderData);
-                Navigator.pop(context);
-              }
+              _orderData.side = OrderSide.buy;
+              submit();
             },
             onSell: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                _orderData.side = OrderSide.sell;
-                widget.connector.createOrder(_orderData);
-                Navigator.pop(context);
-              }
+              _orderData.side = OrderSide.sell;
+              submit();
             }
           )
         ],

@@ -10,7 +10,7 @@ class Option extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(icon, color: Theme.of(context).primaryColor),
+      leading: Icon(icon, color: Theme.of(context).accentColor),
       title: Text(
         text,
         style: TextStyle(

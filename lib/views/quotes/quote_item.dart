@@ -108,7 +108,7 @@ class _QuoteItemState extends State<QuoteItem> {
                   decimals: widget.security.decimals,
                   prefix: change != null && change > 0 ? '+': '',
                   textAlign: TextAlign.end,
-                  style: TextStyle(color: change < 0 ? Colors.red : Colors.green)
+                  style: TextStyle(color: change < 0 ? Colors.pink : Colors.green)
                 ),
               )
             ],

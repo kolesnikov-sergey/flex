@@ -73,11 +73,12 @@ class _NumberTextFieldState extends State<NumberTextField> {
           widget.onSave(double.tryParse(value));
         }
       },
-      autocorrect: true,
+      autovalidate: true,
       validator: widget.validator,
       keyboardType: TextInputType.numberWithOptions(
         decimal: widget.decimals > 0
       ),
+      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         isDense: true,
         suffixText: widget.suffixText,

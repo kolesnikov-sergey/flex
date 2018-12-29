@@ -12,9 +12,10 @@ class More extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
+          Padding(padding: EdgeInsets.all(10)),
           Option(
             text: 'Темная тема',
-            icon: Icons.settings,
+            icon: Icons.color_lens,
             trailing: Switch(
               value: Theme.of(context).brightness == Brightness.dark,
               onChanged: (value) {
@@ -22,6 +23,7 @@ class More extends StatelessWidget {
               }
             ),
           ),
+          Divider(),
           Option(
             text: 'Настройки',
             icon: Icons.settings,
@@ -30,6 +32,11 @@ class More extends StatelessWidget {
           Option(
             text: 'Поддержка',
             icon: Icons.help,
+          ),
+          Divider(),
+          Option(
+            text: 'Чат',
+            icon: Icons.chat,
           ),
           Divider(),
           Option(

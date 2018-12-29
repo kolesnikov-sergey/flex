@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/position.dart';
+import '../ui/number_currency.dart';
 
 class PositionItem extends StatefulWidget {
   final Position position;
@@ -21,10 +22,17 @@ class _PositionItemState extends State<PositionItem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         textDirection: TextDirection.rtl,
         children: <Widget>[
-          Text(
-            '${widget.position.qty} шт',
+          NumberCurrency(
+            currency: 'шт',
+            value: widget.position.qty.toDouble(),
+            decimals: 0,
             textAlign: TextAlign.start,
-            style: TextStyle(fontWeight: FontWeight.bold)
+          ),
+          NumberCurrency(
+            currency: 'RUB',
+            value: 123,
+            textAlign: TextAlign.start,
+            style: TextStyle(fontWeight: FontWeight.bold),
           )
         ],
       )

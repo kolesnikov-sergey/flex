@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class _Button extends StatelessWidget {
-  const _Button({@required this.text, @required this.color, @required this.onPressed});
+  const _Button({@required this.text, this.color, @required this.onPressed});
 
   final String text;
   final Color color;
@@ -38,7 +38,6 @@ class OrderSubmit extends StatelessWidget {
         ),
         _Button(
           text: 'КУПИТЬ',
-          color: Colors.blue,
           onPressed: onBuy,
         )
       ],
