@@ -53,7 +53,7 @@ class _SecurityInfoState extends State<SecurityInfo> {
       ),
       body: FlexFutureBuilder<List<Candle>>(
         future: candles,
-        successBuilder: (context, snapshot) {
+        builder: (context, snapshot) {
           return Column(
             children: <Widget>[
               Expanded(

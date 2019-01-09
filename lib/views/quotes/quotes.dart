@@ -87,7 +87,7 @@ class _State extends State<Quotes> {
           Flexible(
             child: FlexFutureBuilder<List<Security>>(
               future: _securities,
-              successBuilder: (context, snapshot) {
+              builder: (context, snapshot) {
                 final items = _filterSecurities(snapshot.data);
 
                 return ListView.separated(

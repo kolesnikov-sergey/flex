@@ -4,12 +4,12 @@ import 'error_result.dart';
 
 class FlexFutureBuilder<T> extends StatelessWidget {
   final Future<T> future;
-  final AsyncWidgetBuilder<T> successBuilder;
+  final AsyncWidgetBuilder<T> builder;
   final VoidCallback onRetry;
 
   FlexFutureBuilder({
     this.future,
-    @required this.successBuilder,
+    @required this.builder,
     @required this.onRetry
   });
 
@@ -34,7 +34,7 @@ class FlexFutureBuilder<T> extends StatelessWidget {
               );
             }
                
-            return successBuilder(context, snapshot);
+            return builder(context, snapshot);
         }
         return null;
       },
