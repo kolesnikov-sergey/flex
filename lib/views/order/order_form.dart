@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'order_type_select.dart';
 import 'number_text_field.dart';
 import 'order_submit.dart';
-import 'row_value.dart';
+import '../ui/row_value.dart';
 import '../../connectors/connector.dart';
 import '../../models/order_data.dart';
 import '../../models/security.dart';
