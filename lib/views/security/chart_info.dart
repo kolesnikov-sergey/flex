@@ -13,7 +13,7 @@ class ChartInfo extends StatefulWidget {
   final SecurityType securityType;
   final Connector connector;
 
-  const ChartInfo({
+  ChartInfo({
     @required this.security,
     @required this.securityType,
     @required this.connector
@@ -30,6 +30,14 @@ class _ChartInfoState extends State<ChartInfo> {
   void initState() {
     _load();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(ChartInfo oldWidget) {
+    if(oldWidget.security != widget.security) {
+      _load();
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   void _load() {

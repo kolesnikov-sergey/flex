@@ -20,7 +20,12 @@ class Order extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(10),
-        child: OrderForm(security: security, connector: connector) 
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 500),
+            child: OrderForm(security: security, connector: connector)
+          )
+        )  
       ) 
     );
   }

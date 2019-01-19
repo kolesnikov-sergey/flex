@@ -9,8 +9,15 @@ import 'quote_item.dart';
 class QuotesList extends StatefulWidget {
   final Connector connector;
   final SecurityType securityType;
+  final SecurityCallback onPressed;
+  final Security selectedItem;
 
-  QuotesList({@required this.connector, @required this.securityType});
+  QuotesList({
+    @required this.connector,
+    @required this.securityType,
+    @required this.onPressed,
+    this.selectedItem
+  });
 
   @override
   _State createState() => _State();
@@ -74,6 +81,8 @@ class _State extends State<QuotesList> {
                     security: items[index],
                     securityType: widget.securityType,
                     connector: widget.connector,
+                    onPressed: widget.onPressed,
+                    selected: items[index] == widget.selectedItem,
                   ),
                   separatorBuilder: (context, index) => Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),

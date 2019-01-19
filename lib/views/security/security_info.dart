@@ -10,12 +10,15 @@ class SecurityInfo extends StatelessWidget {
   final Security security;
   final SecurityType securityType;
   final Connector connector;
+  final bool showBackButton;
 
   SecurityInfo({
+    Key key,
     @required this.security,
     @required this.securityType,
-    @required this.connector
-  });
+    @required this.connector,
+    this.showBackButton = true
+  }) : super(key: key);
 
   final tabs = [
     Tab(text: 'ГРАФИК'),
@@ -31,7 +34,7 @@ class SecurityInfo extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          leading: BackButton(),
+          leading: showBackButton ? BackButton() : null,
           title: Text(security.name),
           bottom: TabBar(tabs: tabs),
           actions: [

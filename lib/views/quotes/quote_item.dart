@@ -5,18 +5,23 @@ import 'package:flutter/material.dart';
 import '../../models/security.dart';
 import '../../models/quote.dart';
 import '../../connectors/connector.dart';
-import '../security/security_info.dart';
 import '../ui/number_currency.dart';
+
+typedef void SecurityCallback(Security security, SecurityType type);
 
 class QuoteItem extends StatefulWidget {
   final Security security;
   final SecurityType securityType;
   final Connector connector;
+  final SecurityCallback onPressed;
+  final bool selected;
 
   QuoteItem({
     @required this.security,
     @required this.securityType,
-    @required this.connector
+    @required this.connector,
+    @required this.onPressed,
+    this.selected = true
   });
 
   @override
@@ -57,13 +62,7 @@ class _QuoteItemState extends State<QuoteItem> {
   }
 
   void _navigateToSecurity() {
-    Navigator.push(context, new MaterialPageRoute(
-      builder: (BuildContext context) => SecurityInfo(
-        security: widget.security,
-        securityType: widget.securityType,
-        connector: widget.connector
-      )
-    ));
+    widget.onPressed(widget.security, widget.securityType);
   }
 
   @override
@@ -72,6 +71,7 @@ class _QuoteItemState extends State<QuoteItem> {
       onTap: _navigateToSecurity,
       title: Text(widget.security.name, style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(widget.security.id),
+      selected: widget.selected,
       trailing: StreamBuilder<Quote>(
         stream: quotes,
         builder: (context, snapshot) {
