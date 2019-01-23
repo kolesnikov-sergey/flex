@@ -61,14 +61,14 @@ class _QuoteItemState extends State<QuoteItem> {
     super.dispose();
   }
 
-  void _navigateToSecurity() {
+  void tap() {
     widget.onPressed(widget.security, widget.securityType);
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: _navigateToSecurity,
+      onTap: tap,
       title: Text(widget.security.name, style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(widget.security.id),
       selected: widget.selected,

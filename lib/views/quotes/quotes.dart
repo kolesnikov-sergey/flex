@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/security.dart';
 import '../../connectors/connector.dart';
 import '../security/security_info.dart';
-import 'quotes_left.dart';
+import 'quotes_list.dart';
 import 'quotes_full.dart';
 
 class Quotes extends StatelessWidget {
@@ -25,7 +25,7 @@ class Quotes extends StatelessWidget {
         if(constraints.maxWidth > 600) {
           return QuotesFull(connector: connector);
         } else {
-          return QuotesLeft(
+          return QuotesList(
             connector: connector,
             onPressed: (security, type) {
               Navigator.push(context, new MaterialPageRoute(

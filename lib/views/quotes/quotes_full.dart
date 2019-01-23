@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/security.dart';
 import '../../connectors/connector.dart';
 import '../security/security_info.dart';
-import 'quotes_left.dart';
+import 'quotes_list.dart';
 
 class QuotesFull extends StatefulWidget {
   final Connector connector;
@@ -47,7 +47,7 @@ class _QuotesFullState extends State<QuotesFull> {
       children: [
         Container(
           width: 300,
-          child: QuotesLeft(
+          child: QuotesList(
             connector: widget.connector,
             onPressed: change,
             selectedItem: security

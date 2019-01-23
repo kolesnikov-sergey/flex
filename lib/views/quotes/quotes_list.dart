@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 
 import 'search_text_field.dart';
+import '../ui/flex_dropdown.dart';
 import '../ui/flex_future_builder.dart';
 import '../../models/security.dart';
 import '../../connectors/connector.dart';
 import 'quote_item.dart';
+import 'quotes_list_view.dart';
+
+final securityTypes = {
+  SecurityType.shares: 'Акции',
+  SecurityType.bonds: 'Облигации',
+  SecurityType.currencies: 'Валюта',
+  SecurityType.futures: 'Фьючерсы'
+};
 
 class QuotesList extends StatefulWidget {
   final Connector connector;
-  final SecurityType securityType;
   final SecurityCallback onPressed;
   final Security selectedItem;
 
   QuotesList({
     @required this.connector,
-    @required this.securityType,
     @required this.onPressed,
     this.selectedItem
   });
@@ -25,12 +32,13 @@ class QuotesList extends StatefulWidget {
 
 class _State extends State<QuotesList> {
   Future<List<Security>> _securities;
+  SecurityType securityType = SecurityType.shares;
   String _search = '';
   TextEditingController _searchController = new TextEditingController();
 
   @override
   void initState() {
-    _securities = widget.connector.getSecurities(widget.securityType);
+    _securities = widget.connector.getSecurities(securityType);
     _searchController.addListener(_changeSearch);
     super.initState();
   }
@@ -43,7 +51,7 @@ class _State extends State<QuotesList> {
 
   void _load() {
     setState(() {
-      _securities = widget.connector.getSecurities(widget.securityType);
+      _securities = widget.connector.getSecurities(securityType);
     });
   }
 
@@ -51,6 +59,13 @@ class _State extends State<QuotesList> {
     setState(() {
         _search = _searchController.text;
     });
+  }
+
+  void _changeSecurityType(SecurityType type) {
+    setState(() {
+      securityType = type;
+    });
+    _load();
   }
 
   List<Security> _filterSecurities(List<Security> list) {
@@ -63,7 +78,16 @@ class _State extends State<QuotesList> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      appBar: AppBar(
+        title: FlexDropdown(
+          initialValue: securityType,
+          items: securityTypes,
+          onSelected: _changeSecurityType,
+        )
+      ),
+      body: Column(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(10),
@@ -75,25 +99,19 @@ class _State extends State<QuotesList> {
               builder: (context, snapshot) {
                 final items = _filterSecurities(snapshot.data);
 
-                return ListView.separated(
-                  itemCount: items.length,
-                  itemBuilder: (context, index) => QuoteItem(
-                    security: items[index],
-                    securityType: widget.securityType,
-                    connector: widget.connector,
-                    onPressed: widget.onPressed,
-                    selected: items[index] == widget.selectedItem,
-                  ),
-                  separatorBuilder: (context, index) => Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Divider(height: 1)
-                  ),
+                return QuotesListView(
+                  connector: widget.connector,
+                  quotes: items,
+                  securityType: securityType,
+                  onPressed: widget.onPressed,
+                  selectedItem: widget.selectedItem
                 );
               },
               onRetry: _load,
             )
           ),    
         ],
-      );
+      )
+    );
   }
 }
