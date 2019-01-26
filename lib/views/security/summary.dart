@@ -18,15 +18,20 @@ class _SummaryState extends State<Summary> {
             padding: EdgeInsets.all(10),
             child: Column(
               children: [
+                Padding(padding: EdgeInsets.only(top: 10)),
                 RowValue(
                   label: 'Открытие',
                   value: Text('10'),
                 ),
                 Padding(padding: EdgeInsets.only(top: 10)),
+                Divider(),
+                Padding(padding: EdgeInsets.only(top: 10)),
                 RowValue(
                   label: 'Минимум',
                   value: Text('10'),
                 ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Divider(),
                 Padding(padding: EdgeInsets.only(top: 10)),
                 RowValue(
                   label: 'Максимум',

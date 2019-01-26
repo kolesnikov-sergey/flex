@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'chart_info.dart';
 import 'summary.dart';
+import 'order_book.dart';
 import '../../models/security.dart';
 import '../../connectors/connector.dart';
 
@@ -52,9 +53,7 @@ class SecurityInfo extends StatelessWidget {
               securityType: securityType,
             ),
             Summary(),
-            Center(
-              child: Text('Стакан'),
-            )
+            OrderBook()
           ]
         )
       )
