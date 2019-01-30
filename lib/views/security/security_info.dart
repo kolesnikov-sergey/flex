@@ -45,11 +45,18 @@ class SecurityInfo extends StatelessWidget {
             )
           ]
         ),
-        body: ChartInfo(
+        body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            ChartInfo(
               connector: connector,
               security: security,
               securityType: securityType,
             ),
+            Summary(),
+            OrderBook()
+          ]
+        )
       )
     );
   }

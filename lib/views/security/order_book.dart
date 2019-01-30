@@ -40,8 +40,8 @@ class OrderBookBox extends StatelessWidget {
             alignment: alignment,
             decoration: BoxDecoration(
               border: Border(
-                left: border ? BorderSide(color: Colors.grey, width: 0.1) : BorderSide.none,
-                right: border ? BorderSide(color: Colors.grey, width: 0.1) : BorderSide.none,
+                left: border ? BorderSide(color: Colors.grey, width: 0.3) : BorderSide.none,
+                right: border ? BorderSide(color: Colors.grey, width: 0.3) : BorderSide.none,
                 bottom: BorderSide(color: Colors.grey, width: 0.3),
               ),
             ),

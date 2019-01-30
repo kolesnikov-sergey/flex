@@ -16,14 +16,9 @@ class Chart extends StatelessWidget {
       padding: EdgeInsets.only(left: 5),
       child: charts.TimeSeriesChart(
         _createData(context),
-        animate: false,
+        animate: true,
         behaviors: [
-          // Add the sliding viewport behavior to have the viewport center on the
-          // domain that is currently selected.
           charts.SlidingViewport(),
-          // A pan and zoom behavior helps demonstrate the sliding viewport
-          // behavior by allowing the data visible in the viewport to be adjusted
-          // dynamically.
           charts.PanAndZoomBehavior(),
         ],
         domainAxis: charts.DateTimeAxisSpec(
