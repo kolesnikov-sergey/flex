@@ -45,17 +45,11 @@ class SecurityInfo extends StatelessWidget {
             )
           ]
         ),
-        body: TabBarView(
-          children: [
-            ChartInfo(
+        body: ChartInfo(
               connector: connector,
               security: security,
               securityType: securityType,
             ),
-            Summary(),
-            OrderBook()
-          ]
-        )
       )
     );
   }

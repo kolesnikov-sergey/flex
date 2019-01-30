@@ -40,9 +40,9 @@ class OrderBookBox extends StatelessWidget {
             alignment: alignment,
             decoration: BoxDecoration(
               border: Border(
-                left: border ? BorderSide() : BorderSide.none,
-                right: border ? BorderSide() : BorderSide.none,
-                bottom: BorderSide(),
+                left: border ? BorderSide(color: Colors.grey, width: 0.1) : BorderSide.none,
+                right: border ? BorderSide(color: Colors.grey, width: 0.1) : BorderSide.none,
+                bottom: BorderSide(color: Colors.grey, width: 0.3),
               ),
             ),
             child: Text(value ?? '-', style: TextStyle(fontWeight: FontWeight.bold))
