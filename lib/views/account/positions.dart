@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../connectors/connector.dart';
+import '../../connectors/connector_factory.dart';
 import '../../models/position.dart';
 import 'position_item.dart';
 
@@ -13,22 +14,19 @@ final fakePositions = [
 ];
 
 class Positions extends StatefulWidget {
-  final Connector connector;
-
-  Positions({@required this.connector});
-
   @override
   _PositionsState createState() => _PositionsState();
 }
 
 class _PositionsState extends State<Positions> {
+  final Connector connector = ConnectorFactory.getConnector();
   Stream<Position> stream;
   List<Position> positions = List();
   StreamSubscription subscription;
 
   @override
   void initState() {
-    subscription = widget.connector.subscribePositions()
+    subscription = connector.subscribePositions()
       .listen((pos) {
         setState(() {
           positions.add(pos);         
@@ -39,7 +37,7 @@ class _PositionsState extends State<Positions> {
 
   @override
   void dispose() {
-    widget.connector.unsubscribePositions();
+    connector.unsubscribePositions();
     subscription.cancel();
     super.dispose();
   }

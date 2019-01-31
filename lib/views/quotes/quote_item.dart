@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../models/security.dart';
 import '../../models/quote.dart';
 import '../../connectors/connector.dart';
+import '../../connectors/connector_factory.dart';
 import '../ui/number_currency.dart';
 
 typedef void SecurityCallback(Security security, SecurityType type);
@@ -12,14 +13,12 @@ typedef void SecurityCallback(Security security, SecurityType type);
 class QuoteItem extends StatefulWidget {
   final Security security;
   final SecurityType securityType;
-  final Connector connector;
   final SecurityCallback onPressed;
   final bool selected;
 
   QuoteItem({
     @required this.security,
     @required this.securityType,
-    @required this.connector,
     @required this.onPressed,
     this.selected = true
   });
@@ -29,6 +28,7 @@ class QuoteItem extends StatefulWidget {
 }
 
 class _QuoteItemState extends State<QuoteItem> {
+  final Connector connector = ConnectorFactory.getConnector();
   Timer _timerDelay;
   Stream<Quote> quotes;
 
@@ -37,7 +37,7 @@ class _QuoteItemState extends State<QuoteItem> {
     super.initState();
     _timerDelay = Timer(Duration(seconds: 1), () {
       setState(() {
-        quotes = widget.connector.subscribeQuote(widget.security.id);
+        quotes = connector.subscribeQuote(widget.security.id);
       });   
     });
   }
@@ -57,7 +57,7 @@ class _QuoteItemState extends State<QuoteItem> {
   @override
   void dispose() {
     _timerDelay.cancel();
-    widget.connector.unsubscribeQuote(widget.security.id);
+    connector.unsubscribeQuote(widget.security.id);
     super.dispose();
   }
 

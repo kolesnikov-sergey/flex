@@ -5,6 +5,7 @@ import '../models/quote.dart';
 import '../models/candle.dart';
 import '../models/position.dart';
 import '../models/order_data.dart';
+import '../models/order_book_item.dart';
 
 abstract class Connector {
   Future<List<Security>> getSecurities(SecurityType type);
@@ -18,4 +19,6 @@ abstract class Connector {
 
   Stream<Position> subscribePositions();
   void unsubscribePositions();
+
+  Future<List<OrderBookItem>> getOrderBook(String id, SecurityType type);
 }

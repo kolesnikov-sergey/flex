@@ -1,22 +1,15 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
-import 'connectors/connector.dart';
-import 'connectors/iss_connector.dart';
 import 'views/quotes/quotes.dart';
 import 'views/account/account.dart';
 import 'views/more/more.dart';
 
 void main() {
-  final Connector connector = IssConnector();
-  runApp(new TradingApp(connector: connector));
+  runApp(new TradingApp());
 }
 
 class TradingApp extends StatelessWidget {
-  final Connector connector;
-
-  TradingApp({@required this.connector});
-
   @override
   Widget build(BuildContext context) {
     final primaryColor = Color(0xFF1976d2);
@@ -36,7 +29,7 @@ class TradingApp extends StatelessWidget {
           theme: theme,
           initialRoute: '/',
           routes: {
-            '/' : (context) => Home(connector: connector)
+            '/' : (context) => Home()
           },
         );
       }
@@ -46,10 +39,6 @@ class TradingApp extends StatelessWidget {
 
 
 class Home extends StatefulWidget {
-  final Connector connector;
-
-  Home({Key key, @required this.connector}) : super(key: key);
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -61,8 +50,8 @@ class _HomeState extends State<Home> {
  @override
  void initState() {
     _widgetOptions = [
-      Quotes(connector: widget.connector),
-      Account(connector: widget.connector),
+      Quotes(),
+      Account(),
       More(),
     ];
     super.initState();

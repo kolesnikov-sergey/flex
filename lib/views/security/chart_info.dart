@@ -5,18 +5,17 @@ import 'add_order.dart';
 import '../../models/security.dart';
 import '../../models/candle.dart';
 import '../../connectors/connector.dart';
+import '../../connectors/connector_factory.dart';
 import '../order/order.dart';
 import '../ui/flex_future_builder.dart';
 
 class ChartInfo extends StatefulWidget {
   final Security security;
   final SecurityType securityType;
-  final Connector connector;
 
   ChartInfo({
     @required this.security,
     @required this.securityType,
-    @required this.connector
   });
 
   @override
@@ -24,6 +23,7 @@ class ChartInfo extends StatefulWidget {
 }
 
 class _ChartInfoState extends State<ChartInfo> {
+  final Connector connector = ConnectorFactory.getConnector();
   Future<List<Candle>> candles;
   
   @override
@@ -42,13 +42,13 @@ class _ChartInfoState extends State<ChartInfo> {
 
   void _load() {
     setState(() {
-      candles = widget.connector.getCandles(widget.security.id, widget.securityType);
+      candles = connector.getCandles(widget.security.id, widget.securityType);
     });
   }
 
   void _navigateToOrder() {
     Navigator.push(context, new MaterialPageRoute(
-      builder: (BuildContext context) => Order(security: widget.security, connector: widget.connector)
+      builder: (BuildContext context) => Order(security: widget.security)
     ));
   }
 

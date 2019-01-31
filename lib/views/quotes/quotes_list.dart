@@ -5,6 +5,7 @@ import '../ui/flex_dropdown.dart';
 import '../ui/flex_future_builder.dart';
 import '../../models/security.dart';
 import '../../connectors/connector.dart';
+import '../../connectors/connector_factory.dart';
 import 'quote_item.dart';
 import 'quotes_list_view.dart';
 
@@ -16,12 +17,11 @@ final securityTypes = {
 };
 
 class QuotesList extends StatefulWidget {
-  final Connector connector;
+ 
   final SecurityCallback onPressed;
   final Security selectedItem;
 
   QuotesList({
-    @required this.connector,
     @required this.onPressed,
     this.selectedItem
   });
@@ -31,6 +31,7 @@ class QuotesList extends StatefulWidget {
 }
 
 class _State extends State<QuotesList> {
+  final Connector connector = ConnectorFactory.getConnector();
   Future<List<Security>> _securities;
   SecurityType securityType = SecurityType.shares;
   String _search = '';
@@ -38,7 +39,7 @@ class _State extends State<QuotesList> {
 
   @override
   void initState() {
-    _securities = widget.connector.getSecurities(securityType);
+    _securities = connector.getSecurities(securityType);
     _searchController.addListener(_changeSearch);
     super.initState();
   }
@@ -51,7 +52,7 @@ class _State extends State<QuotesList> {
 
   void _load() {
     setState(() {
-      _securities = widget.connector.getSecurities(securityType);
+      _securities = connector.getSecurities(securityType);
     });
   }
 
@@ -100,7 +101,6 @@ class _State extends State<QuotesList> {
                 final items = _filterSecurities(snapshot.data);
 
                 return QuotesListView(
-                  connector: widget.connector,
                   quotes: items,
                   securityType: securityType,
                   onPressed: widget.onPressed,

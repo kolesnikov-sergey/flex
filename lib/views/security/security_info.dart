@@ -5,19 +5,16 @@ import 'chart_info.dart';
 import 'summary.dart';
 import 'order_book.dart';
 import '../../models/security.dart';
-import '../../connectors/connector.dart';
 
 class SecurityInfo extends StatelessWidget {
   final Security security;
   final SecurityType securityType;
-  final Connector connector;
   final bool showBackButton;
 
   SecurityInfo({
     Key key,
     @required this.security,
     @required this.securityType,
-    @required this.connector,
     this.showBackButton = true
   }) : super(key: key);
 
@@ -49,12 +46,14 @@ class SecurityInfo extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           children: [
             ChartInfo(
-              connector: connector,
               security: security,
               securityType: securityType,
             ),
             Summary(),
-            OrderBook()
+            OrderBook(
+              security: security,
+              securityType: securityType,
+            )
           ]
         )
       )

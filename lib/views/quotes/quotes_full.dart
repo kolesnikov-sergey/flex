@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../models/security.dart';
-import '../../connectors/connector.dart';
 import '../security/security_info.dart';
 import 'quotes_list.dart';
 
 class QuotesFull extends StatefulWidget {
-  final Connector connector;
-
-  QuotesFull({@required this.connector});
-
   @override
   _QuotesFullState createState() => _QuotesFullState();
 }
@@ -37,7 +32,6 @@ class _QuotesFullState extends State<QuotesFull> {
       ) 
       : SecurityInfo(
         key: ValueKey(security.id),
-        connector: widget.connector,
         security: security,
         securityType: securityType,
         showBackButton: false,
@@ -48,7 +42,6 @@ class _QuotesFullState extends State<QuotesFull> {
         Container(
           width: 300,
           child: QuotesList(
-            connector: widget.connector,
             onPressed: change,
             selectedItem: security
           ),

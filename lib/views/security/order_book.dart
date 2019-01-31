@@ -2,6 +2,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../models/order_book_item.dart';
+import '../../models/security.dart';
+import '../../connectors/connector.dart';
+import '../../connectors/connector_factory.dart';
+import '../ui/flex_future_builder.dart';
 
 class OrderBookBox extends StatelessWidget {
   final String value;
@@ -55,64 +59,65 @@ class OrderBookBox extends StatelessWidget {
 }
 
 class OrderBook extends StatefulWidget {
+  final Security security;
+  final SecurityType securityType;
+
+  OrderBook({
+    @required this.security,
+    @required this.securityType,
+  });
+
   @override
   _OrderBookState createState() => _OrderBookState();
 }
 
 class _OrderBookState extends State<OrderBook> {
-  final testOrderBookData = [
-    OrderBookItem(price: 12, buy: null, sell: 1),
-    OrderBookItem(price: 11, buy: null, sell: 1),
-    OrderBookItem(price: 10, buy: null, sell: 1),
-    OrderBookItem(price: 9, buy: null, sell: 1),
-    OrderBookItem(price: 8, buy: null, sell: 10),
-    OrderBookItem(price: 7, buy: null, sell: 2),
-    OrderBookItem(price: 6, buy: null, sell: 1),
-    OrderBookItem(price: 5, buy: 5, sell: null),
-    OrderBookItem(price: 4, buy: 4, sell: null),
-    OrderBookItem(price: 3, buy: 3, sell: null),
-    OrderBookItem(price: 2, buy: 2, sell: null),
-    OrderBookItem(price: 1, buy: 2, sell: null)
-  ];
-
+  final Connector connector = ConnectorFactory.getConnector();
   @override
   Widget build(BuildContext context) {
-    final maxBuy = testOrderBookData
-      .where((t) => t.buy != null)
-      .map((t) => t.buy)
-      .reduce(max);
-    final maxSell = testOrderBookData
-      .where((t) => t.sell != null)
-      .map((t) => t.sell)
-      .reduce(max);
 
-    return ListView.builder(
-        itemCount: testOrderBookData.length,
-        itemBuilder: (context, index) {
-          var item = testOrderBookData[index];
+    return FlexFutureBuilder<List<OrderBookItem>>(
+      future: connector.getOrderBook(widget.security.id, widget.securityType),
+      onRetry: () {},
+      builder: (context, snapshot) {
+        final maxBuy = snapshot.data
+          .where((t) => t.buy != null)
+          .map((t) => t.buy)
+          .reduce(max);
+        final maxSell = snapshot.data
+          .where((t) => t.sell != null)
+          .map((t) => t.sell)
+          .reduce(max);
 
-          return Row(
-            children: [
-              OrderBookBox(
-                value: item.buy?.toString(),
-                alignment: Alignment.centerLeft,
-                color: item.buy == null ? null : Colors.pink,
-                widthFactor: item.buy == null ? 0 : item.buy / maxBuy,
-              ),
-              OrderBookBox(
-                value: item.price.toString(),
-                alignment: Alignment.center,
-                border: true,
-              ),
-              OrderBookBox(
-                value: item.sell?.toString(),
-                alignment: Alignment.centerRight,
-                color: item.sell == null ? null : Colors.green,
-                widthFactor: item.sell == null ? 0 : item.sell / maxSell,
-              )
-            ]
-          );
-        }
-      );
+        return ListView.builder(
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) {
+            var item = snapshot.data[index];
+
+            return Row(
+              children: [
+                OrderBookBox(
+                  value: item.buy?.toString(),
+                  alignment: Alignment.centerLeft,
+                  color: item.buy == null ? null : Colors.pink,
+                  widthFactor: item.buy == null ? 0 : item.buy / maxBuy,
+                ),
+                OrderBookBox(
+                  value: item.price.toString(),
+                  alignment: Alignment.center,
+                  border: true,
+                ),
+                OrderBookBox(
+                  value: item.sell?.toString(),
+                  alignment: Alignment.centerRight,
+                  color: item.sell == null ? null : Colors.green,
+                  widthFactor: item.sell == null ? 0 : item.sell / maxSell,
+                )
+              ]
+            );
+          }
+        );
+      }
+    );
   }
 }

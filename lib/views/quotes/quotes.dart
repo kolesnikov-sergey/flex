@@ -7,11 +7,7 @@ import 'quotes_list.dart';
 import 'quotes_full.dart';
 
 class Quotes extends StatelessWidget {
-  final Connector connector;
-
-  Quotes({@required this.connector});
-
-  final securityTypes = {
+  static final securityTypes = {
     SecurityType.shares: 'АКЦИИ',
     SecurityType.bonds: 'ОБЛИГАЦИИ',
     SecurityType.currencies: 'ВАЛЮТА',
@@ -23,16 +19,14 @@ class Quotes extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         if(constraints.maxWidth > 600) {
-          return QuotesFull(connector: connector);
+          return QuotesFull();
         } else {
           return QuotesList(
-            connector: connector,
             onPressed: (security, type) {
               Navigator.push(context, new MaterialPageRoute(
                 builder: (BuildContext context) => SecurityInfo(
                   security: security,
                   securityType: type,
-                  connector: connector
                 )
               ));
             }

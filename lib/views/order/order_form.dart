@@ -5,6 +5,7 @@ import 'number_text_field.dart';
 import 'order_submit.dart';
 import '../ui/row_value.dart';
 import '../../connectors/connector.dart';
+import '../../connectors/connector_factory.dart';
 import '../../models/order_data.dart';
 import '../../models/security.dart';
 import '../../tools/currency_symbol.dart';
@@ -12,15 +13,16 @@ import '../ui/number_currency.dart';
 
 class OrderForm extends StatefulWidget {
   final Security security;
-  final Connector connector;
 
-  OrderForm({@required this.security, @required this.connector});
+  OrderForm({@required this.security});
 
   @override
   _OrderFormState createState() => _OrderFormState();
 }
 
 class _OrderFormState extends State<OrderForm> {
+  final Connector connector = ConnectorFactory.getConnector();
+
   final _formKey = GlobalKey<FormState>();
   OrderData _orderData;
 
@@ -39,7 +41,7 @@ class _OrderFormState extends State<OrderForm> {
   void submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      widget.connector.createOrder(_orderData);
+      connector.createOrder(_orderData);
       Navigator.pop(context);
     }
   }

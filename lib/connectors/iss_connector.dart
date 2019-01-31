@@ -10,6 +10,7 @@ import '../models/quote.dart';
 import '../models/candle.dart';
 import '../models/order_data.dart';
 import '../models/position.dart';
+import '../models/order_book_item.dart';
 
 typedef T ParseFn<T>(String body);
 
@@ -118,6 +119,34 @@ class IssConnector implements Connector {
     );
 
     return _get(uri, _parseCandles);
+  }
+
+  Future<List<OrderBookItem>> getOrderBook(String id, SecurityType type) async {
+    final engine = _getEngineBySecurityType(type);
+    final market = _getMarketBySecurityType(type);
+    final board = _getBoardBySecurityType(type);
+
+    final query = {
+      'iss.meta': 'off',
+      'iss.json': 'extended',
+      'marketdata.columns': 'SECID,LAST',
+    };
+
+    final uri = Uri.https(
+      _issHost,
+      'iss/engines/$engine/markets/$market/boards/$board/securities/$id',
+      query
+    );
+
+    final securities = await _get(uri, _parseSecurities);
+    final security = securities[0];
+
+    return Iterable<int>.generate(20, (i) => 10 - i)
+      .map((i) => OrderBookItem(
+        price: security.last + i,
+        buy: i < 0 ? i.abs() : null,
+        sell: i >= 0 ? i : null
+      ));
   }
 
   Future<void> createOrder(OrderData order) async {

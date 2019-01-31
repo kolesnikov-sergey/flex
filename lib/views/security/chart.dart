@@ -22,7 +22,7 @@ class Chart extends StatelessWidget {
           charts.PanAndZoomBehavior(),
         ],
         domainAxis: charts.DateTimeAxisSpec(
-          viewport: charts.DateTimeExtents(start: candles[max(candles.length - 10, 0)].begin, end: candles[candles.length - 1].begin)
+          viewport: charts.DateTimeExtents(start: candles[max(candles.length - 20, 0)].begin, end: candles[candles.length - 1].begin)
         ),
         primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec: charts.BasicNumericTickProviderSpec(zeroBound: false)
