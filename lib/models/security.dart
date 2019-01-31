@@ -3,7 +3,11 @@ import 'package:meta/meta.dart';
 class Security {
   final String id;
   final String name;
+  final double open;
   final double last;
+  final double high;
+  final double low;
+  final int valtoday;
   final double change;
   final int decimals;
   final double minStep;
@@ -14,7 +18,11 @@ class Security {
   Security({
     @required this.id,
     @required this.name,
+    @required this.open,
     @required this.last,
+    @required this.high,
+    @required this.low,
+    @required this.valtoday,
     @required this.change,
     @required this.decimals,
     @required this.minStep,
@@ -27,7 +35,11 @@ class Security {
     return Security(
       id: json['SECID'] as String ?? '',
       name: json['SHORTNAME'] as String ?? '',
+      open: json['marketdata']['OPEN']?.toDouble() ?? 0,
       last: json['marketdata']['LAST']?.toDouble() ?? 0,
+      high: json['marketdata']['HIGH']?.toDouble() ?? 0,
+      low: json['marketdata']['LOW']?.toDouble() ?? 0,
+      valtoday: json['marketdata']['VALTODAY']?.toInt() ?? 0,
       change: json['marketdata']['CHANGE']?.toDouble() ?? 0,
       decimals: json['DECIMALS'],
       minStep: json['MINSTEP']?.toDouble() ?? 0,

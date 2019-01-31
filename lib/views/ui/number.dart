@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../tools/currency_symbol.dart';
 
-class NumberCurrency extends StatelessWidget {
+class Number extends StatelessWidget {
   final double value;
-  final String currency;
   final int decimals;
   final String prefix;
   final TextStyle style;
   final TextAlign textAlign;
 
-  NumberCurrency({
+  Number({
     Key key,
     @required this.value,
-    @required this.currency,
     this.decimals = 2,
     this.prefix,
     this.style,
@@ -22,13 +19,14 @@ class NumberCurrency extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatted = NumberFormat.currency(
-        locale: 'ru',
-        symbol: currency == null ? null : CurrencySymbol.getCurrencySymbol(currency),
-        decimalDigits: decimals,
-    ).format(value);
+    final format = NumberFormat(null, 'ru')
+      ..minimumFractionDigits = decimals
+      ..maximumFractionDigits = decimals;
+
+    final formatted = format.format(value);
+
     return Text(
-      '${prefix == null ? '' : prefix}$formatted',
+      formatted,
       style: style,
       textAlign: textAlign,
     );

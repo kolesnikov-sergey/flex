@@ -47,7 +47,7 @@ class IssConnector implements Connector {
       'sort_column': 'VALTODAY',
       'sort_order': 'desc',
       'securities.columns': 'SECID,SHORTNAME,DECIMALS,MINSTEP,CURRENCYID,LOTSIZE,FACEVALUE',
-      'marketdata.columns': 'LAST,CHANGE'
+      'marketdata.columns': 'OPEN,LAST,HIGH,LOW,VALTODAY,CHANGE'
     };
 
     final uri = Uri.https(
@@ -129,12 +129,13 @@ class IssConnector implements Connector {
     final query = {
       'iss.meta': 'off',
       'iss.json': 'extended',
-      'marketdata.columns': 'SECID,LAST',
+      'securities.columns': 'SECID,MINSTEP',
+      'marketdata.columns': 'LAST,MINSTEP',
     };
 
     final uri = Uri.https(
       _issHost,
-      'iss/engines/$engine/markets/$market/boards/$board/securities/$id',
+      'iss/engines/$engine/markets/$market/boards/$board/securities/$id.json',
       query
     );
 
@@ -142,11 +143,13 @@ class IssConnector implements Connector {
     final security = securities[0];
 
     return Iterable<int>.generate(20, (i) => 10 - i)
+      .where((i) => i != 0)
       .map((i) => OrderBookItem(
-        price: security.last + i,
+        price: security.last + i * security.minStep,
         buy: i < 0 ? i.abs() : null,
         sell: i >= 0 ? i : null
-      ));
+      ))
+      .toList();
   }
 
   Future<void> createOrder(OrderData order) async {

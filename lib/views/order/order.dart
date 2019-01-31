@@ -6,8 +6,9 @@ import '../../models/security.dart';
 
 class Order extends StatelessWidget {
   final Security security;
+  final double price;
 
-  Order({@required this.security});
+  Order({@required this.security, this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class Order extends StatelessWidget {
         child: Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 500),
-            child: OrderForm(security: security)
+            child: OrderForm(security: security, price: price)
           )
         )  
       ) 

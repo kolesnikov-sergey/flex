@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../models/security.dart';
-import '../../connectors/connector.dart';
 import '../security/security_info.dart';
 import 'quotes_list.dart';
 import 'quotes_full.dart';

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
-import '../../models/candle.dart';
+import '../../../models/candle.dart';
 
 class Chart extends StatelessWidget {
   final List<Candle> candles;

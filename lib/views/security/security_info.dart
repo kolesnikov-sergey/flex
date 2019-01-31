@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'chart_info.dart';
+import 'chart/chart_info.dart';
 import 'summary.dart';
-import 'order_book.dart';
+import 'order_book/order_book.dart';
 import '../../models/security.dart';
 
 class SecurityInfo extends StatelessWidget {
@@ -49,7 +49,9 @@ class SecurityInfo extends StatelessWidget {
               security: security,
               securityType: securityType,
             ),
-            Summary(),
+            Summary(
+              security: security,
+            ),
             OrderBook(
               security: security,
               securityType: securityType,

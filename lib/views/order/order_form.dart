@@ -13,8 +13,9 @@ import '../ui/number_currency.dart';
 
 class OrderForm extends StatefulWidget {
   final Security security;
+  final double price;
 
-  OrderForm({@required this.security});
+  OrderForm({@required this.security, this.price});
 
   @override
   _OrderFormState createState() => _OrderFormState();
@@ -33,7 +34,7 @@ class _OrderFormState extends State<OrderForm> {
       name: widget.security.name, // todo remove
       type: OrderType.limit,
       qty: 1,
-      price: widget.security.last
+      price: widget.price == null ? widget.security.last : widget.price
     );
     super.initState();
   }

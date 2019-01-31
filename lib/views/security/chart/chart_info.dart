@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'chart.dart';
-import 'add_order.dart';
-import '../../models/security.dart';
-import '../../models/candle.dart';
-import '../../connectors/connector.dart';
-import '../../connectors/connector_factory.dart';
-import '../order/order.dart';
-import '../ui/flex_future_builder.dart';
+import '../add_order.dart';
+import '../../../models/security.dart';
+import '../../../models/candle.dart';
+import '../../../connectors/connector.dart';
+import '../../../connectors/connector_factory.dart';
+import '../../order/order.dart';
+import '../../ui/flex_future_builder.dart';
 
 class ChartInfo extends StatefulWidget {
   final Security security;
