@@ -19,10 +19,10 @@ class AddOrder extends StatelessWidget {
           minWidth: double.infinity,
           child: Padding(
             padding: EdgeInsets.all(12),
-            child: Text('ЗАЯВКА', style: TextStyle(fontSize: 16))
+            child: Text('ЗАЯВКА')
           ),
           color: Theme.of(context).primaryColor,
-          textColor: Theme.of(context).primaryTextTheme.button.color,
+          textColor: Colors.white, // TODO fix
           onPressed: onPressed,
         )
       )

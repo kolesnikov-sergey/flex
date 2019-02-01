@@ -11,7 +11,7 @@ class ErrorResult extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('Упс. Что то пошло не так', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text('Упс. Что то пошло не так', style: Theme.of(context).textTheme.title),
         Padding(padding: EdgeInsets.only(top: 20)),
         RaisedButton(
           child: Text('ПОВТОРИТЬ'),

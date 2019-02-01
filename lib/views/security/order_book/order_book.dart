@@ -7,7 +7,6 @@ import '../../../connectors/connector.dart';
 import '../../../connectors/connector_factory.dart';
 import '../../order/order.dart';
 import '../../ui/flex_future_builder.dart';
-import '../../ui/number.dart';
 import 'order_book_box.dart';
 
 class OrderBook extends StatefulWidget {
@@ -66,24 +65,23 @@ class _OrderBookState extends State<OrderBook> {
               child: Row(
                 children: [
                   OrderBookBox(
-                    value: item.buy?.toString(),
+                    value: item.buy,
                     alignment: Alignment.centerLeft,
-                    color: item.buy == null ? null : Colors.pink,
+                    decimals: 0,
+                    color: item.buy == null ? null : Colors.green,
                     widthFactor: item.buy == null ? 0 : item.buy / maxBuy,
                   ),
                   OrderBookBox(
-                    value: item.price.toString(),
+                    value: item.price,
                     alignment: Alignment.center,
+                    decimals: widget.security.decimals,
                     border: true,
-                    child: Number(
-                      decimals: widget.security.decimals,
-                      value: item.price,
-                    ),
                   ),
                   OrderBookBox(
-                    value: item.sell?.toString(),
+                    value: item.sell,
                     alignment: Alignment.centerRight,
-                    color: item.sell == null ? null : Colors.green,
+                    decimals: 0,
+                    color: item.sell == null ? null : Colors.pink,
                     widthFactor: item.sell == null ? 0 : item.sell / maxSell,
                   )
                 ]

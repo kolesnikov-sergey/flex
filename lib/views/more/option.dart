@@ -13,9 +13,7 @@ class Option extends StatelessWidget {
       leading: Icon(icon, color: Theme.of(context).accentColor),
       title: Text(
         text,
-        style: TextStyle(
-          fontWeight: FontWeight.bold
-        )
+        style: Theme.of(context).textTheme.body2
       ),
       trailing: trailing,
     );

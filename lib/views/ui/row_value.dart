@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class RowValue extends StatelessWidget {
   final String label;
@@ -11,7 +11,7 @@ class RowValue extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(label, style: Theme.of(context).textTheme.body2),
         value
       ]
     );

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../../ui/number.dart';
+
 class OrderBookBox extends StatelessWidget {
-  final String value;
+  final num value;
   final Alignment alignment;
+  final int decimals;
   final Color color;
   final double widthFactor;
   final bool border;
-  final Widget child;
 
   OrderBookBox({
     @required this.value,
     @required this.alignment,
+    @required this.decimals,
     this.color,
-    this.child,
     this.widthFactor = 0,
     this.border = false
   });
@@ -44,7 +46,13 @@ class OrderBookBox extends StatelessWidget {
                 bottom: BorderSide(color: Colors.grey, width: 0.3),
               ),
             ),
-            child: child ?? Text(value ?? '-', style: TextStyle(fontWeight: FontWeight.bold))
+            child: value == null
+              ? Text('-')
+              : Number(
+                decimals: decimals,
+                value: value,
+                style: Theme.of(context).textTheme.body2,
+            ),
           )
 
         ],

@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import '../../tools/currency_symbol.dart';
 
 class NumberCurrency extends StatelessWidget {
-  final double value;
+  final num value;
   final String currency;
   final int decimals;
   final String prefix;

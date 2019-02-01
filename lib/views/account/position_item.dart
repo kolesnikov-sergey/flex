@@ -16,7 +16,7 @@ class _PositionItemState extends State<PositionItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(widget.position.name, style: TextStyle(fontWeight: FontWeight.bold)),
+      title: Text(widget.position.name, style: Theme.of(context).textTheme.body2),
       subtitle: Text(widget.position.id),
       trailing: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +24,7 @@ class _PositionItemState extends State<PositionItem> {
         children: <Widget>[
           NumberCurrency(
             currency: 'шт',
-            value: widget.position.qty.toDouble(),
+            value: widget.position.qty,
             decimals: 0,
             textAlign: TextAlign.start,
           ),
@@ -32,7 +32,7 @@ class _PositionItemState extends State<PositionItem> {
             currency: 'RUB',
             value: 123,
             textAlign: TextAlign.start,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.body2,
           )
         ],
       )

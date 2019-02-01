@@ -21,7 +21,7 @@ class TradingApp extends StatelessWidget {
         brightness: brightness,
         primaryColor: brightness == Brightness.dark ? Colors.black : primaryColor,
         toggleableActiveColor: primaryColor,
-        buttonColor: primaryColor
+        buttonColor: primaryColor,
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(

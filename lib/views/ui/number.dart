@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Number extends StatelessWidget {
-  final double value;
+  final num value;
   final int decimals;
   final String prefix;
   final TextStyle style;

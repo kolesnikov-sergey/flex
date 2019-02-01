@@ -125,7 +125,7 @@ class _OrderFormState extends State<OrderForm> {
                 value: widget.security.lotSize * _orderData.qty * (_orderData.type == OrderType.market ? widget.security.last : _orderData.price),
                 currency: widget.security.currency,
                 decimals: widget.security.decimals,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.body2,
               ),
           ),
           Padding(padding: EdgeInsets.only(top: 20)),

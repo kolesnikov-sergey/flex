@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'add_order.dart';
 import '../../models/security.dart';
+import '../order/order.dart';
 import '../ui/row_value.dart';
 import '../ui/number_currency.dart';
 
@@ -61,7 +62,7 @@ class _SummaryState extends State<Summary> {
                 RowValue(
                   label: 'Объем торгов',
                   value: NumberCurrency(
-                    value: widget.security.valtoday.toDouble(),
+                    value: widget.security.valtoday,
                     currency: widget.security.currency,
                     decimals: 0,
                   ),
@@ -70,7 +71,11 @@ class _SummaryState extends State<Summary> {
             ),
           ),
         ),
-        AddOrder(onPressed: (){})
+        AddOrder(onPressed: () {
+          Navigator.push(context, new MaterialPageRoute(
+            builder: (BuildContext context) => Order(security: widget.security)
+          ));
+        })
       ],
     );
   }

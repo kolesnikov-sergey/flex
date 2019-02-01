@@ -27,7 +27,7 @@ class _QuotesFullState extends State<QuotesFull> {
         key: ValueKey('empty'),
         appBar: AppBar(),
         body: Center(
-          child: Text('Выберите инструмент'),
+          child: Text('Выберите инструмент', style: Theme.of(context).textTheme.display1),
         )
       ) 
       : SecurityInfo(

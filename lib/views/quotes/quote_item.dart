@@ -96,7 +96,7 @@ class _QuoteItemState extends State<QuoteItem> {
                   currency: _getCurrency(),
                   decimals: widget.security.decimals,
                   textAlign: TextAlign.end,
-                  style: TextStyle(fontWeight: FontWeight.bold)
+                  style: Theme.of(context).textTheme.body2
                 ),
               ),
               AnimatedSwitcher(
