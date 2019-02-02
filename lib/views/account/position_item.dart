@@ -16,7 +16,7 @@ class _PositionItemState extends State<PositionItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(widget.position.name, style: Theme.of(context).textTheme.body2),
+      title: Text(widget.position.name),
       subtitle: Text(widget.position.id),
       trailing: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

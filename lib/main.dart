@@ -15,7 +15,7 @@ class TradingApp extends StatelessWidget {
     final primaryColor = Color(0xFF1976d2);
 
     return new DynamicTheme(
-      defaultBrightness: Brightness.light,
+      defaultBrightness: Brightness.dark,
       data: (brightness) => new ThemeData(
         accentColor: primaryColor,
         brightness: brightness,
