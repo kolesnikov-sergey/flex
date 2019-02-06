@@ -69,7 +69,7 @@ class _QuoteItemState extends State<QuoteItem> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: tap,
-      title: Text(widget.security.name),
+      title: Text(widget.security.name, style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(widget.security.id),
       selected: widget.selected,
       trailing: StreamBuilder<Quote>(

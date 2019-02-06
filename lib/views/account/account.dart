@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../ui/flex_dropdown.dart';
+import '../ui/number_currency.dart';
 import 'positions.dart';
 import '../../models/market.dart';
 
@@ -29,7 +30,36 @@ class Account extends StatelessWidget {
             items: markets,
             onSelected: (market) {},
           ),
-          bottom: TabBar(tabs: tabs),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(70),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 17),
+                  child: Row(
+                    mainAxisAlignment: Theme.of(context).platform == TargetPlatform.iOS
+                      ? MainAxisAlignment.center :  MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      NumberCurrency(
+                        value: 100000.34,
+                        currency: 'RUB',
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                      Padding(padding: EdgeInsets.only(left: 10)),
+                      NumberCurrency(
+                        value: 100.78,
+                        currency: 'RUB',
+                        prefix: '+',
+                        style: Theme.of(context).textTheme.subtitle.apply(color: Colors.green),
+                      ),
+                    ],
+                  ),
+                ),
+                TabBar(tabs: tabs)
+              ],
+            ),
+          ),
         ),
         body: TabBarView(
           children: [

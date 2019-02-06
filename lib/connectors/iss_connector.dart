@@ -142,7 +142,7 @@ class IssConnector implements Connector {
     final securities = await _get(uri, _parseSecurities);
     final security = securities[0];
 
-    return Iterable<int>.generate(20, (i) => 10 - i)
+    return Iterable<int>.generate(16, (i) => 8 - i)
       .where((i) => i != 0)
       .map((i) => OrderBookItem(
         price: security.last + i * security.minStep,

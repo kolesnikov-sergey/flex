@@ -60,6 +60,28 @@ class _SummaryState extends State<Summary> {
                 Divider(),
                 Padding(padding: EdgeInsets.only(top: 10)),
                 RowValue(
+                  label: 'Покупка',
+                  value: NumberCurrency(
+                    value: widget.security.last, // TODO fix
+                    currency: widget.security.currency,
+                    decimals: widget.security.decimals,
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Divider(),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                RowValue(
+                  label: 'Продажа',
+                  value: NumberCurrency(
+                    value: widget.security.last, // TODO fix
+                    currency: widget.security.currency,
+                    decimals: widget.security.decimals,
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Divider(),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                RowValue(
                   label: 'Объем торгов',
                   value: NumberCurrency(
                     value: widget.security.valtoday,
