@@ -11,6 +11,8 @@ class SearchTextField extends StatelessWidget {
       controller: controller,
       decoration: const InputDecoration(
         isDense: true,
+        filled: true,
+        fillColor: Colors.white12,
         hintText: 'Наименование или ISIN',
         suffixIcon: Icon(Icons.search),
         border: OutlineInputBorder()

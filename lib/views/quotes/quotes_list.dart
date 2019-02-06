@@ -86,14 +86,17 @@ class _State extends State<QuotesList> {
           initialValue: securityType,
           items: securityTypes,
           onSelected: _changeSecurityType,
-        )
-      ),
-      body: Column(
-        children: <Widget>[
-          Padding(
+        ),
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Padding(
             padding: EdgeInsets.all(10),
             child: SearchTextField(controller: _searchController),
           ),
+        ),
+      ),
+      body: Column(
+        children: <Widget>[
           Flexible(
             child: FlexFutureBuilder<List<Security>>(
               future: _securities,

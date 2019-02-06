@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'buy_sell_info.dart';
 import 'order_form.dart';
 import '../../models/security.dart';
 import '../../models/order_data.dart';
@@ -25,7 +26,15 @@ class Order extends StatelessWidget {
         appBar: AppBar(
           leading: BackButton(),
           title: Text(security.name),
-          bottom: TabBar(tabs: tabs),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(120),
+            child: Column(
+              children: [
+                BuySellInfo(security: security),
+                TabBar(tabs: tabs)
+              ],
+            ),
+          ),
         ),
         body: Center(
           child: ConstrainedBox(
