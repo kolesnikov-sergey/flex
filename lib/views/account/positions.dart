@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../connectors/connector.dart';
 import '../../connectors/connector_factory.dart';
 import '../../models/position.dart';
+import '../ui/search_text_field.dart';
 import 'position_item.dart';
 
 final fakePositions = [
@@ -23,6 +24,8 @@ class _PositionsState extends State<Positions> {
   Stream<Position> stream;
   List<Position> positions = List();
   StreamSubscription subscription;
+  TextEditingController searchController = new TextEditingController();
+  String _search = '';
 
   @override
   void initState() {
@@ -32,6 +35,7 @@ class _PositionsState extends State<Positions> {
           positions.add(pos);         
         });
       });
+    searchController.addListener(changeSearch);
     super.initState();
   }
 
@@ -39,20 +43,47 @@ class _PositionsState extends State<Positions> {
   void dispose() {
     connector.unsubscribePositions();
     subscription.cancel();
+    searchController.dispose();
     super.dispose();
+  }
+
+  void changeSearch() {
+    setState(() {
+        _search = searchController.text;
+    });
+  }
+
+  List<Position> filterPositions(List<Position> list) {
+    return list
+      .where((item) => item.name.toLowerCase().contains(_search?.toLowerCase())
+        || item.id.toLowerCase().contains(_search?.toLowerCase())
+      )
+    .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: positions.length,
-      itemBuilder: (context, index) => PositionItem(
-        position: positions[index],
-      ),
-      separatorBuilder: (context, index) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Divider(height: 1)
-      ),
+    final items = filterPositions(positions);
+
+    return Column(
+      children: [
+        Padding(
+            padding: EdgeInsets.all(10),
+            child: SearchTextField(controller: searchController),
+        ),
+        Flexible(
+          child: ListView.separated(
+            itemCount: items.length,
+            itemBuilder: (context, index) => PositionItem(
+              position: items[index],
+            ),
+            separatorBuilder: (context, index) => Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Divider(height: 1)
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

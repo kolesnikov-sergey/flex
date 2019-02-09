@@ -17,15 +17,46 @@ class Chart extends StatelessWidget {
       child: charts.TimeSeriesChart(
         _createData(context),
         animate: true,
+        defaultInteractions: false,
+        animationDuration: Duration(milliseconds: 10),
         behaviors: [
-          charts.SlidingViewport(),
           charts.PanAndZoomBehavior(),
         ],
         domainAxis: charts.DateTimeAxisSpec(
-          viewport: charts.DateTimeExtents(start: candles[max(candles.length - 20, 0)].begin, end: candles[candles.length - 1].begin)
+          tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
+            year: charts.TimeFormatterSpec(
+              format: 'yyyy',
+              transitionFormat: 'yyyy'
+            ),
+            month: charts.TimeFormatterSpec(
+              format: 'MMMM', transitionFormat: 'MMMM'
+            )
+          ),
+          viewport: candles.length > 0
+            ? charts.DateTimeExtents(start: candles[max(candles.length - 20, 0)].begin, end: candles[candles.length - 1].begin)
+            : null,
+          renderSpec: charts.GridlineRendererSpec(
+            labelStyle: charts.TextStyleSpec(color: Theme.of(context).brightness == Brightness.dark
+              ? charts.MaterialPalette.white
+              : charts.MaterialPalette.black,
+            ),
+            lineStyle: charts.LineStyleSpec(
+              thickness: 0
+            )
+          )
         ),
+        
         primaryMeasureAxis: charts.NumericAxisSpec(
-          tickProviderSpec: charts.BasicNumericTickProviderSpec(zeroBound: false)
+          tickProviderSpec: charts.BasicNumericTickProviderSpec(zeroBound: false),
+          renderSpec: charts.GridlineRendererSpec(
+            labelStyle: charts.TextStyleSpec(color: Theme.of(context).brightness == Brightness.dark
+              ? charts.MaterialPalette.white
+              : charts.MaterialPalette.black,
+            ),
+            lineStyle: charts.LineStyleSpec(
+              thickness: 0
+            )
+          )
         )
       ),
     );

@@ -17,12 +17,13 @@ class TradingApp extends StatelessWidget {
     return new DynamicTheme(
       defaultBrightness: Brightness.dark,
       data: (brightness) => new ThemeData(
-        // platform: TargetPlatform.android,
+        platform: TargetPlatform.android,
         accentColor: primaryColor,
         brightness: brightness,
         primaryColor: brightness == Brightness.dark ? Colors.black : primaryColor,
         toggleableActiveColor: primaryColor,
         buttonColor: primaryColor,
+        textTheme: TextTheme().apply()
       ),
       themedWidgetBuilder: (context, theme) {
         return MaterialApp(

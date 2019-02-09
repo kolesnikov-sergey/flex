@@ -29,6 +29,7 @@ class Order extends StatelessWidget {
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(120),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 BuySellInfo(security: security),
                 TabBar(tabs: tabs)
@@ -36,29 +37,24 @@ class Order extends StatelessWidget {
             ),
           ),
         ),
-        body: Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 500),
-            child: TabBarView(
-              children: [
-                OrderForm(
-                  security: security,
-                  orderType: OrderType.limit,
-                  price: price
-                ),
-                OrderForm(
-                  security: security,
-                  orderType: OrderType.market,
-                  price: price
-                ),
-                OrderForm(
-                  security: security,
-                  orderType: OrderType.stop,
-                  price: price
-                ),
-              ],
-            )
-          )
+        body: TabBarView(
+          children: [
+            OrderForm(
+              security: security,
+              orderType: OrderType.limit,
+              price: price
+            ),
+            OrderForm(
+              security: security,
+              orderType: OrderType.market,
+              price: price
+            ),
+            OrderForm(
+              security: security,
+              orderType: OrderType.stop,
+              price: price
+            ),
+          ],
         ) 
       ),
     );

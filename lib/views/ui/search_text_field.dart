@@ -9,11 +9,10 @@ class SearchTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      scrollPadding: EdgeInsets.all(10),
       decoration: const InputDecoration(
         isDense: true,
-        filled: true,
-        fillColor: Colors.white12,
-        hintText: 'Наименование или ISIN',
+        hintText: 'Поиск',
         suffixIcon: Icon(Icons.search),
         border: OutlineInputBorder()
       )

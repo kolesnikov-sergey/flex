@@ -107,8 +107,7 @@ class IssConnector implements Connector {
     final query = {
       'iss.meta': 'off',
       'iss.json': 'extended',
-      'from': '2018-01-01',
-      'till': '2018-12-30',
+      'from': '2016-01-01',
       'interval': '7'
     };
 

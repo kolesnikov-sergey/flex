@@ -52,90 +52,95 @@ class _OrderFormState extends State<OrderForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      child: Form(
-        key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            NumberTextField(
-              label: 'Количество',
-              placeholder: 'Количество',
-              suffixText: 'лот',
-              initialValue: _orderData.qty.toDouble(),
-              onSave: (value) {
-                _orderData.qty = value.toInt();
-              },
-              onChange: (value) {
-                setState(() {
-                  _orderData.qty = value.toInt();           
-                });
-              },
-              validator: (value) {
-                if(value == null) {
-                  return 'Обязательное поле';
-                }
-                final parsed = int.tryParse(value);
-                if(parsed == null || parsed < 0 || parsed > 100000) {
-                  return 'Введите число от 0 до 100 000';
-                }
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 500),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: <Widget>[
+                NumberTextField(
+                  label: 'Количество',
+                  placeholder: 'Количество',
+                  suffixText: 'лот',
+                  initialValue: _orderData.qty.toDouble(),
+                  onSave: (value) {
+                    _orderData.qty = value.toInt();
+                  },
+                  onChange: (value) {
+                    setState(() {
+                      _orderData.qty = value.toInt();           
+                    });
+                  },
+                  validator: (value) {
+                    if(value == null) {
+                      return 'Обязательное поле';
+                    }
+                    final parsed = int.tryParse(value);
+                    if(parsed == null || parsed < 0 || parsed > 100000) {
+                      return 'Введите число от 0 до 100 000';
+                    }
 
-                return null;
-              },
-            ),
-            Padding(padding: EdgeInsets.only(top: 20)),
-            Visibility(
-              visible: widget.orderType != OrderType.market,
-              child: NumberTextField(
-              label: 'Цена',
-              placeholder: 'Цена',
-              suffixText: CurrencySymbol.getCurrencySymbol('RUB'),
-              initialValue: _orderData.price,
-              step: widget.security.minStep,
-              decimals: widget.security.decimals,
-              onSave: (value) {
-                _orderData.price = value;
-              },
-              onChange: (value) {
-                setState(() {
-                  _orderData.price = value;           
-                });
-              },
-              validator: (value) {
-                if(value == null) {
-                  return 'Обязательное поле';
-                }
-                final parsed = double.tryParse(value);
-                if(parsed == null || parsed < 0 || parsed > 1000000) {
-                  return 'Введите число от 0 до 1 000 000';
-                }
-
-                return null;
-              },
-            ),
-            ),
-            Padding(padding: EdgeInsets.only(top: 20)),
-            RowValue(
-                label: 'Стоимость',
-                value: NumberCurrency(
-                  value: widget.security.lotSize * _orderData.qty * (_orderData.type == OrderType.market ? widget.security.last : _orderData.price),
-                  currency: widget.security.currency,
-                  decimals: widget.security.decimals,
-                  style: Theme.of(context).textTheme.body2,
+                    return null;
+                  },
                 ),
+                Padding(padding: EdgeInsets.only(top: 20)),
+                Visibility(
+                  visible: widget.orderType != OrderType.market,
+                  child: NumberTextField(
+                  label: 'Цена',
+                  placeholder: 'Цена',
+                  suffixText: CurrencySymbol.getCurrencySymbol('RUB'),
+                  initialValue: _orderData.price,
+                  step: widget.security.minStep,
+                  decimals: widget.security.decimals,
+                  onSave: (value) {
+                    _orderData.price = value;
+                  },
+                  onChange: (value) {
+                    setState(() {
+                      _orderData.price = value;           
+                    });
+                  },
+                  validator: (value) {
+                    if(value == null) {
+                      return 'Обязательное поле';
+                    }
+                    final parsed = double.tryParse(value);
+                    if(parsed == null || parsed < 0 || parsed > 1000000) {
+                      return 'Введите число от 0 до 1 000 000';
+                    }
+
+                    return null;
+                  },
+                ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 20)),
+                RowValue(
+                    label: 'Стоимость',
+                    value: NumberCurrency(
+                      value: widget.security.lotSize * _orderData.qty * (_orderData.type == OrderType.market ? widget.security.last : _orderData.price),
+                      currency: widget.security.currency,
+                      decimals: widget.security.decimals,
+                      style: Theme.of(context).textTheme.body2,
+                    ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 20)),
+                OrderSubmit(
+                  onBuy: () {
+                    _orderData.side = OrderSide.buy;
+                    submit();
+                  },
+                  onSell: () {
+                    _orderData.side = OrderSide.sell;
+                    submit();
+                  }
+                )
+              ],
             ),
-            Padding(padding: EdgeInsets.only(top: 20)),
-            OrderSubmit(
-              onBuy: () {
-                _orderData.side = OrderSide.buy;
-                submit();
-              },
-              onSell: () {
-                _orderData.side = OrderSide.sell;
-                submit();
-              }
-            )
-          ],
+          ),
         ),
       ),
     );

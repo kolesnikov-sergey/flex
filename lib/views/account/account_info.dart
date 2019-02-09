@@ -10,12 +10,11 @@ class AccountInfo extends StatelessWidget {
         mainAxisAlignment: Theme.of(context).platform == TargetPlatform.iOS
           ? MainAxisAlignment.center
           : MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           NumberCurrency(
             value: 100000.34,
             currency: 'RUB',
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.title.apply(color: Colors.white),
           ),
           Padding(padding: EdgeInsets.only(left: 10)),
           NumberCurrency(
@@ -27,8 +26,8 @@ class AccountInfo extends StatelessWidget {
           Padding(padding: EdgeInsets.only(left: 10)),
           IconButton(
             padding: EdgeInsets.all(0),
-            alignment: Alignment.bottomCenter,
             icon: Icon(Icons.info_outline),
+            color: Colors.white,
             onPressed: () {},
           )
         ],

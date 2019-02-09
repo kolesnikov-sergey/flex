@@ -32,8 +32,9 @@ class Account extends StatelessWidget {
             onSelected: (market) {},
           ),
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(110),
+            preferredSize: Size.fromHeight(120),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AccountInfo(),
                 TabBar(tabs: tabs)

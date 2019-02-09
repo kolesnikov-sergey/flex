@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'search_text_field.dart';
+import '../ui/search_text_field.dart';
 import '../ui/flex_dropdown.dart';
 import '../ui/flex_future_builder.dart';
 import '../../models/security.dart';
@@ -86,25 +86,20 @@ class _State extends State<QuotesList> {
           initialValue: securityType,
           items: securityTypes,
           onSelected: _changeSecurityType,
-        ),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(70),
-          child: Padding(
+        )
+      ),
+      body: Column(
+        children: [
+          Padding(
             padding: EdgeInsets.all(10),
             child: SearchTextField(controller: _searchController),
           ),
-        ),
-      ),
-      body: Column(
-        children: <Widget>[
           Flexible(
             child: FlexFutureBuilder<List<Security>>(
               future: _securities,
               builder: (context, snapshot) {
-                final items = _filterSecurities(snapshot.data);
-
                 return QuotesListView(
-                  quotes: items,
+                  quotes: _filterSecurities(snapshot.data),
                   securityType: securityType,
                   onPressed: widget.onPressed,
                   selectedItem: widget.selectedItem
