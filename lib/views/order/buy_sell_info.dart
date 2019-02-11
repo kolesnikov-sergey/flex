@@ -26,7 +26,7 @@ class BuySellInfo extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.only(left: 10)),
                 NumberCurrency(
-                  value: security.last, // TODO fix
+                  value: security.bid,
                   currency: security.currency,
                   style: Theme.of(context).textTheme.subtitle.apply(color: Colors.pink),
                 ),
@@ -43,8 +43,8 @@ class BuySellInfo extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.only(left: 10)),
                 NumberCurrency(
-                  value: security.last,
-                  currency: security.currency, // TODO fix
+                  value: security.offer,
+                  currency: security.currency,
                   style: Theme.of(context).textTheme.subtitle.apply(color: Colors.green),
                 ),
               ],

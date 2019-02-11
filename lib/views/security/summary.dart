@@ -62,7 +62,7 @@ class _SummaryState extends State<Summary> {
                 RowValue(
                   label: 'Покупка',
                   value: NumberCurrency(
-                    value: widget.security.last, // TODO fix
+                    value: widget.security.bid,
                     currency: widget.security.currency,
                     decimals: widget.security.decimals,
                   ),
@@ -73,7 +73,7 @@ class _SummaryState extends State<Summary> {
                 RowValue(
                   label: 'Продажа',
                   value: NumberCurrency(
-                    value: widget.security.last, // TODO fix
+                    value: widget.security.offer,
                     currency: widget.security.currency,
                     decimals: widget.security.decimals,
                   ),

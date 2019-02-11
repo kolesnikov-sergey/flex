@@ -29,7 +29,7 @@ class Chart extends StatelessWidget {
               transitionFormat: 'yyyy'
             ),
             month: charts.TimeFormatterSpec(
-              format: 'MMMM', transitionFormat: 'MMMM'
+              format: 'MMMM', transitionFormat: 'yyyy MMMM'
             )
           ),
           viewport: candles.length > 0

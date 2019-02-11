@@ -14,7 +14,7 @@ class Quote {
     @required this.bid,
     @required this.offer,
     @required this.spread,
-    @required this.change
+    @required this.change,
   });
 
   factory Quote.fromJson(Map<String, dynamic> json) {
@@ -24,7 +24,7 @@ class Quote {
       bid: json['BID']?.toDouble() ?? 0,
       offer: json['OFFER']?.toDouble() ?? 0,
       spread: json['SPREAD']?.toDouble() ?? 0,
-      change: json['CHANGE']?.toDouble() ?? 0
+      change: json['CHANGE']?.toDouble() ?? 0,
     );
   }
 }

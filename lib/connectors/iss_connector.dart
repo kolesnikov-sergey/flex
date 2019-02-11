@@ -47,7 +47,7 @@ class IssConnector implements Connector {
       'sort_column': 'VALTODAY',
       'sort_order': 'desc',
       'securities.columns': 'SECID,SHORTNAME,DECIMALS,MINSTEP,CURRENCYID,LOTSIZE,FACEVALUE',
-      'marketdata.columns': 'OPEN,LAST,HIGH,LOW,VALTODAY,CHANGE'
+      'marketdata.columns': 'OPEN,LAST,HIGH,LOW,BID,OFFER,VALTODAY,CHANGE'
     };
 
     final uri = Uri.https(

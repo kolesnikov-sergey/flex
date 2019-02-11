@@ -7,6 +7,8 @@ class Security {
   final double last;
   final double high;
   final double low;
+  final double bid;
+  final double offer;
   final int valtoday;
   final double change;
   final int decimals;
@@ -22,6 +24,8 @@ class Security {
     @required this.last,
     @required this.high,
     @required this.low,
+    @required this.bid,
+    @required this.offer,
     @required this.valtoday,
     @required this.change,
     @required this.decimals,
@@ -39,6 +43,8 @@ class Security {
       last: json['marketdata']['LAST']?.toDouble() ?? 0,
       high: json['marketdata']['HIGH']?.toDouble() ?? 0,
       low: json['marketdata']['LOW']?.toDouble() ?? 0,
+      bid: json['marketdata']['BID']?.toDouble() ?? 0,
+      offer: json['marketdata']['OFFER']?.toDouble() ?? 0,
       valtoday: json['marketdata']['VALTODAY']?.toInt() ?? 0,
       change: json['marketdata']['CHANGE']?.toDouble() ?? 0,
       decimals: json['DECIMALS'],

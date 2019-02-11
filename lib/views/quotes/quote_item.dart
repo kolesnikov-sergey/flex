@@ -7,6 +7,7 @@ import '../../models/quote.dart';
 import '../../connectors/connector.dart';
 import '../../connectors/connector_factory.dart';
 import '../ui/number_currency.dart';
+import '../ui/number_currency_and_percent.dart';
 
 typedef void SecurityCallback(Security security, SecurityType type);
 
@@ -101,9 +102,10 @@ class _QuoteItemState extends State<QuoteItem> {
               ),
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
-                child: NumberCurrency(
+                child: NumberCurrencyAndPercent(
                   key: ValueKey(change),
                   value: change,
+                  valuePercent: change / widget.security.open,
                   currency: _getCurrency(),
                   decimals: widget.security.decimals,
                   prefix: change != null && change > 0 ? '+': '',
