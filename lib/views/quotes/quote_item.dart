@@ -85,9 +85,7 @@ class _QuoteItemState extends State<QuoteItem> {
           }
 
           return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            textDirection: TextDirection.rtl,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
@@ -99,6 +97,9 @@ class _QuoteItemState extends State<QuoteItem> {
                   textAlign: TextAlign.end,
                   style: Theme.of(context).textTheme.body2
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 2),
               ),
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),

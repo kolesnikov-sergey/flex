@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../ui/flex_dropdown.dart';
-import '../ui/number_currency.dart';
 import 'account_info.dart';
 import 'positions.dart';
+import 'orders.dart';
+import 'trades.dart';
 import '../../models/market.dart';
 
 class Account extends StatelessWidget {
@@ -45,12 +45,8 @@ class Account extends StatelessWidget {
         body: TabBarView(
           children: [
             Positions(),
-            Center(
-              child: Text('Заявки'),
-            ),
-            Center(
-              child: Text('Сделки'),
-            )
+            Orders(),
+            Trades()
           ],
         ),
       ),

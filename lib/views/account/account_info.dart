@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'account_detail.dart';
 import '../ui/number_currency.dart';
 
 class AccountInfo extends StatelessWidget {
@@ -28,7 +30,11 @@ class AccountInfo extends StatelessWidget {
             padding: EdgeInsets.all(0),
             icon: Icon(Icons.info_outline),
             color: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, new MaterialPageRoute(
+                builder: (BuildContext context) => AccountDetail()
+              ));
+            },
           )
         ],
       ),

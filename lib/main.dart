@@ -9,7 +9,7 @@ import 'views/account/account.dart';
 import 'views/more/more.dart';
 
 void main() {
-  final appSecret ='1671ee3c-8c10-4896-b622-30428d4648f2';
+  final appSecret = '1671ee3c-8c10-4896-b622-30428d4648f2';
 
   AppCenter.start(appSecret, [AppCenterAnalytics.id, AppCenterCrashes.id]);
   runApp(new TradingApp());
