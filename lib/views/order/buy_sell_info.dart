@@ -22,7 +22,7 @@ class BuySellInfo extends StatelessWidget {
               children: [
                 Text(
                   'Покупка:',
-                  style: Theme.of(context).textTheme.subhead.apply(color: Colors.white),
+                  style: Theme.of(context).textTheme.subhead,
                 ),
                 Padding(padding: EdgeInsets.only(left: 10)),
                 NumberCurrency(
@@ -39,7 +39,7 @@ class BuySellInfo extends StatelessWidget {
               children: [
                 Text(
                   'Продажа:',
-                  style: Theme.of(context).textTheme.subhead.apply(color: Colors.white),
+                  style: Theme.of(context).textTheme.subhead,
                 ),
                 Padding(padding: EdgeInsets.only(left: 10)),
                 NumberCurrency(

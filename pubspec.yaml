@@ -18,7 +18,6 @@ dependencies:
 
   http: ^0.12.0
   charts_flutter: ^0.6.0
-  dynamic_theme: ^1.0.1
   appcenter: ^0.2.1
   appcenter_analytics: ^0.2.1
   appcenter_crashes: ^0.2.1

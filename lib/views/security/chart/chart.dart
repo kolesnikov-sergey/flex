@@ -20,6 +20,7 @@ class Chart extends StatelessWidget {
         defaultInteractions: false,
         animationDuration: Duration(milliseconds: 10),
         behaviors: [
+          charts.SlidingViewport(),
           charts.PanAndZoomBehavior(),
         ],
         domainAxis: charts.DateTimeAxisSpec(
@@ -33,13 +34,13 @@ class Chart extends StatelessWidget {
             )
           ),
           viewport: candles.length > 0
-            ? charts.DateTimeExtents(start: candles[max(candles.length - 20, 0)].begin, end: candles[candles.length - 1].begin)
+            ? charts.DateTimeExtents(
+                start: candles[max(candles.length - 20, 0)].begin,
+                end: candles[candles.length - 1].begin
+              )
             : null,
           renderSpec: charts.GridlineRendererSpec(
-            labelStyle: charts.TextStyleSpec(color: Theme.of(context).brightness == Brightness.dark
-              ? charts.MaterialPalette.white
-              : charts.MaterialPalette.black,
-            ),
+            labelStyle: charts.TextStyleSpec(color: charts.MaterialPalette.white),
             lineStyle: charts.LineStyleSpec(
               thickness: 0
             )
@@ -49,10 +50,7 @@ class Chart extends StatelessWidget {
         primaryMeasureAxis: charts.NumericAxisSpec(
           tickProviderSpec: charts.BasicNumericTickProviderSpec(zeroBound: false),
           renderSpec: charts.GridlineRendererSpec(
-            labelStyle: charts.TextStyleSpec(color: Theme.of(context).brightness == Brightness.dark
-              ? charts.MaterialPalette.white
-              : charts.MaterialPalette.black,
-            ),
+            labelStyle: charts.TextStyleSpec(color: charts.MaterialPalette.white),
             lineStyle: charts.LineStyleSpec(
               thickness: 0
             )
@@ -66,9 +64,7 @@ class Chart extends StatelessWidget {
     return [
       new charts.Series<Candle, DateTime>(
         id: 'Trade',
-        colorFn: (_, __) => Theme.of(context).brightness == Brightness.dark
-          ? charts.MaterialPalette.blue.shadeDefault
-          : charts.MaterialPalette.black,
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (Candle candle, _) => candle.begin,
         measureFn: (Candle candle, _) => candle.open,
         data: candles,

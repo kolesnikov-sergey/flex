@@ -16,7 +16,7 @@ class AccountInfo extends StatelessWidget {
           NumberCurrency(
             value: 100000.34,
             currency: 'RUB',
-            style: Theme.of(context).textTheme.title.apply(color: Colors.white),
+            style: Theme.of(context).textTheme.title,
           ),
           Padding(padding: EdgeInsets.only(left: 10)),
           NumberCurrency(

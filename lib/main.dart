@@ -1,4 +1,3 @@
-import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:appcenter/appcenter.dart';
 import 'package:appcenter_analytics/appcenter_analytics.dart';
@@ -18,29 +17,20 @@ void main() {
 class TradingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Color(0xFF1976d2);
+    final primaryColor = Colors.blue;
 
-    return new DynamicTheme(
-      defaultBrightness: Brightness.dark,
-      data: (brightness) => new ThemeData(
-        platform: TargetPlatform.android,
+    return MaterialApp(
+      title: 'flex',
+      theme: ThemeData(
         accentColor: primaryColor,
-        brightness: brightness,
-        primaryColor: brightness == Brightness.dark ? Colors.black : primaryColor,
+        brightness: Brightness.dark,
         toggleableActiveColor: primaryColor,
-        buttonColor: primaryColor,
-        textTheme: TextTheme().apply()
+        buttonColor: primaryColor
       ),
-      themedWidgetBuilder: (context, theme) {
-        return MaterialApp(
-          title: 'flex',
-          theme: theme,
-          initialRoute: '/',
-          routes: {
-            '/' : (context) => Home()
-          },
-        );
-      }
+      initialRoute: '/',
+      routes: {
+        '/' : (context) => Home()
+      },
     );
   }
 }
