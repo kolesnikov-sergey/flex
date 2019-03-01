@@ -34,12 +34,7 @@ class _NumberTextFieldState extends State<NumberTextField> {
   void initState() {
     controller = TextEditingController(text: widget.initialValue?.toStringAsFixed(widget.decimals));
     if(widget.onChange != null) {
-      controller.addListener(() {
-        final val = double.tryParse(controller.text);
-        if(val != null) {
-          widget.onChange(val);
-        }
-      });
+      controller.addListener(onEdit);
     }
     super.initState();
   }
@@ -48,6 +43,13 @@ class _NumberTextFieldState extends State<NumberTextField> {
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+
+  void onEdit() {
+    final val = double.tryParse(controller.text);
+    if(val != null) {
+      widget.onChange(val);
+    }
   }
 
   down() => change(-(widget.step));

@@ -13,7 +13,7 @@ class _Button extends StatelessWidget {
       width: 150,
       child: RaisedButton(
         color: color,
-        child: Text(text, style: TextStyle(color: Colors.white)), // TODO fix
+        child: Text(text),
         onPressed: onPressed,
       ),
     );

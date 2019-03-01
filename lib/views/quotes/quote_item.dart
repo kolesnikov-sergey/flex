@@ -43,7 +43,7 @@ class _QuoteItemState extends State<QuoteItem> {
     });
   }
 
-  //todo не уверен что это должно быть здесь
+  // TODO не уверен что это должно быть здесь
   String _getCurrency() {
     switch(widget.securityType) {
       case SecurityType.bonds:

@@ -29,7 +29,6 @@ class Account extends StatelessWidget {
           title: FlexDropdown(
             initialValue: Market.stock,
             items: markets,
-            onSelected: (market) {},
           ),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(120),

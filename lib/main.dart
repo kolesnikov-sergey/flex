@@ -17,15 +17,16 @@ void main() {
 class TradingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Colors.blue;
+    final accentColor = Colors.blue;
 
     return MaterialApp(
       title: 'flex',
       theme: ThemeData(
-        accentColor: primaryColor,
+        primaryColor: Colors.black,
+        accentColor: accentColor,
         brightness: Brightness.dark,
-        toggleableActiveColor: primaryColor,
-        buttonColor: primaryColor
+        toggleableActiveColor: accentColor,
+        buttonColor: accentColor
       ),
       initialRoute: '/',
       routes: {
