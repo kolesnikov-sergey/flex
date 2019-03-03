@@ -11,12 +11,14 @@ class AccountDetail extends StatelessWidget {
         leading: BackButton(),
         title: Text('Портфель'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Cirlce(),
-          House(),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Cirlce(),
+            House(),
+          ],
+        ),
       )
     );
   }
@@ -42,7 +44,7 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
     )
     ..addListener(_animate);
 
-    percentageAnimationController.forward();
+    percentageAnimationController.forward(from: 0);
   }
 
   @override
@@ -69,25 +71,23 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return CustomPaint(
+      painter: _CirclePainter(
+        completePercent: percentage
+      ),
       child: Container(
-        height: 200.0,
-        width: 200.0,
-        child: CustomPaint(
-          foregroundPainter: _CirclePainter(
-            completePercent: percentage
+        height: 200,
+        width: 200,
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: RaisedButton(
+            color: Colors.indigo,
+            shape: CircleBorder(),
+            child: Text("Click"),
+            onPressed: _up,
           ),
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: RaisedButton(
-              color: Colors.indigo,
-              shape: CircleBorder(),
-              child: Text("Click"),
-              onPressed: _up,
-            ),
-          ),
-        )
-      )
+        ),
+      ),
     );
   }
 }
@@ -111,7 +111,7 @@ class _CirclePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10;
 
-    final center  = Offset((size.width / 2), size.height / 2);
+    final center  = Offset(size.width / 2, size.height / 2);
     final radius  = max(size.width / 2, size.height / 2);
 
     canvas.drawCircle(
@@ -120,10 +120,10 @@ class _CirclePainter extends CustomPainter {
       line
     );
 
-    final arcAngle = 2 * pi * ((completePercent) / 100);
+    final arcAngle = 2 * pi * completePercent / 100;
 
     canvas.drawArc(
-      Rect.fromCircle(center: center,radius: radius),
+      Rect.fromCircle(center: center, radius: radius),
       -pi / 2,
       arcAngle,
       false,
@@ -174,14 +174,11 @@ class _HouseState extends State<House> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      width: 200,
-      child: CustomPaint(
-        foregroundPainter: _HousePainter(
-          init: houseInit
-        ),
-      )
+    return CustomPaint(
+      size: Size(200, 200),
+      painter: _HousePainter(
+        init: houseInit
+      ),
     );
   }
 }

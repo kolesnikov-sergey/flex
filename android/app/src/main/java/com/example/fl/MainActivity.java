@@ -1,4 +1,4 @@
-package com.flex.flex;
+package com.kolesnikov.flex;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
