@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'number_text_field.dart';
-import 'order_submit.dart';
 import '../ui/row_value.dart';
 import '../../connectors/connector.dart';
 import '../../connectors/connector_factory.dart';
@@ -36,6 +36,7 @@ class _OrderFormState extends State<OrderForm> {
     _orderData = OrderData(
       id: widget.security.id,
       name: widget.security.name, // todo remove
+      side: OrderSide.buy,
       qty: 1,
       price: widget.price == null ? widget.security.last : widget.price
     );
@@ -61,6 +62,21 @@ class _OrderFormState extends State<OrderForm> {
             key: _formKey,
             child: ListView(
               children: <Widget>[
+                CupertinoSegmentedControl<OrderSide>(
+                  children: {
+                    OrderSide.buy: Text('Покупка', style: TextStyle(color: Colors.white)),
+                    OrderSide.sell: Text('Продажа', style: TextStyle(color: Colors.white))
+                  },
+                  unselectedColor: Colors.black12,
+                  selectedColor: Colors.blue,
+                  groupValue: _orderData.side,
+                  onValueChanged: (side) {
+                    setState(() {
+                      _orderData.side = side;
+                    });
+                  },
+                ),
+                Padding(padding: EdgeInsets.only(top: 20)),
                 NumberTextField(
                   label: 'Количество',
                   placeholder: 'Количество',
@@ -90,54 +106,49 @@ class _OrderFormState extends State<OrderForm> {
                 Visibility(
                   visible: widget.orderType != OrderType.market,
                   child: NumberTextField(
-                  label: 'Цена',
-                  placeholder: 'Цена',
-                  suffixText: CurrencySymbol.getCurrencySymbol('RUB'),
-                  initialValue: _orderData.price,
-                  step: widget.security.minStep,
-                  decimals: widget.security.decimals,
-                  onSave: (value) {
-                    _orderData.price = value;
-                  },
-                  onChange: (value) {
-                    setState(() {
-                      _orderData.price = value;           
-                    });
-                  },
-                  validator: (value) {
-                    if(value == null) {
-                      return 'Обязательное поле';
-                    }
-                    final parsed = double.tryParse(value);
-                    if(parsed == null || parsed < 0 || parsed > 1000000) {
-                      return 'Введите число от 0 до 1 000 000';
-                    }
+                    label: 'Цена',
+                    placeholder: 'Цена',
+                    suffixText: CurrencySymbol.getCurrencySymbol('RUB'),
+                    initialValue: _orderData.price,
+                    step: widget.security.minStep,
+                    decimals: widget.security.decimals,
+                    onSave: (value) {
+                      _orderData.price = value;
+                    },
+                    onChange: (value) {
+                      setState(() {
+                        _orderData.price = value;           
+                      });
+                    },
+                    validator: (value) {
+                      if(value == null) {
+                        return 'Обязательное поле';
+                      }
+                      final parsed = double.tryParse(value);
+                      if(parsed == null || parsed < 0 || parsed > 1000000) {
+                        return 'Введите число от 0 до 1 000 000';
+                      }
 
-                    return null;
-                  },
-                ),
+                      return null;
+                    },
+                  ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 20)),
                 RowValue(
-                    label: 'Стоимость',
-                    value: NumberCurrency(
-                      value: widget.security.lotSize * _orderData.qty * (_orderData.type == OrderType.market ? widget.security.last : _orderData.price),
-                      currency: widget.security.currency,
-                      decimals: widget.security.decimals,
-                      style: Theme.of(context).textTheme.body2,
-                    ),
+                  label: 'Стоимость',
+                  value: NumberCurrency(
+                    value: widget.security.lotSize * _orderData.qty * (_orderData.type == OrderType.market ? widget.security.last : _orderData.price),
+                    currency: widget.security.currency,
+                    decimals: widget.security.decimals,
+                    style: Theme.of(context).textTheme.body2,
+                  ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 20)),
-                OrderSubmit(
-                  onBuy: () {
-                    _orderData.side = OrderSide.buy;
-                    submit();
-                  },
-                  onSell: () {
-                    _orderData.side = OrderSide.sell;
-                    submit();
-                  }
-                )
+                RaisedButton(
+                  color: Theme.of(context).buttonColor,
+                  child: Text(_orderData.side == OrderSide.buy ? 'КУПИТЬ' : 'ПРОДАТЬ'),
+                  onPressed: submit,
+                ),
               ],
             ),
           ),

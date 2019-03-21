@@ -13,8 +13,8 @@ class Order extends StatelessWidget {
   Order({@required this.security, this.price});
 
   static final tabs = [
-    Tab(text: 'ЛИМИТ'),
     Tab(text: 'МАРКЕТ'),
+    Tab(text: 'ЛИМИТ'),
     Tab(text: 'СТОП'),
   ];
 
@@ -22,6 +22,7 @@ class Order extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: tabs.length,
+      initialIndex: 1,
       child: Scaffold(
         appBar: AppBar(
           leading: BackButton(),
@@ -41,12 +42,12 @@ class Order extends StatelessWidget {
           children: [
             OrderForm(
               security: security,
-              orderType: OrderType.limit,
+              orderType: OrderType.market,
               price: price
             ),
-            OrderForm(
+             OrderForm(
               security: security,
-              orderType: OrderType.market,
+              orderType: OrderType.limit,
               price: price
             ),
             OrderForm(
