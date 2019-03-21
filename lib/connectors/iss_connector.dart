@@ -30,9 +30,11 @@ class IssConnector implements Connector {
   final StreamController<Position> _positionsController = StreamController<Position>.broadcast();
 
   IssConnector() {
-    _quotes = Stream.periodic(Duration(seconds: 10))
+    _quotes = Stream.periodic(Duration(seconds: 5))
       .asyncMap<List<Quote>>((time) => _subscribedQuotes.length > 0 ? getQuotes(_subscribedQuotes) : [])
-      .expand((quote) => quote)
+      .expand((quote) {
+        return quote;
+      })
       .asBroadcastStream();
   }
 
@@ -83,6 +85,7 @@ class IssConnector implements Connector {
     //todo fix
     final engine = 'stock';
     final market = 'shares';
+    final board = 'TQBR';
 
     final query = {
       'iss.meta': 'off',
@@ -93,11 +96,13 @@ class IssConnector implements Connector {
 
     final uri = Uri.https(
       _issHost,
-      'iss/engines/$engine/markets/$market/securities.json',
+      'iss/engines/$engine/markets/$market/boards/$board/securities.json',
       query
     );
 
-    return _get(uri, _parseQuotes);
+    var res = await _get(uri, _parseQuotes);
+
+    return res;
   }
 
   Future<List<Candle>> getCandles(String id, SecurityType type) async {
@@ -202,14 +207,12 @@ class IssConnector implements Connector {
   Future<T> _get<T>(Uri uri, ParseFn<T> parse) async {
     final response = await http.get(uri);
 
-    await Future.delayed(Duration(seconds: 1));
-
     if(response.statusCode != 200) {
       throw new Exception('request error, code: ${response.statusCode}');
     }
 
     // todo тут может возникать необработанное исключение
-    return compute(parse, response.body);
+    return await compute(parse, response.body);
   }
 
   String _getEngineBySecurityType(SecurityType type) {

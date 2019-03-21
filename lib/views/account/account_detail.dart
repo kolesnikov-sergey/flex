@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
@@ -33,22 +34,27 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
   double percentage = 0;
   double newPercentage = 10;
   AnimationController percentageAnimationController;
+  Timer timer;
 
   @override
   void initState() {
     super.initState();
 
+    timer = Timer.periodic(Duration(seconds: 1), (t) {
+      _upValue(1);
+    });
+
     percentageAnimationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 500)
     )
-    ..addListener(_animate);
-
-    percentageAnimationController.forward(from: 0);
+    ..addListener(_animate)
+    ..forward(from: 0);
   }
 
   @override
   void dispose() {
+    timer.cancel();
     percentageAnimationController.dispose();
     super.dispose();
   }
@@ -60,8 +66,12 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
   }
 
   void _up() {
+    _upValue(10);
+  }
+
+  void _upValue(int value) {
     setState(() {
-      newPercentage += 10;
+      newPercentage += value ?? 10;
       if(newPercentage >= 100) {
         newPercentage = 0;
       }
@@ -83,7 +93,7 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
           child: RaisedButton(
             color: Colors.indigo,
             shape: CircleBorder(),
-            child: Text("Click"),
+            child: Text(percentage.toStringAsFixed(2)),
             onPressed: _up,
           ),
         ),
