@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../ui/flex_dropdown.dart';
 import 'account_info.dart';
 import 'positions.dart';
 import 'orders.dart';
 import 'trades.dart';
+import '../ui/flex_drawer.dart';
 import '../../models/market.dart';
 
 class Account extends StatelessWidget {
@@ -25,11 +25,14 @@ class Account extends StatelessWidget {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
+        drawer: FlexDrawer(
+          title: 'Рынок',
+          options: markets,
+          value: Market.stock,
+          onChange: (market) {},
+        ),
         appBar: AppBar(
-          title: FlexDropdown(
-            initialValue: Market.stock,
-            items: markets,
-          ),
+          title: Text(markets[Market.stock]),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(120),
             child: Column(

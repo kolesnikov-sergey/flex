@@ -19,6 +19,7 @@ class _PositionItemState extends State<PositionItem> {
       title: Text(widget.position.name, style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(widget.position.id),
       trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           NumberCurrency(

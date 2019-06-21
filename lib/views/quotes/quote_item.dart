@@ -85,6 +85,7 @@ class _QuoteItemState extends State<QuoteItem> {
           }
 
           return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               AnimatedSwitcher(

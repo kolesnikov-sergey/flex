@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../ui/flex_drawer.dart';
 import '../ui/search_text_field.dart';
-import '../ui/flex_dropdown.dart';
 import '../ui/flex_future_builder.dart';
 import '../../models/security.dart';
 import '../../connectors/connector.dart';
@@ -83,12 +83,14 @@ class _State extends State<QuotesList> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
+      drawer: FlexDrawer(
+        title: 'Инструменты',
+        value: securityType,
+        options: securityTypes,
+        onChange: _changeSecurityType,
+      ),
       appBar: AppBar(
-        title: FlexDropdown(
-          initialValue: securityType,
-          items: securityTypes,
-          onSelected: _changeSecurityType,
-        )
+        title: Text(securityTypes[securityType])
       ),
       body: Column(
         children: [
