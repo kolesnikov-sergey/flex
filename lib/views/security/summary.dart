@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'add_order.dart';
+import 'add_order_button.dart';
 import '../../models/security.dart';
-import '../order/order.dart';
 import '../ui/row_value.dart';
 import '../ui/number_currency.dart';
 
-class Summary extends StatefulWidget {
+class Summary extends StatelessWidget {
   final Security security;
+  final ValueChanged<double> onAddOrder;
 
-  Summary({@required this.security});
+  Summary({@required this.security, @required this.onAddOrder});
 
-  @override
-  _SummaryState createState() => _SummaryState();
-}
-
-class _SummaryState extends State<Summary> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,9 +24,9 @@ class _SummaryState extends State<Summary> {
                 RowValue(
                   label: 'Открытие',
                   value: NumberCurrency(
-                    value: widget.security.open,
-                    currency: widget.security.currency,
-                    decimals: widget.security.decimals,
+                    value: security.open,
+                    currency: security.currency,
+                    decimals: security.decimals,
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 10)),
@@ -40,9 +35,9 @@ class _SummaryState extends State<Summary> {
                 RowValue(
                   label: 'Минимум',
                   value: NumberCurrency(
-                    value: widget.security.low,
-                    currency: widget.security.currency,
-                    decimals: widget.security.decimals,
+                    value: security.low,
+                    currency: security.currency,
+                    decimals: security.decimals,
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 10)),
@@ -51,9 +46,9 @@ class _SummaryState extends State<Summary> {
                 RowValue(
                   label: 'Максимум',
                   value: NumberCurrency(
-                    value: widget.security.high,
-                    currency: widget.security.currency,
-                    decimals: widget.security.decimals,
+                    value: security.high,
+                    currency: security.currency,
+                    decimals: security.decimals,
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 10)),
@@ -62,9 +57,9 @@ class _SummaryState extends State<Summary> {
                 RowValue(
                   label: 'Покупка',
                   value: NumberCurrency(
-                    value: widget.security.bid,
-                    currency: widget.security.currency,
-                    decimals: widget.security.decimals,
+                    value: security.bid,
+                    currency: security.currency,
+                    decimals: security.decimals,
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 10)),
@@ -73,9 +68,9 @@ class _SummaryState extends State<Summary> {
                 RowValue(
                   label: 'Продажа',
                   value: NumberCurrency(
-                    value: widget.security.offer,
-                    currency: widget.security.currency,
-                    decimals: widget.security.decimals,
+                    value: security.offer,
+                    currency: security.currency,
+                    decimals: security.decimals,
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 10)),
@@ -84,8 +79,8 @@ class _SummaryState extends State<Summary> {
                 RowValue(
                   label: 'Объем торгов',
                   value: NumberCurrency(
-                    value: widget.security.valtoday,
-                    currency: widget.security.currency,
+                    value: security.valtoday,
+                    currency: security.currency,
                     decimals: 0,
                   ),
                 ),
@@ -93,11 +88,7 @@ class _SummaryState extends State<Summary> {
             ),
           ),
         ),
-        AddOrder(onPressed: () {
-          Navigator.push(context, new MaterialPageRoute(
-            builder: (BuildContext context) => Order(security: widget.security)
-          ));
-        })
+        AddOrderButton(onPressed: () => onAddOrder(null))
       ],
     );
   }

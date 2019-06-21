@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class AddOrder extends StatelessWidget {
+class AddOrderButton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  AddOrder({@required this.onPressed});
+  AddOrderButton({@required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

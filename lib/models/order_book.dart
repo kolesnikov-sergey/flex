@@ -1,9 +1,9 @@
-class OrderBookItem {
+class OrderBook {
   final double price;
   final int sell;
   final int buy;
 
-  OrderBookItem({
+  OrderBook({
     this.price,
     this.sell,
     this.buy

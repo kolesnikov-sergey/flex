@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../models/security.dart';
-import '../security/security_info.dart';
+import '../security/security_view.dart';
 import 'quotes_list.dart';
 import 'quotes_full.dart';
 
-class Quotes extends StatelessWidget {
+class QuotesView extends StatelessWidget {
   static final securityTypes = {
     SecurityType.shares: 'АКЦИИ',
     SecurityType.bonds: 'ОБЛИГАЦИИ',
@@ -23,7 +23,7 @@ class Quotes extends StatelessWidget {
           return QuotesList(
             onPressed: (security, type) {
               Navigator.push(context, new MaterialPageRoute(
-                builder: (BuildContext context) => SecurityInfo(
+                builder: (BuildContext context) => SecurityView(
                   security: security,
                   securityType: type,
                 )

@@ -2,31 +2,32 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-import '../../../models/order_book_item.dart';
+import '../../../models/order_book.dart';
 import '../../../models/security.dart';
 import '../../../connectors/connector.dart';
 import '../../../connectors/connector_factory.dart';
-import '../../order/order.dart';
 import '../../ui/flex_future_builder.dart';
 import 'order_book_box.dart';
 
-class OrderBook extends StatefulWidget {
+class OrderBookView extends StatefulWidget {
   final Security security;
   final SecurityType securityType;
+  final ValueChanged<double> onAddOrder;
 
-  OrderBook({
+  OrderBookView({
     @required this.security,
     @required this.securityType,
+    @required this.onAddOrder
   });
 
   @override
   _OrderBookState createState() => _OrderBookState();
 }
 
-class _OrderBookState extends State<OrderBook> {
+class _OrderBookState extends State<OrderBookView> {
   final Connector connector = ConnectorFactory.getConnector();
 
-  Future<List<OrderBookItem>> orderBook;
+  Future<List<OrderBook>> orderBook;
 
   @override
   void initState() {
@@ -36,7 +37,7 @@ class _OrderBookState extends State<OrderBook> {
 
   @override
   Widget build(BuildContext context) {
-    return FlexFutureBuilder<List<OrderBookItem>>(
+    return FlexFutureBuilder<List<OrderBook>>(
       future: orderBook,
       onRetry: () {},
       builder: (context, snapshot) {
@@ -55,14 +56,7 @@ class _OrderBookState extends State<OrderBook> {
             var item = snapshot.data[index];
 
             return GestureDetector(
-              onTap: () {
-                 Navigator.push(context, new MaterialPageRoute(
-                  builder: (BuildContext context) => Order(
-                    security: widget.security,
-                    price: item.price,
-                  )
-                ));
-              },
+              onTap: () => widget.onAddOrder(item.price),
               child: Row(
                 children: [
                   OrderBookBox(

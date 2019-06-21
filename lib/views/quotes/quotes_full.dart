@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/security.dart';
-import '../security/security_info.dart';
+import '../security/security_view.dart';
 import 'quotes_list.dart';
 
 class QuotesFull extends StatefulWidget {
@@ -30,7 +30,7 @@ class _QuotesFullState extends State<QuotesFull> {
           child: Text('Выберите инструмент', style: Theme.of(context).textTheme.display1),
         )
       ) 
-      : SecurityInfo(
+      : SecurityView(
         key: ValueKey(security.id),
         security: security,
         securityType: securityType,

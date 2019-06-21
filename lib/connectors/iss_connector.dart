@@ -8,9 +8,9 @@ import 'connector.dart';
 import '../models/security.dart';
 import '../models/quote.dart';
 import '../models/candle.dart';
-import '../models/order_data.dart';
+import '../models/order.dart';
 import '../models/position.dart';
-import '../models/order_book_item.dart';
+import '../models/order_book.dart';
 
 typedef T ParseFn<T>(String body);
 
@@ -125,7 +125,7 @@ class IssConnector implements Connector {
     return _get(uri, _parseCandles);
   }
 
-  Future<List<OrderBookItem>> getOrderBook(String id, SecurityType type) async {
+  Future<List<OrderBook>> getOrderBook(String id, SecurityType type) async {
     final engine = _getEngineBySecurityType(type);
     final market = _getMarketBySecurityType(type);
     final board = _getBoardBySecurityType(type);
@@ -148,7 +148,7 @@ class IssConnector implements Connector {
 
     return Iterable<int>.generate(16, (i) => 8 - i)
       .where((i) => i != 0)
-      .map((i) => OrderBookItem(
+      .map((i) => OrderBook(
         price: security.last + i * security.minStep,
         buy: i < 0 ? i.abs() : null,
         sell: i >= 0 ? i : null
@@ -156,7 +156,7 @@ class IssConnector implements Connector {
       .toList();
   }
 
-  Future<void> createOrder(OrderData order) async {
+  Future<void> createOrder(Order order) async {
     await Future.delayed(Duration(seconds: 1));
     final current = _startedPositions.firstWhere((pos) => pos.id == order.id, orElse: () => null);
 

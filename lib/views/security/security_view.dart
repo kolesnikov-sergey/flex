@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'chart/chart_info.dart';
+import 'chart/chart_view.dart';
 import 'summary.dart';
-import 'order_book/order_book.dart';
+import 'order_book/order_book_view.dart';
+import '../order/order_view.dart';
 import '../../models/security.dart';
 
-class SecurityInfo extends StatelessWidget {
+class SecurityView extends StatelessWidget {
   final Security security;
   final SecurityType securityType;
   final bool showBackButton;
 
-  SecurityInfo({
+  SecurityView({
     Key key,
     @required this.security,
     @required this.securityType,
@@ -26,6 +27,12 @@ class SecurityInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigateToOrder = (double price) {
+      Navigator.push(context, new MaterialPageRoute(
+        builder: (BuildContext context) => OrderView(security: security, price: price)
+      ));
+    };
+
     return DefaultTabController(
       length: tabs.length,
       initialIndex: 0,
@@ -45,16 +52,19 @@ class SecurityInfo extends StatelessWidget {
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            ChartInfo(
+            ChartView(
               security: security,
               securityType: securityType,
+              onAddOrder: navigateToOrder,
             ),
             Summary(
               security: security,
+              onAddOrder: navigateToOrder,
             ),
-            OrderBook(
+            OrderBookView(
               security: security,
               securityType: securityType,
+              onAddOrder: navigateToOrder,
             )
           ]
         )

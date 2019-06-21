@@ -4,13 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'buy_sell_info.dart';
 import 'order_form.dart';
 import '../../models/security.dart';
-import '../../models/order_data.dart';
+import '../../models/order.dart';
 
-class Order extends StatelessWidget {
+class OrderView extends StatelessWidget {
   final Security security;
   final double price;
 
-  Order({@required this.security, this.price});
+  OrderView({@required this.security, this.price});
 
   static final tabs = [
     Tab(text: 'МАРКЕТ'),

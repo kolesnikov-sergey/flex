@@ -5,7 +5,7 @@ import 'number_text_field.dart';
 import '../ui/row_value.dart';
 import '../../connectors/connector.dart';
 import '../../connectors/connector_factory.dart';
-import '../../models/order_data.dart';
+import '../../models/order.dart';
 import '../../models/security.dart';
 import '../../tools/currency_symbol.dart';
 import '../ui/number_currency.dart';
@@ -29,11 +29,11 @@ class _OrderFormState extends State<OrderForm> {
   final Connector connector = ConnectorFactory.getConnector();
 
   final _formKey = GlobalKey<FormState>();
-  OrderData _orderData;
+  Order _order;
 
   @override
   void initState() {
-    _orderData = OrderData(
+    _order = Order(
       id: widget.security.id,
       name: widget.security.name, // todo remove
       side: OrderSide.buy,
@@ -46,7 +46,7 @@ class _OrderFormState extends State<OrderForm> {
   void submit() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      connector.createOrder(_orderData);
+      connector.createOrder(_order);
       Navigator.pop(context);
     }
   }
@@ -69,10 +69,10 @@ class _OrderFormState extends State<OrderForm> {
                   },
                   unselectedColor: Colors.black12,
                   selectedColor: Colors.blue,
-                  groupValue: _orderData.side,
+                  groupValue: _order.side,
                   onValueChanged: (side) {
                     setState(() {
-                      _orderData.side = side;
+                      _order.side = side;
                     });
                   },
                 ),
@@ -81,13 +81,13 @@ class _OrderFormState extends State<OrderForm> {
                   label: 'Количество',
                   placeholder: 'Количество',
                   suffixText: 'лот',
-                  initialValue: _orderData.qty.toDouble(),
+                  initialValue: _order.qty.toDouble(),
                   onSave: (value) {
-                    _orderData.qty = value.toInt();
+                    _order.qty = value.toInt();
                   },
                   onChange: (value) {
                     setState(() {
-                      _orderData.qty = value.toInt();           
+                      _order.qty = value.toInt();           
                     });
                   },
                   validator: (value) {
@@ -109,15 +109,15 @@ class _OrderFormState extends State<OrderForm> {
                     label: 'Цена',
                     placeholder: 'Цена',
                     suffixText: CurrencySymbol.getCurrencySymbol('RUB'),
-                    initialValue: _orderData.price,
+                    initialValue: _order.price,
                     step: widget.security.minStep,
                     decimals: widget.security.decimals,
                     onSave: (value) {
-                      _orderData.price = value;
+                      _order.price = value;
                     },
                     onChange: (value) {
                       setState(() {
-                        _orderData.price = value;           
+                        _order.price = value;           
                       });
                     },
                     validator: (value) {
@@ -137,7 +137,7 @@ class _OrderFormState extends State<OrderForm> {
                 RowValue(
                   label: 'Стоимость',
                   value: NumberCurrency(
-                    value: widget.security.lotSize * _orderData.qty * (_orderData.type == OrderType.market ? widget.security.last : _orderData.price),
+                    value: widget.security.lotSize * _order.qty * (_order.type == OrderType.market ? widget.security.last : _order.price),
                     currency: widget.security.currency,
                     decimals: widget.security.decimals,
                     style: Theme.of(context).textTheme.body2,
@@ -146,7 +146,7 @@ class _OrderFormState extends State<OrderForm> {
                 Padding(padding: EdgeInsets.only(top: 20)),
                 RaisedButton(
                   color: Theme.of(context).buttonColor,
-                  child: Text(_orderData.side == OrderSide.buy ? 'КУПИТЬ' : 'ПРОДАТЬ'),
+                  child: Text(_order.side == OrderSide.buy ? 'КУПИТЬ' : 'ПРОДАТЬ'),
                   onPressed: submit,
                 ),
               ],

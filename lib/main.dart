@@ -3,7 +3,7 @@ import 'package:appcenter/appcenter.dart';
 import 'package:appcenter_analytics/appcenter_analytics.dart';
 import 'package:appcenter_crashes/appcenter_crashes.dart';
 
-import 'views/quotes/quotes.dart';
+import 'views/quotes/quotes_view.dart';
 import 'views/account/account.dart';
 import 'views/more/more.dart';
 
@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
  @override
  void initState() {
     _widgetOptions = [
-      Quotes(),
+      QuotesView(),
       Account(),
       More(),
     ];

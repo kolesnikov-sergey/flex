@@ -3,28 +3,29 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'chart.dart';
-import '../add_order.dart';
+import '../add_order_button.dart';
 import '../../../models/security.dart';
 import '../../../models/candle.dart';
 import '../../../connectors/connector.dart';
 import '../../../connectors/connector_factory.dart';
-import '../../order/order.dart';
 import '../../ui/flex_future_builder.dart';
 
-class ChartInfo extends StatefulWidget {
+class ChartView extends StatefulWidget {
   final Security security;
   final SecurityType securityType;
+  final ValueChanged<double> onAddOrder;
 
-  ChartInfo({
+  ChartView({
     @required this.security,
     @required this.securityType,
+    @required this.onAddOrder
   });
 
   @override
   _ChartInfoState createState() => _ChartInfoState();
 }
 
-class _ChartInfoState extends State<ChartInfo> {
+class _ChartInfoState extends State<ChartView> {
   final Connector connector = ConnectorFactory.getConnector();
   Future<List<Candle>> candles;
   
@@ -35,7 +36,7 @@ class _ChartInfoState extends State<ChartInfo> {
   }
 
   @override
-  void didUpdateWidget(ChartInfo oldWidget) {
+  void didUpdateWidget(ChartView oldWidget) {
     if(oldWidget.security != widget.security) {
       _load();
     }
@@ -48,12 +49,6 @@ class _ChartInfoState extends State<ChartInfo> {
     });
   }
 
-  void _navigateToOrder() {
-    Navigator.push(context, new MaterialPageRoute(
-      builder: (BuildContext context) => Order(security: widget.security)
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return FlexFutureBuilder<List<Candle>>(
@@ -64,7 +59,7 @@ class _ChartInfoState extends State<ChartInfo> {
               Expanded(
                 child: Chart(snapshot.data)    
               ),
-              AddOrder(onPressed: _navigateToOrder)
+              AddOrderButton(onPressed: () => widget.onAddOrder(null))
             ],
           );
       },

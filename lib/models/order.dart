@@ -1,4 +1,4 @@
-class OrderData {
+class Order {
   String id;
   OrderType type;
   OrderSide side;
@@ -7,7 +7,7 @@ class OrderData {
 
   String name; //todo remove
 
-  OrderData({this.id, this.type, this.side, this.price, this.qty, this.name});
+  Order({this.id, this.type, this.side, this.price, this.qty, this.name});
 }
 
 enum OrderType {
