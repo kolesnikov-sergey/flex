@@ -6,15 +6,13 @@ class Number extends StatelessWidget {
   final int decimals;
   final String prefix;
   final TextStyle style;
-  final TextAlign textAlign;
 
   Number({
     Key key,
     @required this.value,
     this.decimals = 2,
     this.prefix,
-    this.style,
-    this.textAlign
+    this.style
   }) : super(key: key);
 
   @override
@@ -27,8 +25,7 @@ class Number extends StatelessWidget {
 
     return Text(
       formatted,
-      style: style,
-      textAlign: textAlign,
+      style: style
     );
   }
 }

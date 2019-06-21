@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../models/security.dart';
 import '../security/security_view.dart';
-import 'quotes_list.dart';
+import 'quotes_mobile_layout.dart';
 
-class QuotesFull extends StatefulWidget {
+class QuotesLargeLayout extends StatefulWidget {
   @override
-  _QuotesFullState createState() => _QuotesFullState();
+  _QuotesLargeLayoutState createState() => _QuotesLargeLayoutState();
 }
 
-class _QuotesFullState extends State<QuotesFull> {
+class _QuotesLargeLayoutState extends State<QuotesLargeLayout> {
   Security security;
   SecurityType securityType;
 
@@ -41,7 +41,7 @@ class _QuotesFullState extends State<QuotesFull> {
       children: [
         Container(
           width: 300,
-          child: QuotesList(
+          child: QuotesMobileLayout(
             onPressed: change,
             selectedItem: security
           ),

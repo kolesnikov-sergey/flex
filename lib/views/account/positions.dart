@@ -6,7 +6,7 @@ import '../../connectors/connector.dart';
 import '../../connectors/connector_factory.dart';
 import '../../models/position.dart';
 import '../ui/search_text_field.dart';
-import 'position_item.dart';
+import 'position_tile.dart';
 
 final fakePositions = [
   Position(id: 'SBER', name: 'СБЕРБАНК', qty: 10),
@@ -74,7 +74,7 @@ class _PositionsState extends State<Positions> {
         Flexible(
           child: ListView.separated(
             itemCount: items.length,
-            itemBuilder: (context, index) => PositionItem(
+            itemBuilder: (context, index) => PositionTile(
               position: items[index],
             ),
             separatorBuilder: (context, index) => Padding(

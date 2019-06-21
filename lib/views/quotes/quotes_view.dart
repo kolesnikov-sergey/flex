@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../models/security.dart';
 import '../security/security_view.dart';
-import 'quotes_list.dart';
-import 'quotes_full.dart';
+import 'quotes_mobile_layout.dart';
+import 'quotes_large_layout.dart';
 
 class QuotesView extends StatelessWidget {
   static final securityTypes = {
@@ -18,9 +18,9 @@ class QuotesView extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         if(constraints.maxWidth > 600) {
-          return QuotesFull();
+          return QuotesLargeLayout();
         } else {
-          return QuotesList(
+          return QuotesMobileLayout(
             onPressed: (security, type) {
               Navigator.push(context, new MaterialPageRoute(
                 builder: (BuildContext context) => SecurityView(

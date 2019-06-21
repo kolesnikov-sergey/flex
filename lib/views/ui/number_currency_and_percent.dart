@@ -9,7 +9,6 @@ class NumberCurrencyAndPercent extends StatelessWidget {
   final int decimals;
   final String prefix;
   final TextStyle style;
-  final TextAlign textAlign;
 
   NumberCurrencyAndPercent({
     Key key,
@@ -18,8 +17,7 @@ class NumberCurrencyAndPercent extends StatelessWidget {
     @required this.currency,
     this.decimals = 2,
     this.prefix,
-    this.style,
-    this.textAlign
+    this.style
   }) : super(key: key);
 
   @override
@@ -38,8 +36,7 @@ class NumberCurrencyAndPercent extends StatelessWidget {
   
     return Text(
       '${prefix == null ? '' : prefix}$formatted (${prefix == null ? '' : prefix}$formattedPercent)',
-      style: style,
-      textAlign: textAlign,
+      style: style
     );
   }
 }

@@ -11,13 +11,13 @@ import '../ui/number_currency_and_percent.dart';
 
 typedef void SecurityCallback(Security security, SecurityType type);
 
-class QuoteItem extends StatefulWidget {
+class QuoteTile extends StatefulWidget {
   final Security security;
   final SecurityType securityType;
   final SecurityCallback onPressed;
   final bool selected;
 
-  QuoteItem({
+  QuoteTile({
     @required this.security,
     @required this.securityType,
     @required this.onPressed,
@@ -25,10 +25,10 @@ class QuoteItem extends StatefulWidget {
   });
 
   @override
-  _QuoteItemState createState() => _QuoteItemState();
+  _QuoteTileState createState() => _QuoteTileState();
 }
 
-class _QuoteItemState extends State<QuoteItem> {
+class _QuoteTileState extends State<QuoteTile> {
   final Connector connector = ConnectorFactory.getConnector();
   Timer _timerDelay;
   Stream<Quote> quotes;
@@ -95,7 +95,6 @@ class _QuoteItemState extends State<QuoteItem> {
                   value: last,
                   currency: _getCurrency(),
                   decimals: widget.security.decimals,
-                  textAlign: TextAlign.end,
                   style: Theme.of(context).textTheme.body2
                 ),
               ),
@@ -111,7 +110,6 @@ class _QuoteItemState extends State<QuoteItem> {
                   currency: _getCurrency(),
                   decimals: widget.security.decimals,
                   prefix: change != null && change > 0 ? '+': '',
-                  textAlign: TextAlign.end,
                   style: TextStyle(color: change < 0 ? Colors.pink : Colors.green)
                 ),
               )

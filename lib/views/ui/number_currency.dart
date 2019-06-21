@@ -8,7 +8,6 @@ class NumberCurrency extends StatelessWidget {
   final int decimals;
   final String prefix;
   final TextStyle style;
-  final TextAlign textAlign;
 
   NumberCurrency({
     Key key,
@@ -16,8 +15,7 @@ class NumberCurrency extends StatelessWidget {
     @required this.currency,
     this.decimals = 2,
     this.prefix,
-    this.style,
-    this.textAlign
+    this.style
   }) : super(key: key);
 
   @override
@@ -29,8 +27,7 @@ class NumberCurrency extends StatelessWidget {
     ).format(value);
     return Text(
       '${prefix == null ? '' : prefix}$formatted',
-      style: style,
-      textAlign: textAlign,
+      style: style
     );
   }
 }

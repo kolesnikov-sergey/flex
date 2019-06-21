@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import '../../models/position.dart';
 import '../ui/number_currency.dart';
 
-class PositionItem extends StatefulWidget {
+class PositionTile extends StatefulWidget {
   final Position position;
 
-  PositionItem({this.position});
+  PositionTile({this.position});
 
   @override
-  _PositionItemState createState() => _PositionItemState();
+  _PositionTileState createState() => _PositionTileState();
 }
 
-class _PositionItemState extends State<PositionItem> {
+class _PositionTileState extends State<PositionTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -26,7 +26,6 @@ class _PositionItemState extends State<PositionItem> {
             currency: 'шт',
             value: widget.position.qty,
             decimals: 0,
-            textAlign: TextAlign.start,
             style: TextStyle(fontWeight: FontWeight.bold)
           ),
           Padding(
@@ -40,7 +39,6 @@ class _PositionItemState extends State<PositionItem> {
                 currency: '%',
                 prefix: '+',
                 value: 12.23,
-                textAlign: TextAlign.start,
                 style: TextStyle(
                   color: Colors.green
                 ),
@@ -51,7 +49,6 @@ class _PositionItemState extends State<PositionItem> {
               NumberCurrency(
                 currency: 'RUB',
                 value: 123,
-                textAlign: TextAlign.start,
               )
             ],
           ),
