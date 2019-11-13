@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../models/security.dart';
 import '../../models/quote.dart';
 import '../../connectors/connector.dart';
-import '../../connectors/connector_factory.dart';
 import '../ui/number_currency.dart';
 import '../ui/number_currency_and_percent.dart';
 
@@ -29,7 +29,7 @@ class QuoteTile extends StatefulWidget {
 }
 
 class _QuoteTileState extends State<QuoteTile> {
-  final Connector connector = ConnectorFactory.getConnector();
+  final Connector connector = GetIt.I<Connector>();
   Timer _timerDelay;
   Stream<Quote> quotes;
 

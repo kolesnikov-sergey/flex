@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../connectors/connector.dart';
-import '../../connectors/connector_factory.dart';
 import '../../models/position.dart';
 import '../ui/search_text_field.dart';
 import 'position_tile.dart';
@@ -20,7 +20,7 @@ class Positions extends StatefulWidget {
 }
 
 class _PositionsState extends State<Positions> {
-  final Connector connector = ConnectorFactory.getConnector();
+  final Connector connector = GetIt.I<Connector>();
   Stream<Position> stream;
   List<Position> positions = List();
   StreamSubscription subscription;

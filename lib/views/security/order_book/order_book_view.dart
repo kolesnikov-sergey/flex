@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../models/order_book.dart';
 import '../../../models/security.dart';
 import '../../../connectors/connector.dart';
-import '../../../connectors/connector_factory.dart';
 import '../../ui/flex_future_builder.dart';
 import 'order_book_box.dart';
 
@@ -25,7 +25,7 @@ class OrderBookView extends StatefulWidget {
 }
 
 class _OrderBookState extends State<OrderBookView> {
-  final Connector connector = ConnectorFactory.getConnector();
+  final Connector connector = GetIt.I<Connector>();
 
   Future<List<OrderBook>> orderBook;
 

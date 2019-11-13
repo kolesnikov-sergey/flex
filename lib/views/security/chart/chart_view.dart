@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'chart.dart';
 import '../add_order_button.dart';
 import '../../../models/security.dart';
 import '../../../models/candle.dart';
 import '../../../connectors/connector.dart';
-import '../../../connectors/connector_factory.dart';
 import '../../ui/flex_future_builder.dart';
 
 class ChartView extends StatefulWidget {
@@ -26,7 +26,7 @@ class ChartView extends StatefulWidget {
 }
 
 class _ChartInfoState extends State<ChartView> {
-  final Connector connector = ConnectorFactory.getConnector();
+  final Connector connector = GetIt.I<Connector>();
   Future<List<Candle>> candles;
   
   @override

@@ -1,16 +1,12 @@
+import 'package:flex/setup.dart';
 import 'package:flutter/material.dart';
-import 'package:appcenter/appcenter.dart';
-import 'package:appcenter_analytics/appcenter_analytics.dart';
-import 'package:appcenter_crashes/appcenter_crashes.dart';
 
 import 'views/quotes/quotes_view.dart';
 import 'views/account/account.dart';
 import 'views/more/more.dart';
 
 void main() {
-  final appSecret = '1671ee3c-8c10-4896-b622-30428d4648f2';
-
-  AppCenter.start(appSecret, [AppCenterAnalytics.id, AppCenterCrashes.id]);
+  setup();
   runApp(new TradingApp());
 }
 

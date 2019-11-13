@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../ui/flex_drawer.dart';
 import '../ui/search_text_field.dart';
 import '../ui/flex_future_builder.dart';
 import '../../models/security.dart';
 import '../../connectors/connector.dart';
-import '../../connectors/connector_factory.dart';
 import 'quote_tile.dart';
 import 'quotes_list.dart';
 
@@ -33,7 +33,7 @@ class QuotesMobileLayout extends StatefulWidget {
 }
 
 class _State extends State<QuotesMobileLayout> {
-  final Connector connector = ConnectorFactory.getConnector();
+  final Connector connector = GetIt.I<Connector>();
   Future<List<Security>> _securities;
   SecurityType securityType = SecurityType.shares;
   String _search = '';

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'number_text_field.dart';
 import '../ui/row_value.dart';
 import '../../connectors/connector.dart';
-import '../../connectors/connector_factory.dart';
 import '../../models/order.dart';
 import '../../models/security.dart';
 import '../../tools/currency_symbol.dart';
@@ -26,7 +26,7 @@ class OrderForm extends StatefulWidget {
 }
 
 class _OrderFormState extends State<OrderForm> {
-  final Connector connector = ConnectorFactory.getConnector();
+  final Connector connector = GetIt.I<Connector>();
 
   final _formKey = GlobalKey<FormState>();
   Order _order;
