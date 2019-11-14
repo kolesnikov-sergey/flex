@@ -1,9 +1,9 @@
-import 'package:flex/setup.dart';
 import 'package:flutter/material.dart';
 
 import 'views/quotes/quotes_view.dart';
 import 'views/account/account.dart';
 import 'views/more/more.dart';
+import 'setup.dart';
 
 void main() {
   setup();
