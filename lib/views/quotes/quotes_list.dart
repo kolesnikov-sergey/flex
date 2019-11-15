@@ -28,7 +28,7 @@ class QuotesList extends StatelessWidget {
       ),
       separatorBuilder: (context, index) => Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Divider(height: 1)
+        child: Divider(height: 1, thickness: 1)
       ),
     );
   }
