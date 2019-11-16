@@ -24,7 +24,6 @@ class _PositionsState extends State<Positions> {
   Stream<Position> stream;
   List<Position> positions = List();
   StreamSubscription subscription;
-  TextEditingController searchController = new TextEditingController();
   String _search = '';
 
   @override
@@ -35,7 +34,6 @@ class _PositionsState extends State<Positions> {
           positions.add(pos);         
         });
       });
-    searchController.addListener(changeSearch);
     super.initState();
   }
 
@@ -43,13 +41,12 @@ class _PositionsState extends State<Positions> {
   void dispose() {
     connector.unsubscribePositions();
     subscription.cancel();
-    searchController.dispose();
     super.dispose();
   }
 
-  void changeSearch() {
+  void changeSearch(String value) {
     setState(() {
-        _search = searchController.text;
+        _search = value;
     });
   }
 
@@ -69,7 +66,7 @@ class _PositionsState extends State<Positions> {
       children: [
         Padding(
             padding: EdgeInsets.all(10),
-            child: SearchTextField(controller: searchController),
+            child: SearchTextField(onChanged: changeSearch),
         ),
         Flexible(
           child: ListView.separated(

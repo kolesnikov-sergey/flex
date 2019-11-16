@@ -1,37 +1,79 @@
+import 'package:flex/state/securities_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../state/securities_state.dart';
 import '../../models/security.dart';
-import '../security/security_view.dart';
-import 'quotes_mobile_layout.dart';
-import 'quotes_large_layout.dart';
+import '../ui/flex_drawer.dart';
+import '../ui/search_text_field.dart';
+import '../ui/loadable.dart';
 
-class QuotesView extends StatelessWidget {
-  static final securityTypes = {
-    SecurityType.shares: 'АКЦИИ',
-    SecurityType.bonds: 'ОБЛИГАЦИИ',
-    SecurityType.currencies: 'ВАЛЮТА',
-    SecurityType.futures: 'ФЬЮЧЕРСЫ'
-  };
+import 'quote_tile.dart';
+import 'quotes_list.dart';
+
+final securityTypes = {
+  SecurityType.shares: 'Акции',
+  SecurityType.bonds: 'Облигации',
+  SecurityType.currencies: 'Валюта',
+  SecurityType.futures: 'Фьючерсы'
+};
+
+class QuotesView extends StatefulWidget {
+  final SecurityCallback onPressed;
+  final Security selectedItem;
+
+  QuotesView({
+    @required this.onPressed,
+    this.selectedItem
+  });
+
+  @override
+  _State createState() => _State();
+}
+
+class _State extends State<QuotesView> {
+  @override
+  void initState() {
+    final securitiesState = Provider.of<SecuritiesState>(context, listen: false);
+    Future.microtask(() => securitiesState.loadSecurities(SecurityType.shares));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if(constraints.maxWidth > 600) {
-          return QuotesLargeLayout();
-        } else {
-          return QuotesMobileLayout(
-            onPressed: (security, type) {
-              Navigator.push(context, new MaterialPageRoute(
-                builder: (BuildContext context) => SecurityView(
-                  security: security,
-                  securityType: type,
-                )
-              ));
-            }
-          );
-        }
-      }
+    final securitiesState = Provider.of<SecuritiesState>(context);
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      drawer: FlexDrawer(
+        title: 'Инструменты',
+        value: securitiesState.getSecurityType(),
+        options: securityTypes,
+        onChange: (type) => securitiesState.loadSecurities(type),
+      ),
+      appBar: AppBar(
+        title: Text(securityTypes[securitiesState.getSecurityType()])
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: SearchTextField(onChanged: securitiesState.setSearch),
+          ),
+          Flexible(
+            child: Loadable(
+              isLoading: securitiesState.getIsLoading(),
+              hasError: false,
+              onRetry: () => securitiesState.loadSecurities(securitiesState.getSecurityType()),
+              child: QuotesList(
+                quotes: securitiesState.getSecurities(),
+                securityType: securitiesState.getSecurityType(),
+                onPressed: widget.onPressed,
+                selectedItem: widget.selectedItem
+              ),
+            )
+          ),    
+        ],
+      )
     );
   }
 }

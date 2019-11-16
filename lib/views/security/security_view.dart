@@ -6,17 +6,18 @@ import 'summary.dart';
 import 'order_book/order_book_view.dart';
 import '../order/order_view.dart';
 import '../../models/security.dart';
+import '../../models/layout_type.dart';
 
 class SecurityView extends StatelessWidget {
   final Security security;
   final SecurityType securityType;
-  final bool showBackButton;
+  final LayoutType layoutType;
 
   SecurityView({
     Key key,
     @required this.security,
     @required this.securityType,
-    this.showBackButton = true
+    this.layoutType = LayoutType.mobile,
   }) : super(key: key);
 
   final tabs = [
@@ -39,9 +40,11 @@ class SecurityView extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          leading: showBackButton ? BackButton() : null,
+          leading: layoutType == LayoutType.mobile ? BackButton() : null,
           title: Text(security.name),
-          bottom: TabBar(tabs: tabs),
+          bottom: layoutType == LayoutType.mobile 
+            ? TabBar(tabs: tabs)
+            : null,
           actions: [
             IconButton(
               icon: Icon(Icons.star_border),
@@ -49,25 +52,31 @@ class SecurityView extends StatelessWidget {
             )
           ]
         ),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            ChartView(
-              security: security,
-              securityType: securityType,
-              onAddOrder: navigateToOrder,
-            ),
-            Summary(
-              security: security,
-              onAddOrder: navigateToOrder,
-            ),
-            OrderBookView(
+        body: layoutType == LayoutType.mobile
+          ? TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                ChartView(
+                  security: security,
+                  securityType: securityType,
+                  onAddOrder: navigateToOrder,
+                ),
+                Summary(
+                  security: security,
+                  onAddOrder: navigateToOrder,
+                ),
+                OrderBookView(
+                  security: security,
+                  securityType: securityType,
+                  onAddOrder: navigateToOrder,
+                )
+              ]
+            )
+          : ChartView(
               security: security,
               securityType: securityType,
               onAddOrder: navigateToOrder,
             )
-          ]
-        )
       )
     );
   }

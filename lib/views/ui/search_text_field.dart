@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class SearchTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final ValueChanged<String> onChanged;
 
-  SearchTextField({this.controller});
+  SearchTextField({this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
       scrollPadding: EdgeInsets.all(10),
+      onChanged: onChanged,
       decoration: const InputDecoration(
         isDense: true,
         hintText: 'Поиск',

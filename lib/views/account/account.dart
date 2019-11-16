@@ -6,6 +6,7 @@ import 'orders.dart';
 import 'trades.dart';
 import '../ui/flex_drawer.dart';
 import '../../models/market.dart';
+import '../../models/layout_type.dart';
 
 class Account extends StatelessWidget {
   static final markets = {
@@ -20,6 +21,12 @@ class Account extends StatelessWidget {
     Tab(text: 'СДЕЛКИ')
   ];
 
+  Account({
+    this.layoutType = LayoutType.mobile,
+  });
+
+  final LayoutType layoutType;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -33,16 +40,18 @@ class Account extends StatelessWidget {
         ),
         appBar: AppBar(
           title: Text(markets[Market.stock]),
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(120),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AccountInfo(),
-                TabBar(tabs: tabs)
-              ],
-            ),
-          ),
+          bottom: layoutType == LayoutType.mobile
+            ? PreferredSize(
+                preferredSize: Size.fromHeight(120),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AccountInfo(),
+                    TabBar(tabs: tabs)
+                  ],
+                ),
+              )
+            : null
         ),
         body: TabBarView(
           children: [
