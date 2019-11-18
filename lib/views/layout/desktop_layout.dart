@@ -1,10 +1,10 @@
-import 'package:flex/models/layout_type.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../security/security_view.dart';
 import '../quotes/quotes_view.dart';
 import '../account/account.dart';
+import '../../models/layout_type.dart';
 import '../../state/security_state.dart';
 
 class DesktopLayout extends StatelessWidget {
