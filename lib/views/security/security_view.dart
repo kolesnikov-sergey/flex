@@ -29,9 +29,22 @@ class SecurityView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navigateToOrder = (double price) {
-      Navigator.push(context, new MaterialPageRoute(
-        builder: (BuildContext context) => OrderView(security: security, price: price)
-      ));
+      if (layoutType == LayoutType.mobile) {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (BuildContext context) => OrderView(security: security, price: price)
+        ));
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => Dialog(
+            child: Container(
+              width: 400,
+              height: 480, // TODO height by content
+              child: OrderView(security: security, price: price)
+            )
+          )
+        );
+      }
     };
 
     return DefaultTabController(

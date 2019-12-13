@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 class SearchTextField extends StatelessWidget {
   final ValueChanged<String> onChanged;
 
-  SearchTextField({this.onChanged});
+  SearchTextField({@required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      scrollPadding: EdgeInsets.all(10),
+    return TextField(
       onChanged: onChanged,
       decoration: const InputDecoration(
         isDense: true,
