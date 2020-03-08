@@ -9,12 +9,10 @@ import '../../connectors/connector.dart';
 import '../ui/number_currency.dart';
 import '../ui/number_currency_and_percent.dart';
 
-typedef void SecurityCallback(Security security, SecurityType type);
-
 class QuoteTile extends StatefulWidget {
   final Security security;
   final SecurityType securityType;
-  final SecurityCallback onPressed;
+  final Function(Security) onPressed;
   final bool selected;
 
   QuoteTile({
@@ -63,7 +61,7 @@ class _QuoteTileState extends State<QuoteTile> {
   }
 
   void tap() {
-    widget.onPressed(widget.security, widget.securityType);
+    widget.onPressed(widget.security);
   }
 
   @override

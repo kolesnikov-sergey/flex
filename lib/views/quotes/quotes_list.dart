@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'quote_tile.dart';
 import '../../models/security.dart';
+import 'quote_tile.dart';
 
 class QuotesList extends StatelessWidget {
   final List<Security> quotes;
   final SecurityType securityType;
   final Security selectedItem;
-  final SecurityCallback onPressed;
+  final Function(Security) onPressed;
 
   QuotesList({
     @required this.quotes,

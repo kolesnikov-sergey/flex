@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
-import '../../state/securities_state.dart';
 import '../../models/security.dart';
+import '../../state/securities_state.dart';
 import '../ui/flex_drawer.dart';
 import '../ui/search_text_field.dart';
 import '../ui/loadable.dart';
 
-import 'quote_tile.dart';
 import 'quotes_list.dart';
 
 final securityTypes = {
@@ -18,7 +18,7 @@ final securityTypes = {
 };
 
 class QuotesView extends StatefulWidget {
-  final SecurityCallback onPressed;
+  final Function(Security) onPressed;
   final Security selectedItem;
 
   QuotesView({
@@ -31,48 +31,50 @@ class QuotesView extends StatefulWidget {
 }
 
 class _State extends State<QuotesView> {
+  final _securitiesState = GetIt.I<SecuritiesState>();
+
   @override
   void initState() {
-    final securitiesState = Provider.of<SecuritiesState>(context, listen: false);
-    Future.microtask(() => securitiesState.loadSecurities(SecurityType.shares));
+    _securitiesState.loadSecurities(SecurityType.shares);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final securitiesState = Provider.of<SecuritiesState>(context);
-    return Scaffold(
-      resizeToAvoidBottomPadding: false,
-      drawer: FlexDrawer(
-        title: 'Инструменты',
-        value: securitiesState.getSecurityType(),
-        options: securityTypes,
-        onChange: (type) => securitiesState.loadSecurities(type),
+    return Observer(
+      builder: (_) => Scaffold(
+        resizeToAvoidBottomPadding: false,
+        drawer: FlexDrawer(
+          title: 'Инструменты',
+          value: _securitiesState.securityType,
+          options: securityTypes,
+          onChange: (type) => _securitiesState.loadSecurities(type),
+        ),
+        appBar: AppBar(
+          title: Text(securityTypes[_securitiesState.securityType])
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: SearchTextField(onChanged: _securitiesState.setSearch),
+            ),
+            Flexible(
+              child: Loadable(
+                isLoading: _securitiesState.isLoading,
+                hasError: false,
+                onRetry: () => _securitiesState.loadSecurities(_securitiesState.securityType),
+                child: QuotesList(
+                  quotes: _securitiesState.securities,
+                  securityType: _securitiesState.securityType,
+                  onPressed: widget.onPressed,
+                  selectedItem: widget.selectedItem
+                ),
+              )
+            ),    
+          ],
+        )
       ),
-      appBar: AppBar(
-        title: Text(securityTypes[securitiesState.getSecurityType()])
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: SearchTextField(onChanged: securitiesState.setSearch),
-          ),
-          Flexible(
-            child: Loadable(
-              isLoading: securitiesState.getIsLoading(),
-              hasError: false,
-              onRetry: () => securitiesState.loadSecurities(securitiesState.getSecurityType()),
-              child: QuotesList(
-                quotes: securitiesState.getSecurities(),
-                securityType: securitiesState.getSecurityType(),
-                onPressed: widget.onPressed,
-                selectedItem: widget.selectedItem
-              ),
-            )
-          ),    
-        ],
-      )
     );
   }
 }

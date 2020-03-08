@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../state/securities_state.dart';
 import '../account/account.dart';
 import '../quotes/quotes_view.dart';
 import '../security/security_view.dart';
@@ -11,6 +13,8 @@ class MobileLayout extends StatefulWidget {
 }
 
 class _MobileLayoutState extends State<MobileLayout> {
+  final _securitiesState = GetIt.I<SecuritiesState>();
+
   int _selectedIndex = 0;
   List<Widget> _widgetOptions;
 
@@ -18,11 +22,11 @@ class _MobileLayoutState extends State<MobileLayout> {
   void initState() {
     _widgetOptions = [
       QuotesView(
-        onPressed: (security, type) {
+        onPressed: (security) {
           Navigator.push(context, new MaterialPageRoute(
             builder: (BuildContext context) => SecurityView(
               security: security,
-              securityType: type,
+              securityType: _securitiesState.securityType,
             ),
           ));
         }
