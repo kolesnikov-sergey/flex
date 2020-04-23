@@ -38,9 +38,12 @@ class _SecurityViewState extends State<SecurityView> {
           context: context,
           builder: (BuildContext context) => Dialog(
             child: Container(
-              width: 400,
-              height: 480, // TODO height by content
-              child: OrderView()
+              width: 450,
+              height: 520, // TODO height by content
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: OrderView()
+              )
             )
           )
         );

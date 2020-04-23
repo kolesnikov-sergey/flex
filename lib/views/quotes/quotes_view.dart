@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../models/security.dart';
+import '../../models/layout_type.dart';
 import '../../state/securities_state.dart';
 import '../ui/flex_drawer.dart';
 import '../ui/search_text_field.dart';
@@ -18,7 +19,9 @@ final securityTypes = {
 };
 
 class QuotesView extends StatefulWidget {
-  QuotesView();
+  QuotesView({@required this.layoutType});
+
+  final LayoutType layoutType;
 
   @override
   _State createState() => _State();
@@ -36,7 +39,9 @@ class _State extends State<QuotesView> {
   void _selectSecurity(Security security) {
     _securitiesState.setCurrent(security);
 
-    Navigator.pushNamed(context, '/security');
+    if (widget.layoutType == LayoutType.mobile) {
+      Navigator.pushNamed(context, '/security');
+    }
   }
 
   @override

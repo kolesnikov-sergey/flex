@@ -31,7 +31,9 @@ class _DesktopAppState extends State<DesktopApp> {
       children: [
           Container(
             width: 300,
-            child: QuotesView(),
+            child: QuotesView(
+              layoutType: LayoutType.desktop,
+            ),
           ),
           Container(
             width: 1,

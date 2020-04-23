@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../account/account.dart';
 import '../quotes/quotes_view.dart';
 import '../more/more.dart';
+import '../../models/layout_type.dart';
 
 class MobileApp extends StatefulWidget {
   @override
@@ -16,7 +17,9 @@ class _MobileAppState extends State<MobileApp> {
   @override
   void initState() {
     _widgetOptions = [
-      QuotesView(),
+      QuotesView(
+        layoutType: LayoutType.mobile,
+      ),
       Account(),
       More(),
     ];

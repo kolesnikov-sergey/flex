@@ -22,7 +22,7 @@ class Account extends StatelessWidget {
   ];
 
   Account({
-    this.layoutType = LayoutType.mobile,
+    this.layoutType,
   });
 
   final LayoutType layoutType;
