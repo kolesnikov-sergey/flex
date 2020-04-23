@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:ffi';
 
-import 'package:flex/models/quote.dart';
-import 'package:flex/tools/throttle.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '../connectors/connector.dart';
+import '../models/quote.dart';
+import '../tools/throttle.dart';
 import 'quote_state.dart';
 
 part 'quotes_state.g.dart';

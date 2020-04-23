@@ -1,5 +1,6 @@
-import 'package:flex/models/quote.dart';
 import 'package:mobx/mobx.dart';
+
+import '../models/quote.dart';
 
 part 'quote_state.g.dart';
 
