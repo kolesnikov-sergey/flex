@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../state/securities_state.dart';
@@ -17,16 +18,6 @@ class _DesktopAppState extends State<DesktopApp> {
 
   @override
   Widget build(BuildContext context) {
-    final rightWidget = _securitiesState.current == null
-      ? Scaffold(
-        key: ValueKey('empty'),
-        appBar: AppBar(),
-        body: Center(
-          child: Text('Выберите инструмент', style: Theme.of(context).textTheme.display1),
-        )
-      ) 
-      : SecurityView();
-
     return Row(
       children: [
           Container(
@@ -45,7 +36,19 @@ class _DesktopAppState extends State<DesktopApp> {
               children: [
                 Flexible(
                   flex: 1,
-                  child: rightWidget,
+                  child: Observer(
+                    builder: (_) {
+                      return _securitiesState.current == null
+                        ? Scaffold(
+                          key: ValueKey('empty'),
+                          appBar: AppBar(),
+                          body: Center(
+                            child: Text('Выберите инструмент', style: Theme.of(context).textTheme.display1),
+                          )
+                        ) 
+                        : SecurityView();
+                    },
+                  ),
                 ),
                 Flexible(
                   flex: 1,
