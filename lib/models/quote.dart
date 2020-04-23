@@ -2,11 +2,11 @@ import 'package:meta/meta.dart';
 
 class Quote {
   final String id;
-  final double last;
-  final double bid;
-  final double offer;
-  final double spread;
-  final double change;
+  double last;
+  double bid;
+  double offer;
+  double spread;
+  double change;
 
   Quote({
     @required this.id,
@@ -26,5 +26,13 @@ class Quote {
       spread: json['SPREAD']?.toDouble() ?? 0,
       change: json['CHANGE']?.toDouble() ?? 0,
     );
+  }
+
+  void merge(Quote quote) {
+    last = quote.last;
+    bid = quote.bid;
+    offer = quote.offer;
+    spread = quote.spread;
+    change = quote.change;
   }
 }

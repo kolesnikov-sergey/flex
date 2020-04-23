@@ -39,7 +39,6 @@ class _PositionsState extends State<Positions> {
 
   @override
   void dispose() {
-    connector.unsubscribePositions();
     subscription.cancel();
     super.dispose();
   }

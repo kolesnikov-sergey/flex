@@ -1,5 +1,9 @@
+import 'package:flex/views/order/order_view.dart';
+import 'package:flex/views/security/security_view.dart';
 import 'package:flutter/material.dart';
-import 'views/layout/layout.dart';
+import 'package:provider/provider.dart';
+import 'models/layout_type.dart';
+import 'views/app/app.dart';
 import 'setup.dart';
 
 void main() {
@@ -21,9 +25,21 @@ class TradingApp extends StatelessWidget {
         toggleableActiveColor: accentColor,
         buttonColor: accentColor
       ),
+      builder: (context, child) {
+        return LayoutBuilder(
+          builder: (_, constraints) {
+            return Provider.value(
+              value: constraints.maxWidth > 600 ? LayoutType.desktop : LayoutType.mobile,
+              child: child
+            );
+          },
+        );
+      },
       initialRoute: '/',
       routes: {
-        '/' : (context) => Layout()
+        '/' : (context) => App(),
+        '/security': (context) => SecurityView(),
+        '/order': (context) => OrderView(),
       },
     );
   }

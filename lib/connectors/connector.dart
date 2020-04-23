@@ -14,11 +14,9 @@ abstract class Connector {
 
   Future<void> createOrder(Order order);
 
-  Stream<Quote> subscribeQuote(String id);
-  void unsubscribeQuote(String id);
+  Stream<Quote> subscribeQuotes(List<String> ids);
 
   Stream<Position> subscribePositions();
-  void unsubscribePositions();
 
   Future<List<OrderBook>> getOrderBook(String id, SecurityType type);
 }

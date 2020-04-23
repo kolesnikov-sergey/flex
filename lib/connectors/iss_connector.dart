@@ -17,26 +17,11 @@ typedef T ParseFn<T>(String body);
 class IssConnector implements Connector {
   final String _issHost = 'iss.moex.com';
 
-  final List<String> _subscribedQuotes = List<String>();
-
-  Stream<Quote> _quotes;
-
   final _startedPositions = [
     Position(id: 'SBER', name: 'Сбербанк', qty: 10),
     Position(id: 'LKOH', name: 'ЛУКОЙЛ', qty: 20),
     Position(id: 'GAZP', name: 'ГАЗПРОМ ао', qty: 5)
   ];
-
-  final StreamController<Position> _positionsController = StreamController<Position>.broadcast();
-
-  IssConnector() {
-    _quotes = Stream.periodic(Duration(seconds: 5))
-      .asyncMap<List<Quote>>((time) => _subscribedQuotes.length > 0 ? getQuotes(_subscribedQuotes) : [])
-      .expand((quote) {
-        return quote;
-      })
-      .asBroadcastStream();
-  }
 
   Future<List<Security>> getSecurities(SecurityType type) async {
     final engine = _getEngineBySecurityType(type);
@@ -61,25 +46,33 @@ class IssConnector implements Connector {
     return _get(uri, _parseSecurities);
   }
 
-  Stream<Quote> subscribeQuote(String id) {
-    _subscribedQuotes.add(id);
-    return _quotes.where((q) => q.id == id);
-  }
-
-  void unsubscribeQuote(String id) {
-    _subscribedQuotes.remove(id);
+  Stream<Quote> subscribeQuotes(List<String> ids) {
+    return Stream.periodic(Duration(seconds: 5))
+      .asyncMap<List<Quote>>((time) => getQuotes(ids))
+      .expand((quote) {
+        return quote;
+      });
   }
 
   Stream<Position> subscribePositions() {
-    Timer(Duration(milliseconds: 100), () {
-      _startedPositions.forEach((pos) {
-        _positionsController.add(pos);
-      });
-    });
-    return _positionsController.stream;
-  }
+    StreamController<Position> controller;
+    Timer timer;
+    controller = StreamController<Position>(
+      onListen: () {
+        timer = Timer(Duration(milliseconds: 100), () {
+          _startedPositions.forEach((pos) {
+            controller.add(pos);
+          });
+        });
+      },
+      onCancel: () {
+        timer.cancel();
+        controller.close();
+      }
+    );
 
-  void unsubscribePositions() {}
+    return controller.stream;
+  }
 
   Future<List<Quote>> getQuotes(List<String> ids) async {
     //todo fix
@@ -259,7 +252,5 @@ class IssConnector implements Connector {
     }
   }
 
-  void dispose() {
-    _positionsController.sink.close();
-  }
+  void dispose() {}
 }

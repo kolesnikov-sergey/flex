@@ -84,6 +84,23 @@ mixin _$SecuritiesState on SecuritiesStateBase, Store {
     }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
   }
 
+  final _$currentAtom = Atom(name: 'SecuritiesStateBase.current');
+
+  @override
+  Security get current {
+    _$currentAtom.context.enforceReadPolicy(_$currentAtom);
+    _$currentAtom.reportObserved();
+    return super.current;
+  }
+
+  @override
+  set current(Security value) {
+    _$currentAtom.context.conditionallyRunInAction(() {
+      super.current = value;
+      _$currentAtom.reportChanged();
+    }, _$currentAtom, name: '${_$currentAtom.name}_set');
+  }
+
   final _$loadSecuritiesAsyncAction = AsyncAction('loadSecurities');
 
   @override
@@ -105,9 +122,19 @@ mixin _$SecuritiesState on SecuritiesStateBase, Store {
   }
 
   @override
+  void setCurrent(Security security) {
+    final _$actionInfo = _$SecuritiesStateBaseActionController.startAction();
+    try {
+      return super.setCurrent(security);
+    } finally {
+      _$SecuritiesStateBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string =
-        'securities: ${securities.toString()},securityType: ${securityType.toString()},search: ${search.toString()},isLoading: ${isLoading.toString()},filteredSecurities: ${filteredSecurities.toString()}';
+        'securities: ${securities.toString()},securityType: ${securityType.toString()},search: ${search.toString()},isLoading: ${isLoading.toString()},current: ${current.toString()},filteredSecurities: ${filteredSecurities.toString()}';
     return '{$string}';
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../state/securities_state.dart';
@@ -8,12 +7,12 @@ import '../quotes/quotes_view.dart';
 import '../account/account.dart';
 import '../../models/layout_type.dart';
 
-class DesktopLayout extends StatefulWidget {
+class DesktopApp extends StatefulWidget {
   @override
-  _DesktopLayoutState createState() => _DesktopLayoutState();
+  _DesktopAppState createState() => _DesktopAppState();
 }
 
-class _DesktopLayoutState extends State<DesktopLayout> {
+class _DesktopAppState extends State<DesktopApp> {
   final _securitiesState = GetIt.I<SecuritiesState>();
 
   @override
@@ -26,22 +25,13 @@ class _DesktopLayoutState extends State<DesktopLayout> {
           child: Text('Выберите инструмент', style: Theme.of(context).textTheme.display1),
         )
       ) 
-      : SecurityView(
-        key: ValueKey(_securitiesState.current.id),
-        security: _securitiesState.current,
-        securityType: _securitiesState.securityType,
-        layoutType: LayoutType.desktop,
-      );
+      : SecurityView();
 
-    return Observer(
-      builder: (_) => Row(
-        children: [
+    return Row(
+      children: [
           Container(
             width: 300,
-            child: QuotesView(
-              onPressed: _securitiesState.setCurrent,
-              selectedItem: _securitiesState.current
-            ),
+            child: QuotesView(),
           ),
           Container(
             width: 1,
@@ -65,7 +55,6 @@ class _DesktopLayoutState extends State<DesktopLayout> {
             )
           )
         ],
-      ),
     );
   }
 }

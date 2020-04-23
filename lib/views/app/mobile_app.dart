@@ -1,36 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
-import '../../state/securities_state.dart';
 import '../account/account.dart';
 import '../quotes/quotes_view.dart';
-import '../security/security_view.dart';
 import '../more/more.dart';
 
-class MobileLayout extends StatefulWidget {
+class MobileApp extends StatefulWidget {
   @override
-  _MobileLayoutState createState() => _MobileLayoutState();
+  _MobileAppState createState() => _MobileAppState();
 }
 
-class _MobileLayoutState extends State<MobileLayout> {
-  final _securitiesState = GetIt.I<SecuritiesState>();
-
+class _MobileAppState extends State<MobileApp> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions;
 
   @override
   void initState() {
     _widgetOptions = [
-      QuotesView(
-        onPressed: (security) {
-          Navigator.push(context, new MaterialPageRoute(
-            builder: (BuildContext context) => SecurityView(
-              security: security,
-              securityType: _securitiesState.securityType,
-            ),
-          ));
-        }
-      ),
+      QuotesView(),
       Account(),
       More(),
     ];

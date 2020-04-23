@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../models/security.dart';
-import '../../models/quote.dart';
-import '../../connectors/connector.dart';
 import '../ui/number_currency.dart';
 import '../ui/number_currency_and_percent.dart';
+import '../../state/quotes_state.dart';
 
 class QuoteTile extends StatefulWidget {
   final Security security;
@@ -27,17 +27,15 @@ class QuoteTile extends StatefulWidget {
 }
 
 class _QuoteTileState extends State<QuoteTile> {
-  final Connector connector = GetIt.I<Connector>();
+  final QuotesState _quotesState = GetIt.I<QuotesState>();
   Timer _timerDelay;
-  Stream<Quote> quotes;
+  VoidCallback unconnect;
 
   @override
   void initState() {
     super.initState();
-    _timerDelay = Timer(Duration(seconds: 1), () {
-      setState(() {
-        quotes = connector.subscribeQuote(widget.security.id);
-      });   
+    _timerDelay = Timer(Duration(milliseconds: 100), () {
+      unconnect = _quotesState.connectQuote(widget.security.id);  
     });
   }
 
@@ -56,7 +54,9 @@ class _QuoteTileState extends State<QuoteTile> {
   @override
   void dispose() {
     _timerDelay.cancel();
-    connector.unsubscribeQuote(widget.security.id);
+    if (unconnect != null) {
+      unconnect();
+    }
     super.dispose();
   }
 
@@ -71,16 +71,12 @@ class _QuoteTileState extends State<QuoteTile> {
       title: Text(widget.security.name, style: TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(widget.security.id),
       selected: widget.selected,
-      trailing: StreamBuilder<Quote>(
-        stream: quotes,
-        builder: (context, snapshot) {
-          double last = widget.security.last;
-          double change = widget.security.change;
+      trailing: Observer(
+        builder: (_) {
+          final quote = _quotesState.quotes[widget.security.id];
 
-          if(snapshot.hasData) {
-            last = snapshot.data.last;
-            change = snapshot.data.change;
-          }
+          final last = quote == null ? widget.security.last : quote.last;
+          final change = quote == null ?  widget.security.change : quote.change;
 
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,

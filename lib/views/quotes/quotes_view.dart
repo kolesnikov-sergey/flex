@@ -18,13 +18,7 @@ final securityTypes = {
 };
 
 class QuotesView extends StatefulWidget {
-  final Function(Security) onPressed;
-  final Security selectedItem;
-
-  QuotesView({
-    @required this.onPressed,
-    this.selectedItem
-  });
+  QuotesView();
 
   @override
   _State createState() => _State();
@@ -37,6 +31,12 @@ class _State extends State<QuotesView> {
   void initState() {
     _securitiesState.loadSecurities(SecurityType.shares);
     super.initState();
+  }
+
+  void _selectSecurity(Security security) {
+    _securitiesState.setCurrent(security);
+
+    Navigator.pushNamed(context, '/security');
   }
 
   @override
@@ -65,10 +65,10 @@ class _State extends State<QuotesView> {
                 hasError: false,
                 onRetry: () => _securitiesState.loadSecurities(_securitiesState.securityType),
                 child: QuotesList(
-                  quotes: _securitiesState.securities,
+                  quotes: _securitiesState.filteredSecurities,
                   securityType: _securitiesState.securityType,
-                  onPressed: widget.onPressed,
-                  selectedItem: widget.selectedItem
+                  onPressed: _selectSecurity,
+                  selectedItem: _securitiesState.current
                 ),
               )
             ),    
