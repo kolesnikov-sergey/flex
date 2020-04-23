@@ -13,7 +13,7 @@ class AddOrderButton extends StatelessWidget {
         child: MaterialButton(
           minWidth: double.infinity,
           child: Text('ЗАЯВКА'),
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).accentColor,
           onPressed: onPressed,
         )
       )

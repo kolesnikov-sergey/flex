@@ -20,6 +20,9 @@ class TradingApp extends StatelessWidget {
       title: 'flex',
       theme: ThemeData(
         primaryColor: Colors.black,
+        appBarTheme: AppBarTheme(
+          color: Colors.black12,
+        ),
         accentColor: accentColor,
         brightness: Brightness.dark,
         toggleableActiveColor: accentColor,

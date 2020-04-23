@@ -40,10 +40,7 @@ class _SecurityViewState extends State<SecurityView> {
             child: Container(
               width: 450,
               height: 520, // TODO height by content
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: OrderView()
-              )
+              child: OrderView()
             )
           )
         );
