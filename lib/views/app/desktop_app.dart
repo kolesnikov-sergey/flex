@@ -25,6 +25,7 @@ class _DesktopAppState extends State<DesktopApp> {
           ),
           VerticalDivider(
             width: 1,
+            color: Theme.of(context).primaryColor,
           ),
           Flexible(
             flex: 3,
