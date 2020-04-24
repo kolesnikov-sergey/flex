@@ -47,6 +47,8 @@ class _State extends State<QuotesView> {
 
   @override
   Widget build(BuildContext context) {
+    final layoutType = Provider.of<LayoutType>(context);
+
     return Observer(
       builder: (_) => Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -74,7 +76,7 @@ class _State extends State<QuotesView> {
                   quotes: _securitiesState.filteredSecurities,
                   securityType: _securitiesState.securityType,
                   onPressed: _selectSecurity,
-                  selectedItem: _securitiesState.current
+                  selectedItem: layoutType == LayoutType.desktop ? _securitiesState.current : null
                 ),
               )
             ),    

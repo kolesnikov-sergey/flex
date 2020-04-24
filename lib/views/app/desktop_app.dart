@@ -25,7 +25,6 @@ class _DesktopAppState extends State<DesktopApp> {
           ),
           VerticalDivider(
             width: 1,
-            thickness: 1,
           ),
           Flexible(
             flex: 3,
