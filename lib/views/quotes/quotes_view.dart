@@ -31,7 +31,15 @@ class _State extends State<QuotesView> {
 
   @override
   void initState() {
-    _securitiesState.loadSecurities(SecurityType.shares);
+    void load() async {
+      await _securitiesState.loadSecurities(SecurityType.shares);
+      if (_securitiesState.current == null && _securitiesState.filteredSecurities.length > 0) {
+        _securitiesState.setCurrent(_securitiesState.filteredSecurities[0]);
+      }
+    }
+
+    load();
+
     super.initState();
   }
 

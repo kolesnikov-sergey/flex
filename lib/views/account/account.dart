@@ -39,7 +39,16 @@ class Account extends StatelessWidget {
           onChange: (market) {},
         ),
         appBar: AppBar(
-          title: Text(markets[Market.stock]),
+          title: layoutType == LayoutType.mobile
+            ? Text(markets[Market.stock])
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(markets[Market.stock]),
+                  AccountInfo(),
+                ]
+              ),
           bottom: layoutType == LayoutType.mobile
             ? PreferredSize(
                 preferredSize: Size.fromHeight(120),
@@ -51,7 +60,7 @@ class Account extends StatelessWidget {
                   ],
                 ),
               )
-            : null
+            : TabBar(tabs: tabs)
         ),
         body: TabBarView(
           children: [

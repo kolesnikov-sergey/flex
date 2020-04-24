@@ -1,17 +1,15 @@
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 import 'desktop_app.dart';
 import 'mobile_app.dart';
+import '../../models/layout_type.dart';
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, constraints) {
-        return constraints.maxWidth > 600
-          ? DesktopApp()
-          : MobileApp();
-      },
-    );
+    return Provider.of<LayoutType>(context) == LayoutType.desktop
+      ? DesktopApp()
+      : MobileApp();
   }
 }

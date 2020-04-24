@@ -31,13 +31,13 @@ class OrderBookBox extends StatelessWidget {
               alignment: alignment,
               child: Container(
                 color: color,
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                 child: Text('')
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
             alignment: alignment,
             decoration: BoxDecoration(
               border: Border(

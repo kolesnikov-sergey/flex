@@ -7,7 +7,7 @@ class AccountInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 17, right: 17, bottom: 20),
+      padding: const EdgeInsets.only(left: 17, right: 17),
       child: Row(
         mainAxisAlignment: Theme.of(context).platform == TargetPlatform.iOS
           ? MainAxisAlignment.center

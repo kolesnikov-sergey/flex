@@ -48,6 +48,7 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
       builder: (_) => Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -79,16 +80,16 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
               ),
             ),
             Container(
-              width: 400,
+              width: 350,
               child: DefaultTabController(
                 length: tabs.length,
                 initialIndex: 0,
                 child: Scaffold(
                   appBar: AppBar(
+                    automaticallyImplyLeading: false,
                     title: TabBar(tabs: tabs),
                   ),
                   body: TabBarView(
-                   
                     children: [
                       OrderBookView(
                         security: _securitiesState.current,
