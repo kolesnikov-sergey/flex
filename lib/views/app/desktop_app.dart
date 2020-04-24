@@ -23,7 +23,7 @@ class _DesktopAppState extends State<DesktopApp> {
             width: 300,
             child: QuotesView(),
           ),
-          VerticalDivider(
+          Container(
             width: 1,
             color: Theme.of(context).primaryColor,
           ),
