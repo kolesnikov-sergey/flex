@@ -3,7 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../state/securities_state.dart';
-import '../security/security_view.dart';
+import '../security/security_desktop.dart';
 import '../quotes/quotes_view.dart';
 import '../account/account.dart';
 
@@ -43,7 +43,7 @@ class _DesktopAppState extends State<DesktopApp> {
                             child: Text('Выберите инструмент', style: Theme.of(context).textTheme.display1),
                           )
                         ) 
-                        : SecurityView();
+                        : SecurityDesktop();
                     },
                   ),
                 ),

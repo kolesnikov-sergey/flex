@@ -1,9 +1,9 @@
-import 'package:flex/views/order/order_view.dart';
-import 'package:flex/views/security/security_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'models/layout_type.dart';
 import 'views/app/app.dart';
+import 'views/order/order_view.dart';
+import 'views/security/security_mobile.dart';
 import 'setup.dart';
 
 void main() {
@@ -41,7 +41,7 @@ class TradingApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/' : (context) => App(),
-        '/security': (context) => SecurityView(),
+        '/security': (context) => SecurityMobile(),
         '/order': (context) => OrderView(),
       },
     );

@@ -14,11 +14,11 @@ class Summary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         Expanded(
           child: Padding(
             padding: EdgeInsets.all(10),
-            child: Column(
+            child: ListView(
               children: [
                 Padding(padding: EdgeInsets.only(top: 10)),
                 RowValue(
@@ -84,11 +84,12 @@ class Summary extends StatelessWidget {
                     decimals: 0,
                   ),
                 ),
+                Padding(padding: EdgeInsets.only(top: 10)),
               ],
             ),
           ),
         ),
-        onAddOrder ?? AddOrderButton(onPressed: () => onAddOrder(null))
+        if (onAddOrder != null) AddOrderButton(onPressed: () => onAddOrder(null))
       ],
     );
   }
