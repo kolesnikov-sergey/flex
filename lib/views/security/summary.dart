@@ -9,7 +9,7 @@ class Summary extends StatelessWidget {
   final Security security;
   final ValueChanged<double> onAddOrder;
 
-  Summary({@required this.security, @required this.onAddOrder});
+  Summary({@required this.security, this.onAddOrder});
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class Summary extends StatelessWidget {
             ),
           ),
         ),
-        AddOrderButton(onPressed: () => onAddOrder(null))
+        onAddOrder ?? AddOrderButton(onPressed: () => onAddOrder(null))
       ],
     );
   }

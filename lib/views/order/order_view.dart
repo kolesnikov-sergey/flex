@@ -1,4 +1,3 @@
-import 'package:flex/state/securities_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -7,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'buy_sell_info.dart';
 import 'order_form.dart';
 import '../../models/order.dart';
+import '../../state/securities_state.dart';
 
 class OrderView extends StatefulWidget {
   final double price;

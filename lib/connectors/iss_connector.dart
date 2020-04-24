@@ -105,8 +105,8 @@ class IssConnector implements Connector {
     final query = {
       'iss.meta': 'off',
       'iss.json': 'extended',
-      'from': '2016-01-01',
-      'interval': '7'
+      'from': '2010-01-01',
+      'interval': '31'
     };
 
     final uri = Uri.https(

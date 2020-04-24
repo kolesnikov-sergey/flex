@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'account_info.dart';
 import 'positions.dart';
@@ -21,14 +22,13 @@ class Account extends StatelessWidget {
     Tab(text: 'СДЕЛКИ')
   ];
 
-  Account({
-    this.layoutType,
-  });
+  Account();
 
-  final LayoutType layoutType;
 
   @override
   Widget build(BuildContext context) {
+    final layoutType = Provider.of<LayoutType>(context);
+
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(

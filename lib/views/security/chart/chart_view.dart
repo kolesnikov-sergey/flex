@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import 'chart.dart';
+import 'chart_candles.dart';
 import '../add_order_button.dart';
 import '../../../models/security.dart';
 import '../../../models/candle.dart';
@@ -18,7 +18,7 @@ class ChartView extends StatefulWidget {
   ChartView({
     @required this.security,
     @required this.securityType,
-    @required this.onAddOrder
+    this.onAddOrder
   });
 
   @override
@@ -57,9 +57,9 @@ class _ChartInfoState extends State<ChartView> {
           return Column(
             children: <Widget>[
               Expanded(
-                child: Chart(snapshot.data)    
+                child: ChartCandles(snapshot.data)    
               ),
-              AddOrderButton(onPressed: () => widget.onAddOrder(null))
+              if (widget.onAddOrder != null) AddOrderButton(onPressed: () => widget.onAddOrder(null))
             ],
           );
       },

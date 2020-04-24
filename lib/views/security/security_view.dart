@@ -1,4 +1,3 @@
-import 'package:flex/state/securities_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,6 +9,7 @@ import 'summary.dart';
 import 'order_book/order_book_view.dart';
 import '../order/order_view.dart';
 import '../../models/layout_type.dart';
+import '../../state/securities_state.dart';
 
 class SecurityView extends StatefulWidget {
   SecurityView({
@@ -34,17 +34,21 @@ class _SecurityViewState extends State<SecurityView> {
     if (layoutType == LayoutType.mobile) {
       Navigator.pushNamed(context, '/order');
     } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => Dialog(
-            child: Container(
-              width: 450,
-              height: 520, // TODO height by content
-              child: OrderView()
-            )
-          )
-        );
-      }
+      _showOrderDialog();
+    }
+  }
+
+  void _showOrderDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => Dialog(
+        child: Container(
+          width: 450,
+          height: 520, // TODO height by content
+          child: OrderView()
+        )
+      )
+    );
   }
 
   @override
@@ -59,11 +63,28 @@ class _SecurityViewState extends State<SecurityView> {
           resizeToAvoidBottomPadding: false,
           appBar: AppBar(
             leading: layoutType == LayoutType.mobile ? BackButton() : null,
-            title: Text(_securitiesState.current.name),
+            title: layoutType == LayoutType.mobile
+              ? Text(_securitiesState.current.name)
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(_securitiesState.current.name),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: MaterialButton(
+                        height: 40,
+                        child: Text('ЗАЯВКА'),
+                        color: Theme.of(context).accentColor,
+                        onPressed: _showOrderDialog,
+                      ),
+                    ),
+                  ],
+                ),
             bottom: layoutType == LayoutType.mobile 
               ? TabBar(tabs: tabs)
               : null,
             actions: [
+              
               IconButton(
                 icon: Icon(Icons.star_border),
                 onPressed: () {},
@@ -93,7 +114,6 @@ class _SecurityViewState extends State<SecurityView> {
             : ChartView(
                 security: _securitiesState.current,
                 securityType:  _securitiesState.securityType,
-                onAddOrder: _navigateToOrder,
               )
         ),
       )

@@ -14,7 +14,7 @@ void main() {
 class TradingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final accentColor = Colors.blue;
+    final accentColor = Colors.blueAccent;
 
     return MaterialApp(
       title: 'flex',

@@ -6,7 +6,6 @@ import '../../state/securities_state.dart';
 import '../security/security_view.dart';
 import '../quotes/quotes_view.dart';
 import '../account/account.dart';
-import '../../models/layout_type.dart';
 
 class DesktopApp extends StatefulWidget {
   @override
@@ -22,13 +21,11 @@ class _DesktopAppState extends State<DesktopApp> {
       children: [
           Container(
             width: 300,
-            child: QuotesView(
-              layoutType: LayoutType.desktop,
-            ),
+            child: QuotesView(),
           ),
-          Container(
+          VerticalDivider(
             width: 1,
-            color: Theme.of(context).primaryColor,
+            thickness: 1,
           ),
           Flexible(
             flex: 3,
@@ -52,9 +49,7 @@ class _DesktopAppState extends State<DesktopApp> {
                 ),
                 Flexible(
                   flex: 1,
-                  child: Account(
-                    layoutType: LayoutType.desktop,
-                  ),
+                  child: Account(),
                 )
               ],
             )
