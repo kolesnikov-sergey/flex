@@ -115,7 +115,10 @@ class IssConnector implements Connector {
       query
     );
 
-    return _get(uri, _parseCandles);
+    final candles = await _get(uri, _parseCandles);
+    candles.sort((a, b) => a.begin.compareTo(b.begin));
+
+    return candles;
   }
 
   Future<List<OrderBook>> getOrderBook(String id, SecurityType type) async {
