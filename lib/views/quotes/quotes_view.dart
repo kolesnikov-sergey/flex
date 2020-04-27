@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../models/security.dart';
 import '../../models/layout_type.dart';
 import '../../state/securities_state.dart';
-import '../ui/flex_drawer.dart';
+import '../ui/flex_dropdown.dart';
 import '../ui/search_text_field.dart';
 import '../ui/loadable.dart';
 
@@ -46,7 +46,7 @@ class _State extends State<QuotesView> {
   void _selectSecurity(Security security) {
     _securitiesState.setCurrent(security);
 
-    final layoutType = Provider.of<LayoutType>(context);
+    final layoutType = Provider.of<LayoutType>(context, listen: false);
 
     if (layoutType == LayoutType.mobile) {
       Navigator.pushNamed(context, '/security');
@@ -60,14 +60,12 @@ class _State extends State<QuotesView> {
     return Observer(
       builder: (_) => Scaffold(
         resizeToAvoidBottomPadding: false,
-        drawer: FlexDrawer(
-          title: 'Инструменты',
-          value: _securitiesState.securityType,
-          options: securityTypes,
-          onChange: (type) => _securitiesState.loadSecurities(type),
-        ),
         appBar: AppBar(
-          title: Text(securityTypes[_securitiesState.securityType])
+          title: FlexDropdown(
+            value: _securitiesState.securityType,
+            items: securityTypes,
+            onChanged: _securitiesState.loadSecurities,
+          )
         ),
         body: Column(
           children: [

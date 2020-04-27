@@ -5,7 +5,7 @@ import 'account_info.dart';
 import 'positions.dart';
 import 'orders.dart';
 import 'trades.dart';
-import '../ui/flex_drawer.dart';
+import '../ui/flex_dropdown.dart';
 import '../../models/market.dart';
 import '../../models/layout_type.dart';
 
@@ -32,20 +32,14 @@ class Account extends StatelessWidget {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
-        drawer: FlexDrawer(
-          title: 'Рынок',
-          options: markets,
-          value: Market.stock,
-          onChange: (market) {},
-        ),
         appBar: AppBar(
           title: layoutType == LayoutType.mobile
-            ? Text(markets[Market.stock])
+            ? FlexDropdown(value: Market.stock, items: markets, onChanged: (val) {})
             : Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text(markets[Market.stock]),
+                  FlexDropdown(value: Market.stock, items: markets, onChanged: (val) {}),
                   AccountInfo(),
                 ]
               ),
@@ -60,7 +54,13 @@ class Account extends StatelessWidget {
                   ],
                 ),
               )
-            : TabBar(tabs: tabs)
+            : PreferredSize(
+                preferredSize: Size.fromHeight(50),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: TabBar(tabs: tabs, isScrollable: true),
+                )
+              ),
         ),
         body: TabBarView(
           children: [

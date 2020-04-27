@@ -18,7 +18,7 @@ class SecurityMobile extends StatefulWidget {
 }
 
 class _SecurityMobileState extends State<SecurityMobile> {
-  final tabs = [
+  final _tabs = [
     Tab(text: 'ГРАФИК'),
     Tab(text: 'СВОДКА'),
     Tab(text: 'СТАКАН')
@@ -33,7 +33,7 @@ class _SecurityMobileState extends State<SecurityMobile> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: tabs.length,
+      length: _tabs.length,
       initialIndex: 0,
       child: Observer(
         builder: (_) => Scaffold(
@@ -41,9 +41,8 @@ class _SecurityMobileState extends State<SecurityMobile> {
           appBar: AppBar(
             leading: BackButton(),
             title: Text(_securitiesState.current.name),
-            bottom: TabBar(tabs: tabs),
+            bottom: TabBar(tabs: _tabs),
             actions: [
-              
               IconButton(
                 icon: Icon(Icons.star_border),
                 onPressed: () {},

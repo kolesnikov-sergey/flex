@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'add_order_button.dart';
+import 'order_button.dart';
 import '../../models/security.dart';
 import '../ui/row_value.dart';
 import '../ui/number_currency.dart';
@@ -89,7 +89,7 @@ class Summary extends StatelessWidget {
             ),
           ),
         ),
-        if (onAddOrder != null) AddOrderButton(onPressed: () => onAddOrder(null))
+        if (onAddOrder != null) OrderButton(fullWidth: true, onPressed: () => onAddOrder(null))
       ],
     );
   }

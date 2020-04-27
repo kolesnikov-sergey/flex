@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 
 import 'chart/chart_view.dart';
 import 'summary.dart';
+import 'order_button.dart';
 import 'order_book/order_book_view.dart';
 import '../order/order_view.dart';
 import '../../state/securities_state.dart';
@@ -53,15 +54,7 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(_securitiesState.current.name),
-              Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: MaterialButton(
-                  height: 40,
-                  child: Text('ЗАЯВКА'),
-                  color: Theme.of(context).accentColor,
-                  onPressed: _showOrderDialog,
-                ),
-              ),
+              OrderButton(onPressed: _showOrderDialog),
             ],
           ),
           actions: [

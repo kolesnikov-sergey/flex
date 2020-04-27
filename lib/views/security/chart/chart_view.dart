@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'chart_candles.dart';
-import '../add_order_button.dart';
+import '../order_button.dart';
 import '../../../models/security.dart';
 import '../../../models/candle.dart';
 import '../../../connectors/connector.dart';
@@ -59,7 +59,7 @@ class _ChartInfoState extends State<ChartView> {
               Expanded(
                 child: ChartCandles(snapshot.data)    
               ),
-              if (widget.onAddOrder != null) AddOrderButton(onPressed: () => widget.onAddOrder(null))
+              if (widget.onAddOrder != null) OrderButton(fullWidth: true, onPressed: () => widget.onAddOrder(null))
             ],
           );
       },
