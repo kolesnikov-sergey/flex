@@ -82,22 +82,17 @@ class _QuoteTileState extends State<QuoteTile> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: NumberCurrency(
+              NumberCurrency(
                   key: ValueKey(last),
                   value: last,
                   currency: _getCurrency(),
                   decimals: widget.security.decimals,
                   style: Theme.of(context).textTheme.body2
                 ),
-              ),
               Padding(
                 padding: EdgeInsets.only(top: 2),
               ),
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: NumberCurrencyAndPercent(
+              NumberCurrencyAndPercent(
                   key: ValueKey(change),
                   value: change,
                   valuePercent: change / widget.security.open,
@@ -106,7 +101,6 @@ class _QuoteTileState extends State<QuoteTile> {
                   prefix: change != null && change > 0 ? '+': '',
                   style: TextStyle(color: change < 0 ? Colors.pink : Colors.green)
                 ),
-              )
             ],
           );
         }
