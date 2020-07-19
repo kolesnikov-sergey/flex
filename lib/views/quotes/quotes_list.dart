@@ -9,26 +9,26 @@ class QuotesList extends StatelessWidget {
   final Security selectedItem;
   final Function(Security) onPressed;
 
-  QuotesList({
-    @required this.quotes,
-    @required this.securityType,
-    @required this.selectedItem,
-    @required this.onPressed
-  });
+  QuotesList(
+      {@required this.quotes,
+      @required this.securityType,
+      @required this.selectedItem,
+      @required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: quotes.length,
-      itemBuilder: (context, index) => QuoteTile(
-        security: quotes[index],
-        securityType: securityType,
-        onPressed: onPressed,
-        selected: quotes[index] == selectedItem,
-      ),
-      separatorBuilder: (context, index) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Divider(height: 1, thickness: 1)
+    return Scrollbar(
+      child: ListView.separated(
+        itemCount: quotes.length,
+        itemBuilder: (context, index) => QuoteTile(
+          security: quotes[index],
+          securityType: securityType,
+          onPressed: onPressed,
+          selected: quotes[index] == selectedItem,
+        ),
+        separatorBuilder: (context, index) => Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Divider(height: 1, thickness: 1)),
       ),
     );
   }
