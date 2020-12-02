@@ -83,7 +83,6 @@ class _QuoteTileState extends State<QuoteTile> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               NumberCurrency(
-                  key: ValueKey(last),
                   value: last,
                   currency: _getCurrency(),
                   decimals: widget.security.decimals,

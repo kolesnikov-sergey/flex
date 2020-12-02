@@ -57,24 +57,26 @@ class _State extends State<QuotesView> {
   Widget build(BuildContext context) {
     final layoutType = Provider.of<LayoutType>(context);
 
-    return Observer(
-      builder: (_) => Scaffold(
-        resizeToAvoidBottomPadding: false,
-        appBar: AppBar(
-          title: FlexDropdown(
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      appBar: AppBar(
+        title: Observer(builder: (_) {
+          return FlexDropdown(
             value: _securitiesState.securityType,
             items: securityTypes,
             onChanged: _securitiesState.loadSecurities,
-          )
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: SearchTextField(onChanged: _securitiesState.setSearch),
-            ),
-            Flexible(
-              child: Loadable(
+          );
+        }) 
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: SearchTextField(onChanged: _securitiesState.setSearch),
+          ),
+          Flexible(
+            child: Observer(builder: (_) {
+              return Loadable(
                 isLoading: _securitiesState.isLoading,
                 hasError: false,
                 onRetry: () => _securitiesState.loadSecurities(_securitiesState.securityType),
@@ -84,11 +86,11 @@ class _State extends State<QuotesView> {
                   onPressed: _selectSecurity,
                   selectedItem: layoutType == LayoutType.desktop ? _securitiesState.current : null
                 ),
-              )
-            ),    
-          ],
-        )
-      ),
+              );
+            })
+          ),    
+        ],
+      )
     );
   }
 }

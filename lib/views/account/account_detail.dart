@@ -8,20 +8,20 @@ class AccountDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: BackButton(),
-        title: Text('Портфель'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Cirlce(),
-            House(),
-          ],
+        appBar: AppBar(
+          leading: BackButton(),
+          title: Text('Портфель'),
         ),
-      )
-    );
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Cirlce(),
+              House(),
+            ],
+          ),
+        )
+      );
   }
 }
 
@@ -48,8 +48,8 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
       vsync: this,
       duration: Duration(milliseconds: 500)
     )
-    ..addListener(_animate)
-    ..forward(from: 0);
+          ..addListener(_animate)
+          ..forward(from: 0);
   }
 
   @override
@@ -61,7 +61,8 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
 
   void _animate() {
     setState(() {
-      percentage = lerpDouble(percentage, newPercentage, percentageAnimationController.value);
+      percentage = lerpDouble(
+          percentage, newPercentage, percentageAnimationController.value);
     });
   }
 
@@ -72,7 +73,7 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
   void _upValue(int value) {
     setState(() {
       newPercentage += value ?? 10;
-      if(newPercentage >= 100) {
+      if (newPercentage >= 100) {
         newPercentage = 0;
       }
       percentageAnimationController.forward(from: 0);
@@ -82,9 +83,7 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: _CirclePainter(
-        completePercent: percentage
-      ),
+      painter: _CirclePainter(completePercent: percentage),
       child: Container(
         height: 200,
         width: 200,
@@ -121,24 +120,15 @@ class _CirclePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10;
 
-    final center  = Offset(size.width / 2, size.height / 2);
-    final radius  = max(size.width / 2, size.height / 2);
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = max(size.width / 2, size.height / 2);
 
-    canvas.drawCircle(
-      center,
-      radius,
-      line
-    );
+    canvas.drawCircle(center, radius, line);
 
     final arcAngle = 2 * pi * completePercent / 100;
 
-    canvas.drawArc(
-      Rect.fromCircle(center: center, radius: radius),
-      -pi / 2,
-      arcAngle,
-      false,
-      complete
-    );
+    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2,
+        arcAngle, false, complete);
   }
 
   @override
@@ -161,11 +151,9 @@ class _HouseState extends State<House> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    houseAnimationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 2000)
-    )
-    ..addListener(_animate);
+    houseAnimationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 2000))
+          ..addListener(_animate);
 
     houseAnimationController.forward();
   }
@@ -186,9 +174,7 @@ class _HouseState extends State<House> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size(200, 200),
-      painter: _HousePainter(
-        init: houseInit
-      ),
+      painter: _HousePainter(init: houseInit),
     );
   }
 }
@@ -205,7 +191,7 @@ class _HousePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10;
-    
+
     final start = Offset(0, size.height / 4);
     final downLeft = Offset(0, size.height);
     final downRight = Offset(size.width, size.height);
@@ -214,22 +200,22 @@ class _HousePainter extends CustomPainter {
 
     canvas.drawLine(start, downLeft, line);
 
-    if(init > 0.2) {
+    if (init > 0.2) {
       canvas.drawLine(downLeft, downRight, line);
     }
 
-    if(init > 0.4) {
+    if (init > 0.4) {
       canvas.drawLine(downRight, unRight, line);
     }
 
-    if(init > 0.6) {
+    if (init > 0.6) {
       canvas.drawLine(unRight, start, line);
     }
-    
-    if(init > 0.8) {
+
+    if (init > 0.8) {
       canvas.drawLine(start, top, line);
       canvas.drawLine(unRight, top, line);
-    }    
+    }
   }
 
   @override

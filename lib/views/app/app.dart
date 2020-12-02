@@ -8,8 +8,8 @@ import '../../models/layout_type.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Provider.of<LayoutType>(context) == LayoutType.desktop
-      ? DesktopApp()
-      : MobileApp();
+    return context.watch<LayoutType>() == LayoutType.desktop
+        ? DesktopApp()
+        : MobileApp();
   }
 }
