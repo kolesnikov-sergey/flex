@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'connector.dart';
@@ -207,8 +206,7 @@ class IssConnector implements Connector {
       throw new Exception('request error, code: ${response.statusCode}');
     }
 
-    // todo тут может возникать необработанное исключение
-    return await compute(parse, response.body);
+    return parse(response.body);
   }
 
   String _getEngineBySecurityType(SecurityType type) {
