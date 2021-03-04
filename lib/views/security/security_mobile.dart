@@ -37,7 +37,7 @@ class _SecurityMobileState extends State<SecurityMobile> {
       initialIndex: 0,
       child: Observer(
         builder: (_) => Scaffold(
-          resizeToAvoidBottomPadding: false,
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             leading: BackButton(),
             title: Text(_securitiesState.current.name),

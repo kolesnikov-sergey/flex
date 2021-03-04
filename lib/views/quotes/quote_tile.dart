@@ -68,7 +68,7 @@ class _QuoteTileState extends State<QuoteTile> {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: tap,
-      title: Text(widget.security.name, style: TextStyle(fontWeight: FontWeight.bold)),
+      title: Text(widget.security.name),
       subtitle: Text(widget.security.id),
       selected: widget.selected,
       trailing: Observer(

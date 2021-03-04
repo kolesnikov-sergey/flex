@@ -58,7 +58,7 @@ class _State extends State<QuotesView> {
     final layoutType = Provider.of<LayoutType>(context);
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Observer(builder: (_) {
           return FlexDropdown(

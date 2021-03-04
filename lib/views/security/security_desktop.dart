@@ -47,7 +47,7 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Row(

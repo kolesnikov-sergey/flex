@@ -26,7 +26,7 @@ dependencies:
   mobx: ^1.2.1
   mobx_codegen: ^1.1.2
   flutter_mobx: ^1.1.0
-  flutter_candlesticks: ^0.1.4
+  flutter_candlesticks_chart: ^0.1.1
   intl: ^0.16.1
 
 
