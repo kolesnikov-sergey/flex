@@ -48,7 +48,7 @@ class Security {
       decimals: json['DECIMALS'],
       minStep: json['MINSTEP']?.toDouble() ?? 0,
       lotSize: json['LOTSIZE'] ?? 1,
-      currency: json['CURRENCYID'],
+      currency: json['CURRENCYID'] ?? '',
       faceValue: json['FACEVALUE']?.toDouble() ?? 0
     );
   }
