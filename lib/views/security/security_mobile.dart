@@ -10,7 +10,7 @@ import '../../state/securities_state.dart';
 
 class SecurityMobile extends StatefulWidget {
   SecurityMobile({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -26,12 +26,14 @@ class _SecurityMobileState extends State<SecurityMobile> {
 
   final _securitiesState = GetIt.I<SecuritiesState>();
 
-  void _navigateToOrder(double price) {
+  void _navigateToOrder(double? price) {
     Navigator.pushNamed(context, '/order');
   }
 
   @override
   Widget build(BuildContext context) {
+    final currentSecurity = _securitiesState.current;
+
     return DefaultTabController(
       length: _tabs.length,
       initialIndex: 0,
@@ -40,7 +42,7 @@ class _SecurityMobileState extends State<SecurityMobile> {
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             leading: BackButton(),
-            title: Text(_securitiesState.current.name),
+            title: Text(_securitiesState.current?.name ?? ''),
             bottom: TabBar(tabs: _tabs),
             actions: [
               IconButton(
@@ -51,18 +53,18 @@ class _SecurityMobileState extends State<SecurityMobile> {
           ),
           body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
-            children: [
+            children: currentSecurity == null ? [] : [
               ChartView(
-                security: _securitiesState.current,
+                security: currentSecurity,
                 securityType: _securitiesState.securityType,
                 onAddOrder: _navigateToOrder,
               ),
               Summary(
-                security: _securitiesState.current,
+                security: currentSecurity,
                 onAddOrder: _navigateToOrder,
               ),
               OrderBookView(
-                security: _securitiesState.current,
+                security: currentSecurity,
                 securityType:  _securitiesState.securityType,
                 onAddOrder: _navigateToOrder,
               )

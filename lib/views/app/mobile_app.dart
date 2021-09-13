@@ -11,7 +11,7 @@ class MobileApp extends StatefulWidget {
 
 class _MobileAppState extends State<MobileApp> {
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions;
+  late List<Widget> _widgetOptions;
 
   @override
   void initState() {
@@ -31,9 +31,9 @@ class _MobileAppState extends State<MobileApp> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.equalizer), title: Text('Котировки')),
-          BottomNavigationBarItem(icon: Icon(Icons.business_center), title: Text('Портфель')),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), title: Text('Ещё')),
+          BottomNavigationBarItem(icon: Icon(Icons.equalizer), label: 'Котировки'),
+          BottomNavigationBarItem(icon: Icon(Icons.business_center), label: 'Портфель'),
+          BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Ещё'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

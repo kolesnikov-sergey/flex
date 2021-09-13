@@ -16,9 +16,9 @@ class QuoteTile extends StatefulWidget {
   final bool selected;
 
   QuoteTile({
-    @required this.security,
-    @required this.securityType,
-    @required this.onPressed,
+    required this.security,
+    required this.securityType,
+    required this.onPressed,
     this.selected = true
   });
 
@@ -28,8 +28,8 @@ class QuoteTile extends StatefulWidget {
 
 class _QuoteTileState extends State<QuoteTile> {
   final QuotesState _quotesState = GetIt.I<QuotesState>();
-  Timer _timerDelay;
-  VoidCallback unconnect;
+  late Timer _timerDelay;
+  Function? unconnect;
 
   @override
   void initState() {
@@ -54,8 +54,9 @@ class _QuoteTileState extends State<QuoteTile> {
   @override
   void dispose() {
     _timerDelay.cancel();
+ 
     if (unconnect != null) {
-      unconnect();
+      unconnect!();
     }
     super.dispose();
   }
@@ -86,7 +87,7 @@ class _QuoteTileState extends State<QuoteTile> {
                   value: last,
                   currency: _getCurrency(),
                   decimals: widget.security.decimals,
-                  style: Theme.of(context).textTheme.body2
+                  style: Theme.of(context).textTheme.bodyText2
                 ),
               Padding(
                 padding: EdgeInsets.only(top: 2),

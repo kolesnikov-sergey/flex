@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_candlesticks_chart/flutter_candlesticks_chart.dart';
+import 'package:interactive_chart/interactive_chart.dart';
 
 import '../../../models/candle.dart';
 import '../../../tools/currency_symbol.dart';
@@ -13,24 +13,24 @@ class ChartCandles extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10),
-      child: CandleStickChart(
-        data: _createData(),
+      child: InteractiveChart(
+        candles: _createData(),
         //enableGridLines: true,
-        volumeProp: 0.2,
+        // volumeProp: 0.2,
         //labelPrefix: CurrencySymbol.currencies['RUB'],
       ),
     );
   }
 
-  List<CandleStickChartData> _createData() {
+  List<CandleData> _createData() {
     return candles
-      .map((candle) => CandleStickChartData(
+      .map((candle) => CandleData(
         open: candle.open,
         close: candle.close,
         high: candle.high,
         low: candle.low,
         volume: candle.volume,
-        dateTime: candle.begin,
+        timestamp: candle.begin.millisecondsSinceEpoch,
       ))
       .toList();
   }

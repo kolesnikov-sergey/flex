@@ -40,7 +40,7 @@ class _DesktopAppState extends State<DesktopApp> {
                           key: ValueKey('empty'),
                           appBar: AppBar(),
                           body: Center(
-                            child: Text('Выберите инструмент', style: Theme.of(context).textTheme.display1),
+                            child: Text('Выберите инструмент', style: Theme.of(context).textTheme.headline6),
                           )
                         ) 
                         : SecurityDesktop();

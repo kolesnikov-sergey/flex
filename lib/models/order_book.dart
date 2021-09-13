@@ -1,10 +1,10 @@
 class OrderBook {
   final double price;
-  final int sell;
-  final int buy;
+  final int? sell;
+  final int? buy;
 
   OrderBook({
-    this.price,
+    required this.price,
     this.sell,
     this.buy
   });

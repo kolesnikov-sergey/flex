@@ -4,8 +4,8 @@ class Position {
   int qty; // todo make final
 
   Position({
-    this.id,
-    this.name,
-    this.qty
+    required this.id,
+    required this.name,
+    required this.qty
   });
 }

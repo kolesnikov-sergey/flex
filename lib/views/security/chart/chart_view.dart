@@ -13,11 +13,11 @@ import '../../ui/flex_future_builder.dart';
 class ChartView extends StatefulWidget {
   final Security security;
   final SecurityType securityType;
-  final ValueChanged<double> onAddOrder;
+  final ValueChanged<double?>? onAddOrder;
 
   ChartView({
-    @required this.security,
-    @required this.securityType,
+    required this.security,
+    required this.securityType,
     this.onAddOrder
   });
 
@@ -27,7 +27,7 @@ class ChartView extends StatefulWidget {
 
 class _ChartInfoState extends State<ChartView> {
   final Connector connector = GetIt.I<Connector>();
-  Future<List<Candle>> candles;
+  late Future<List<Candle>> candles;
   
   @override
   void initState() {
@@ -57,9 +57,9 @@ class _ChartInfoState extends State<ChartView> {
           return Column(
             children: <Widget>[
               Expanded(
-                child: ChartCandles(snapshot.data)    
+                child: ChartCandles(snapshot.data ?? [])    
               ),
-              if (widget.onAddOrder != null) OrderButton(fullWidth: true, onPressed: () => widget.onAddOrder(null))
+              if (widget.onAddOrder != null) OrderButton(fullWidth: true, onPressed: () => widget.onAddOrder!(null))
             ],
           );
       },

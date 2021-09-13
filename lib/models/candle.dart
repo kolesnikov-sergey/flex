@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 class Candle {
   final double open;
   final double close;
@@ -11,14 +9,14 @@ class Candle {
   final DateTime end;
 
   Candle({
-    @required this.open,
-    @required this.close,
-    @required this.high,
-    @required this.low,
-    @required this.value,
-    @required this.volume,
-    @required this.begin,
-    @required this.end
+    required this.open,
+    required this.close,
+    required this.high,
+    required this.low,
+    required this.value,
+    required this.volume,
+    required this.begin,
+    required this.end
   });
 
   factory Candle.fromJson(Map<String, dynamic> json) {

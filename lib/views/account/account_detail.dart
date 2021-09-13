@@ -33,8 +33,9 @@ class Cirlce extends StatefulWidget {
 class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
   double percentage = 0;
   double newPercentage = 10;
-  AnimationController percentageAnimationController;
-  Timer timer;
+
+  late AnimationController percentageAnimationController;
+  late Timer timer;
 
   @override
   void initState() {
@@ -62,7 +63,7 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
   void _animate() {
     setState(() {
       percentage = lerpDouble(
-          percentage, newPercentage, percentageAnimationController.value);
+          percentage, newPercentage, percentageAnimationController.value) ?? 0;
     });
   }
 
@@ -72,7 +73,7 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
 
   void _upValue(int value) {
     setState(() {
-      newPercentage += value ?? 10;
+      newPercentage += value;
       if (newPercentage >= 100) {
         newPercentage = 0;
       }
@@ -104,7 +105,7 @@ class _CirlceState extends State<Cirlce> with SingleTickerProviderStateMixin {
 class _CirclePainter extends CustomPainter {
   double completePercent;
 
-  _CirclePainter({this.completePercent});
+  _CirclePainter({ required this.completePercent });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -145,7 +146,7 @@ class House extends StatefulWidget {
 class _HouseState extends State<House> with SingleTickerProviderStateMixin {
   double houseInit = 0;
 
-  AnimationController houseAnimationController;
+  late AnimationController houseAnimationController;
 
   @override
   void initState() {
@@ -182,7 +183,7 @@ class _HouseState extends State<House> with SingleTickerProviderStateMixin {
 class _HousePainter extends CustomPainter {
   double init;
 
-  _HousePainter({this.init});
+  _HousePainter({ required this.init });
 
   @override
   void paint(Canvas canvas, Size size) {

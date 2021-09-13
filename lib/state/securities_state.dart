@@ -18,23 +18,24 @@ abstract class SecuritiesStateBase with Store {
   SecurityType securityType = SecurityType.shares;
 
   @observable
-  String search;
+  String? search;
 
   @observable
   bool isLoading = false;
 
   @observable
-  Security current;
+  Security? current;
 
   @computed
   List<Security> get filteredSecurities {
+    final search = this.search;
     if (search == null || search.isEmpty) {
       return securities;
     }
   
     return securities
-      .where((item) => item.name.toLowerCase().contains(search?.toLowerCase())
-        || item.id.toLowerCase().contains(search?.toLowerCase())
+      .where((item) => item.name.toLowerCase().contains(search.toLowerCase())
+        || item.id.toLowerCase().contains(search.toLowerCase())
       )
       .toList();
   }

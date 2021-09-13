@@ -6,18 +6,24 @@ class FlexDropdown<T> extends StatelessWidget {
   final void Function(T) onChanged;
 
   FlexDropdown({
-    @required this.value,
-    @required this.items,
-    @required this.onChanged
+    required this.value,
+    required this.items,
+    required this.onChanged
   });
+
+  _handleChanged(T? value) {
+    if (value != null) {
+      onChanged(value);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton<T>(
       value: value,
-      style: Theme.of(context).textTheme.title,
+      style: Theme.of(context).textTheme.headline6,
       underline: Container(height: 0),
-      onChanged: onChanged,
+      onChanged: _handleChanged,
       items: items.entries.map((entry) {
         return DropdownMenuItem<T>(
           value: entry.key,

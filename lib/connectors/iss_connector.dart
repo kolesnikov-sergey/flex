@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:collection/collection.dart';
 
 import 'connector.dart';
 import '../models/security.dart';
@@ -54,19 +55,19 @@ class IssConnector implements Connector {
   }
 
   Stream<Position> subscribePositions() {
-    StreamController<Position> controller;
-    Timer timer;
+    StreamController<Position>? controller;
+    Timer? timer;
     controller = StreamController<Position>(
       onListen: () {
         timer = Timer(Duration(milliseconds: 100), () {
           _startedPositions.forEach((pos) {
-            controller.add(pos);
+            controller?.add(pos);
           });
         });
       },
       onCancel: () {
-        timer.cancel();
-        controller.close();
+        timer?.cancel();
+        controller?.close();
       }
     );
 
@@ -153,7 +154,7 @@ class IssConnector implements Connector {
 
   Future<void> createOrder(Order order) async {
     await Future.delayed(Duration(seconds: 1));
-    final current = _startedPositions.firstWhere((pos) => pos.id == order.id, orElse: () => null);
+    final current = _startedPositions.firstWhereOrNull((pos) => pos.id == order.id);
 
     if(current != null) {
       current.qty = current.qty + ((order.side == OrderSide.buy ? 1 : -1) * order.qty);
@@ -177,7 +178,7 @@ class IssConnector implements Connector {
     final securities = json.decode(responseBody)[1]['securities'];
     final marketdata = json.decode(responseBody)[1]['marketdata'];
 
-    final result = List<Security>();
+    final result = <Security>[];
 
     for (var i = 0; i < securities.length; i++) {
       final sec = securities[i];
@@ -209,7 +210,7 @@ class IssConnector implements Connector {
     return parse(response.body);
   }
 
-  String _getEngineBySecurityType(SecurityType type) {
+  String? _getEngineBySecurityType(SecurityType type) {
     switch(type) {
       case SecurityType.shares:
       case SecurityType.bonds:
@@ -223,7 +224,7 @@ class IssConnector implements Connector {
     }
   }
 
-  String _getMarketBySecurityType(SecurityType type) {
+  String? _getMarketBySecurityType(SecurityType type) {
     switch(type) {
       case SecurityType.shares:
         return 'shares';
@@ -238,7 +239,7 @@ class IssConnector implements Connector {
     }
   }
 
-  String _getBoardBySecurityType(SecurityType type) {
+  String? _getBoardBySecurityType(SecurityType type) {
     switch(type) {
       case SecurityType.shares:
         return 'TQBR';

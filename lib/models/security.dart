@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 class Security {
   final String id;
   final String name;
@@ -18,27 +16,27 @@ class Security {
   final double faceValue;
 
   Security({
-    @required this.id,
-    @required this.name,
-    @required this.open,
-    @required this.last,
-    @required this.high,
-    @required this.low,
-    @required this.bid,
-    @required this.offer,
-    @required this.valtoday,
-    @required this.change,
-    @required this.decimals,
-    @required this.minStep,
-    @required this.lotSize,
-    @required this.currency,
-    @required this.faceValue
+    required this.id,
+    required this.name,
+    required this.open,
+    required this.last,
+    required this.high,
+    required this.low,
+    required this.bid,
+    required this.offer,
+    required this.valtoday,
+    required this.change,
+    required this.decimals,
+    required this.minStep,
+    required this.lotSize,
+    required this.currency,
+    required this.faceValue
   });
 
   factory Security.fromJson(Map<String, dynamic> json) {
     return Security(
-      id: json['SECID'] as String ?? '',
-      name: json['SHORTNAME'] as String ?? '',
+      id: json['SECID'] ?? '',
+      name: json['SHORTNAME'] ?? '',
       open: json['marketdata']['OPEN']?.toDouble() ?? 0,
       last: json['marketdata']['LAST']?.toDouble() ?? 0,
       high: json['marketdata']['HIGH']?.toDouble() ?? 0,

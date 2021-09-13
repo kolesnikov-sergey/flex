@@ -7,10 +7,10 @@ class FlexDrawer<T> extends StatelessWidget {
   final ValueChanged<T> onChange;
 
   FlexDrawer({
-    @required this.title,
-    @required this.options,
-    @required this.value,
-    @required this.onChange
+    required this.title,
+    required this.options,
+    required this.value,
+    required this.onChange
   });
 
   @override
@@ -20,7 +20,7 @@ class FlexDrawer<T> extends StatelessWidget {
         children: [
           DrawerHeader(
             child: Center(
-              child: Text(title, style: Theme.of(context).textTheme.title)
+              child: Text(title, style: Theme.of(context).textTheme.headline6)
             ),
           ),
           ...options.entries.map((opt) => ListTile(

@@ -10,9 +10,9 @@ class FlexFutureBuilder<T> extends StatelessWidget {
   final VoidCallback onRetry;
 
   FlexFutureBuilder({
-    this.future,
-    @required this.builder,
-    @required this.onRetry
+    required this.future,
+    required this.builder,
+    required this.onRetry
   });
 
   @override
@@ -38,7 +38,6 @@ class FlexFutureBuilder<T> extends StatelessWidget {
                
             return builder(context, snapshot);
         }
-        return null;
       },
     );
   }

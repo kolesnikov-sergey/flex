@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 class Quote {
   final String id;
   double last;
@@ -9,17 +7,17 @@ class Quote {
   double change;
 
   Quote({
-    @required this.id,
-    @required this.last,
-    @required this.bid,
-    @required this.offer,
-    @required this.spread,
-    @required this.change,
+    required this.id,
+    required this.last,
+    required this.bid,
+    required this.offer,
+    required this.spread,
+    required this.change,
   });
 
   factory Quote.fromJson(Map<String, dynamic> json) {
     return Quote(
-      id: json['SECID'] as String ?? '',
+      id: json['SECID'] ?? '',
       last: json['LAST']?.toDouble() ?? 0,
       bid: json['BID']?.toDouble() ?? 0,
       offer: json['OFFER']?.toDouble() ?? 0,

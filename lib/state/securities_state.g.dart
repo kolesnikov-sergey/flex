@@ -9,7 +9,7 @@ part of 'securities_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SecuritiesState on SecuritiesStateBase, Store {
-  Computed<List<Security>> _$filteredSecuritiesComputed;
+  Computed<List<Security>>? _$filteredSecuritiesComputed;
 
   @override
   List<Security> get filteredSecurities => (_$filteredSecuritiesComputed ??=
@@ -53,14 +53,14 @@ mixin _$SecuritiesState on SecuritiesStateBase, Store {
   final _$searchAtom = Atom(name: 'SecuritiesStateBase.search');
 
   @override
-  String get search {
+  String? get search {
     _$searchAtom.context.enforceReadPolicy(_$searchAtom);
     _$searchAtom.reportObserved();
     return super.search;
   }
 
   @override
-  set search(String value) {
+  set search(String? value) {
     _$searchAtom.context.conditionallyRunInAction(() {
       super.search = value;
       _$searchAtom.reportChanged();
@@ -87,14 +87,14 @@ mixin _$SecuritiesState on SecuritiesStateBase, Store {
   final _$currentAtom = Atom(name: 'SecuritiesStateBase.current');
 
   @override
-  Security get current {
+  Security? get current {
     _$currentAtom.context.enforceReadPolicy(_$currentAtom);
     _$currentAtom.reportObserved();
     return super.current;
   }
 
   @override
-  set current(Security value) {
+  set current(Security? value) {
     _$currentAtom.context.conditionallyRunInAction(() {
       super.current = value;
       _$currentAtom.reportChanged();

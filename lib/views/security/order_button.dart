@@ -6,7 +6,7 @@ class OrderButton extends StatelessWidget {
 
   OrderButton({
     this.fullWidth = false,
-    @required this.onPressed
+    required this.onPressed
   });
 
   @override

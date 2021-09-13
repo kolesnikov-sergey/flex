@@ -7,9 +7,9 @@ import '../ui/number_currency.dart';
 
 class Summary extends StatelessWidget {
   final Security security;
-  final ValueChanged<double> onAddOrder;
+  final ValueChanged<double?>? onAddOrder;
 
-  Summary({@required this.security, this.onAddOrder});
+  Summary({required this.security, this.onAddOrder});
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +89,7 @@ class Summary extends StatelessWidget {
             ),
           ),
         ),
-        if (onAddOrder != null) OrderButton(fullWidth: true, onPressed: () => onAddOrder(null))
+        if (onAddOrder != null) OrderButton(fullWidth: true, onPressed: () => onAddOrder!(null))
       ],
     );
   }

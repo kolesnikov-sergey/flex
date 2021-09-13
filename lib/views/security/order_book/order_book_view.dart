@@ -12,12 +12,12 @@ import 'order_book_box.dart';
 class OrderBookView extends StatefulWidget {
   final Security security;
   final SecurityType securityType;
-  final ValueChanged<double> onAddOrder;
+  final ValueChanged<double?> onAddOrder;
 
   OrderBookView({
-    @required this.security,
-    @required this.securityType,
-    @required this.onAddOrder
+    required this.security,
+    required this.securityType,
+    required this.onAddOrder
   });
 
   @override
@@ -27,7 +27,7 @@ class OrderBookView extends StatefulWidget {
 class _OrderBookState extends State<OrderBookView> {
   final Connector connector = GetIt.I<Connector>();
 
-  Future<List<OrderBook>> orderBook;
+  late Future<List<OrderBook>> orderBook;
 
   @override
   void initState() {
@@ -42,18 +42,18 @@ class _OrderBookState extends State<OrderBookView> {
       onRetry: () {},
       builder: (context, snapshot) {
         final maxBuy = snapshot.data
-          .where((t) => t.buy != null)
-          .map((t) => t.buy)
+          ?.where((t) => t.buy != null)
+          .map((t) => t.buy ?? 0)
           .reduce(max);
         final maxSell = snapshot.data
-          .where((t) => t.sell != null)
-          .map((t) => t.sell)
+          ?.where((t) => t.sell != null)
+          .map((t) => t.sell ?? 0)
           .reduce(max);
 
         return ListView.builder(
-          itemCount: snapshot.data.length,
+          itemCount: snapshot.data?.length,
           itemBuilder: (context, index) {
-            var item = snapshot.data[index];
+            var item = snapshot.data![index];
 
             return GestureDetector(
               onTap: () => widget.onAddOrder(item.price),
@@ -64,7 +64,7 @@ class _OrderBookState extends State<OrderBookView> {
                     alignment: Alignment.centerLeft,
                     decimals: 0,
                     color: item.buy == null ? null : Colors.green,
-                    widthFactor: item.buy == null ? 0 : item.buy / maxBuy,
+                    widthFactor: item.buy == null || maxBuy == null ? 0 : item.buy! / maxBuy,
                   ),
                   OrderBookBox(
                     value: item.price,
@@ -77,7 +77,7 @@ class _OrderBookState extends State<OrderBookView> {
                     alignment: Alignment.centerRight,
                     decimals: 0,
                     color: item.sell == null ? null : Colors.pink,
-                    widthFactor: item.sell == null ? 0 : item.sell / maxSell,
+                    widthFactor: item.sell == null || maxSell == null ? 0 : item.sell! / maxSell,
                   )
                 ]
               ),

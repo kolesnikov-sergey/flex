@@ -6,7 +6,7 @@ import '../ui/number_currency.dart';
 class PositionTile extends StatefulWidget {
   final Position position;
 
-  PositionTile({this.position});
+  PositionTile({required this.position});
 
   @override
   _PositionTileState createState() => _PositionTileState();

@@ -6,14 +6,15 @@ import 'quote_tile.dart';
 class QuotesList extends StatelessWidget {
   final List<Security> quotes;
   final SecurityType securityType;
-  final Security selectedItem;
+  final Security? selectedItem;
   final Function(Security) onPressed;
 
-  QuotesList(
-      {@required this.quotes,
-      @required this.securityType,
-      @required this.selectedItem,
-      @required this.onPressed});
+  QuotesList({
+    required this.quotes,
+    required this.securityType,
+    this.selectedItem,
+    required this.onPressed
+  });
 
   @override
   Widget build(BuildContext context) {

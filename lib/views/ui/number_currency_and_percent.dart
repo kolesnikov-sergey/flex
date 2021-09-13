@@ -7,14 +7,14 @@ class NumberCurrencyAndPercent extends StatelessWidget {
   final num valuePercent;
   final String currency;
   final int decimals;
-  final String prefix;
-  final TextStyle style;
+  final String? prefix;
+  final TextStyle? style;
 
   NumberCurrencyAndPercent({
-    Key key,
-    @required this.value,
-    @required this.valuePercent,
-    @required this.currency,
+    Key? key,
+    required this.value,
+    required this.valuePercent,
+    required this.currency,
     this.decimals = 2,
     this.prefix,
     this.style

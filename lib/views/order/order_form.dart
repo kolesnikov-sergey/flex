@@ -13,11 +13,11 @@ import '../ui/number_currency.dart';
 class OrderForm extends StatefulWidget {
   final Security security;
   final OrderType orderType;
-  final double price;
+  final double? price;
 
   OrderForm({
-    @required this.security,
-    @required this.orderType,
+    required this.security,
+    required this.orderType,
     this.price
   });
 
@@ -29,23 +29,25 @@ class _OrderFormState extends State<OrderForm> {
   final Connector connector = GetIt.I<Connector>();
 
   final _formKey = GlobalKey<FormState>();
-  Order _order;
+  late Order _order;
 
   @override
   void initState() {
     _order = Order(
       id: widget.security.id,
+      type: widget.orderType,
       name: widget.security.name, // todo remove
       side: OrderSide.buy,
       qty: 1,
-      price: widget.price == null ? widget.security.last : widget.price
+      price: widget.price == null ? widget.security.last : widget.price!
     );
     super.initState();
   }
 
   void submit() {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    final currentState = _formKey.currentState;
+    if (currentState != null && currentState.validate()) {
+      currentState.save();
       connector.createOrder(_order);
       Navigator.pop(context);
     }
@@ -140,7 +142,7 @@ class _OrderFormState extends State<OrderForm> {
                     value: widget.security.lotSize * _order.qty * (_order.type == OrderType.market ? widget.security.last : _order.price),
                     currency: widget.security.currency,
                     decimals: widget.security.decimals,
-                    style: Theme.of(context).textTheme.body2,
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(top: 20)),

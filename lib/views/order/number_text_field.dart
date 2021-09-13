@@ -12,15 +12,15 @@ class NumberTextField extends StatefulWidget {
   final FormFieldValidator<String> validator;
 
   NumberTextField({
-    this.label,
-    this.placeholder,
-    this.suffixText,
-    this.initialValue,
+    required this.label,
+    required this.placeholder,
+    required this.suffixText,
+    required this.initialValue,
     this.step = 1,
     this.decimals = 0,
-    this.onSave,
-    this.onChange,
-    this.validator
+    required this.onSave,
+    required this.onChange,
+    required this.validator
   });
 
   @override
@@ -28,7 +28,7 @@ class NumberTextField extends StatefulWidget {
 }
 
 class _NumberTextFieldState extends State<NumberTextField> {
-  TextEditingController controller;
+  late TextEditingController controller;
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class _NumberTextFieldState extends State<NumberTextField> {
       controller: controller,
       onSaved: (value) {
         if(widget.onSave != null) {
-          widget.onSave(double.tryParse(value));
+          widget.onSave(double.tryParse(value ?? "") ?? 0);
         }
       },
       autovalidate: true,

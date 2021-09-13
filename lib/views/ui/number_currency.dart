@@ -6,13 +6,13 @@ class NumberCurrency extends StatelessWidget {
   final num value;
   final String currency;
   final int decimals;
-  final String prefix;
-  final TextStyle style;
+  final String? prefix;
+  final TextStyle? style;
 
   NumberCurrency({
-    Key key,
-    @required this.value,
-    @required this.currency,
+    Key? key,
+    required this.value,
+    required this.currency,
     this.decimals = 2,
     this.prefix,
     this.style
@@ -22,7 +22,7 @@ class NumberCurrency extends StatelessWidget {
   Widget build(BuildContext context) {
     final formatted = NumberFormat.currency(
         locale: 'ru',
-        symbol: currency == null ? null : CurrencySymbol.getCurrencySymbol(currency),
+        symbol: CurrencySymbol.getCurrencySymbol(currency),
         decimalDigits: decimals,
     ).format(value);
     return Text(

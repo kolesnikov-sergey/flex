@@ -16,14 +16,14 @@ class AccountInfo extends StatelessWidget {
           NumberCurrency(
             value: 100000.34,
             currency: 'RUB',
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.headline6,
           ),
           Padding(padding: EdgeInsets.only(left: 10)),
           NumberCurrency(
             value: 100.78,
             currency: 'RUB',
             prefix: '+',
-            style: Theme.of(context).textTheme.subtitle.apply(color: Colors.green),
+            style: Theme.of(context).textTheme.subtitle2?.apply(color: Colors.green),
           ),
           Padding(padding: EdgeInsets.only(left: 10)),
           IconButton(

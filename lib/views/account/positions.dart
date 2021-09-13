@@ -21,9 +21,8 @@ class Positions extends StatefulWidget {
 
 class _PositionsState extends State<Positions> {
   final Connector connector = GetIt.I<Connector>();
-  Stream<Position> stream;
-  List<Position> positions = List();
-  StreamSubscription subscription;
+  List<Position> positions = [];
+  late StreamSubscription subscription;
   String _search = '';
 
   @override
@@ -51,8 +50,8 @@ class _PositionsState extends State<Positions> {
 
   List<Position> filterPositions(List<Position> list) {
     return list
-      .where((item) => item.name.toLowerCase().contains(_search?.toLowerCase())
-        || item.id.toLowerCase().contains(_search?.toLowerCase())
+      .where((item) => item.name.toLowerCase().contains(_search.toLowerCase())
+        || item.id.toLowerCase().contains(_search.toLowerCase())
       )
     .toList();
   }

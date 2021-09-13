@@ -24,14 +24,13 @@ abstract class _QuoteState with Store {
   @observable
   double change;
 
-  _QuoteState(Quote quote) {
-    id = quote.id;
-    last = quote.last;
-    bid = quote.bid;
-    offer = quote.offer;
-    spread = quote.spread;
+  _QuoteState(Quote quote) :
+    id = quote.id,
+    last = quote.last,
+    bid = quote.bid,
+    offer = quote.offer,
+    spread = quote.spread,
     change = quote.change;
-  }
 
   @action
   void update(Quote quote) {

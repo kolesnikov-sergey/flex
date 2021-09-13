@@ -9,10 +9,10 @@ class Loadable<T> extends StatelessWidget {
   final VoidCallback onRetry;
 
   Loadable({
-    @required this.child,
-    @required this.isLoading,
-    @required this.hasError,
-    @required this.onRetry,
+    required this.child,
+    required this.isLoading,
+    required this.hasError,
+    required this.onRetry,
   });
 
   @override

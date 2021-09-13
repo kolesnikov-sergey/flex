@@ -12,7 +12,7 @@ import '../../state/securities_state.dart';
 
 class SecurityDesktop extends StatefulWidget {
   SecurityDesktop({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -28,7 +28,7 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
   final _securitiesState = GetIt.I<SecuritiesState>();
   
 
-  void _showOrderDialog([double price]) {
+  void _showOrderDialog([double? price]) {
     showDialog(
       context: context,
       builder: (BuildContext context) => Dialog(
@@ -53,7 +53,7 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(_securitiesState.current.name),
+              Text(_securitiesState.current!.name),
               OrderButton(onPressed: _showOrderDialog),
             ],
           ),
@@ -68,7 +68,7 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
           children: <Widget>[
             Flexible(
               child: ChartView(
-                security: _securitiesState.current,
+                security: _securitiesState.current!,
                 securityType:  _securitiesState.securityType,
               ),
             ),
@@ -85,12 +85,12 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
                   body: TabBarView(
                     children: [
                       OrderBookView(
-                        security: _securitiesState.current,
+                        security: _securitiesState.current!,
                         securityType:  _securitiesState.securityType,
                         onAddOrder: _showOrderDialog,
                       ),
                       Summary(
-                        security: _securitiesState.current,
+                        security: _securitiesState.current!,
                       ),
                     ]
                   ),

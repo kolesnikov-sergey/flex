@@ -7,7 +7,14 @@ class Order {
 
   String name; //todo remove
 
-  Order({this.id, this.type, this.side, this.price, this.qty, this.name});
+  Order({
+    required this.id,
+    required this.type,
+    required this.side,
+    required this.price,
+    required this.qty,
+    required this.name
+  });
 }
 
 enum OrderType {

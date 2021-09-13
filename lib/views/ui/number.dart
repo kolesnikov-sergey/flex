@@ -4,12 +4,12 @@ import 'package:intl/intl.dart';
 class Number extends StatelessWidget {
   final num value;
   final int decimals;
-  final String prefix;
-  final TextStyle style;
+  final String? prefix;
+  final TextStyle? style;
 
   Number({
-    Key key,
-    @required this.value,
+    Key? key,
+    required this.value,
     this.decimals = 2,
     this.prefix,
     this.style

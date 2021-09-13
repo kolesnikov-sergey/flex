@@ -1,7 +1,7 @@
 import 'dart:async';
 
 Function throttle(int delayMs, Function fn) {
-  Timer timer;
+  Timer? timer;
 
   return () {
     if (timer != null) {

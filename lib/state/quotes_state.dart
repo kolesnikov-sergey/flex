@@ -15,11 +15,11 @@ class QuotesState = QuotesStateBase with _$QuotesState;
 abstract class QuotesStateBase with Store {
   final _connector = GetIt.I<Connector>();
 
-  StreamSubscription<Quote> sub;
+  StreamSubscription<Quote>? sub;
 
   final Map<String, int> _symbols = {};
 
-  Function _resubscribeThrottled;
+  late Function _resubscribeThrottled;
 
   QuotesStateBase() {
     _resubscribeThrottled = throttle(500, _resubscribe);
@@ -44,7 +44,7 @@ abstract class QuotesStateBase with Store {
       final connectCount = _symbols[symbol];
       if (connectCount == 1) {
         _symbols.remove(symbol);
-      } else {
+      } else if (connectCount != null) {
         _symbols[symbol] = connectCount - 1;
       }
     };
