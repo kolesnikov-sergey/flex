@@ -7,9 +7,9 @@ class NumberTextField extends StatefulWidget {
   final double initialValue;
   final double step;
   final int decimals;
-  final ValueChanged<double> onSave;
-  final ValueChanged<double> onChange;
-  final FormFieldValidator<String> validator;
+  final ValueChanged<double>? onSave;
+  final ValueChanged<double>? onChange;
+  final FormFieldValidator<String>? validator;
 
   NumberTextField({
     required this.label,
@@ -18,9 +18,9 @@ class NumberTextField extends StatefulWidget {
     required this.initialValue,
     this.step = 1,
     this.decimals = 0,
-    required this.onSave,
-    required this.onChange,
-    required this.validator
+    this.onSave,
+    this.onChange,
+    this.validator
   });
 
   @override
@@ -47,8 +47,9 @@ class _NumberTextFieldState extends State<NumberTextField> {
 
   void onEdit() {
     final val = double.tryParse(controller.text);
-    if(val != null) {
-      widget.onChange(val);
+    final onChange = widget.onChange;
+    if(val != null && onChange != null) {
+      onChange(val);
     }
   }
 
@@ -72,10 +73,10 @@ class _NumberTextFieldState extends State<NumberTextField> {
       controller: controller,
       onSaved: (value) {
         if(widget.onSave != null) {
-          widget.onSave(double.tryParse(value ?? "") ?? 0);
+          
         }
       },
-      autovalidate: true,
+      autovalidateMode: AutovalidateMode.always,
       validator: widget.validator,
       keyboardType: TextInputType.numberWithOptions(
         decimal: widget.decimals > 0
