@@ -1,11 +1,10 @@
+import 'package:flex/state/securities.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/security.dart';
 import '../../models/layout_type.dart';
-import '../../state/securities_state.dart';
 import '../ui/flex_dropdown.dart';
 import '../ui/search_text_field.dart';
 import '../ui/loadable.dart';
@@ -27,14 +26,13 @@ class QuotesView extends StatefulWidget {
 }
 
 class _State extends State<QuotesView> {
-  final _securitiesState = GetIt.I<SecuritiesState>();
-
   @override
   void initState() {
     void load() async {
-      await _securitiesState.loadSecurities(SecurityType.shares);
-      if (_securitiesState.current == null && _securitiesState.filteredSecurities.length > 0) {
-        _securitiesState.setCurrent(_securitiesState.filteredSecurities[0]);
+      final cubit = context.read<SecuritiesCubit>();
+      await cubit.load(SecurityType.shares);
+      if (cubit.state.current == null && cubit.state.securities.length > 0) {
+        cubit.setCurrentSecurity(cubit.state.securities[0]);
       }
     }
 
@@ -44,13 +42,26 @@ class _State extends State<QuotesView> {
   }
 
   void _selectSecurity(Security security) {
-    _securitiesState.setCurrent(security);
+    final cubit = context.read<SecuritiesCubit>();
+    cubit.setCurrentSecurity(security);
 
     final layoutType = Provider.of<LayoutType>(context, listen: false);
 
     if (layoutType == LayoutType.mobile) {
       Navigator.pushNamed(context, '/security');
     }
+  }
+
+  void _handleSearch(String value) {
+    final cubit = context.read<SecuritiesCubit>();
+
+    cubit.setSearch(value);
+  }
+
+  void _load([SecurityType? securityType]) async {
+    final cubit = context.read<SecuritiesCubit>();
+
+    await cubit.load(securityType);
   }
 
   @override
@@ -60,31 +71,34 @@ class _State extends State<QuotesView> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Observer(builder: (_) {
-          return FlexDropdown(
-            value: _securitiesState.securityType,
-            items: securityTypes,
-            onChanged: _securitiesState.loadSecurities,
-          );
-        }) 
+        title: BlocBuilder<SecuritiesCubit, SecuritiesState>(
+          builder: (_, state) {
+            return FlexDropdown(
+              value: state.securityType,
+              items: securityTypes,
+              onChanged: _load,
+            );
+          }
+        ) 
       ),
       body: Column(
         children: [
           Padding(
             padding: EdgeInsets.all(10),
-            child: SearchTextField(onChanged: _securitiesState.setSearch),
+            child: SearchTextField(onChanged: _handleSearch),
           ),
           Flexible(
-            child: Observer(builder: (_) {
+            child: BlocBuilder<SecuritiesCubit, SecuritiesState>(
+              builder: (_, state) {
               return Loadable(
-                isLoading: _securitiesState.isLoading,
+                isLoading: state.isLoading,
                 hasError: false,
-                onRetry: () => _securitiesState.loadSecurities(_securitiesState.securityType),
+                onRetry: _load,
                 child: QuotesList(
-                  quotes: _securitiesState.filteredSecurities,
-                  securityType: _securitiesState.securityType,
+                  quotes: state.securities,// TODO filtered
+                  securityType: state.securityType,
                   onPressed: _selectSecurity,
-                  selectedItem: layoutType == LayoutType.desktop ? _securitiesState.current : null
+                  selectedItem: layoutType == LayoutType.desktop ? state.current : null
                 ),
               );
             })

@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flex/state/positions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../connectors/connector.dart';
@@ -20,63 +22,23 @@ class Positions extends StatefulWidget {
 }
 
 class _PositionsState extends State<Positions> {
-  final Connector connector = GetIt.I<Connector>();
-  List<Position> positions = [];
-  late StreamSubscription subscription;
-  String _search = '';
-
-  @override
-  void initState() {
-    subscription = connector.subscribePositions()
-      .listen((pos) {
-        setState(() {
-          positions.add(pos);         
-        });
-      });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
-  }
-
-  void changeSearch(String value) {
-    setState(() {
-        _search = value;
-    });
-  }
-
-  List<Position> filterPositions(List<Position> list) {
-    return list
-      .where((item) => item.name.toLowerCase().contains(_search.toLowerCase())
-        || item.id.toLowerCase().contains(_search.toLowerCase())
-      )
-    .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final items = filterPositions(positions);
-
     return Column(
       children: [
-        Padding(
-            padding: EdgeInsets.all(10),
-            child: SearchTextField(onChanged: changeSearch),
-        ),
         Flexible(
-          child: ListView.separated(
-            itemCount: items.length,
-            itemBuilder: (context, index) => PositionTile(
-              position: items[index],
-            ),
-            separatorBuilder: (context, index) => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(height: 1, thickness: 1)
-            ),
-          ),
+          child: BlocBuilder<PositionsCubit, List<Position>>(
+            builder: (context, positions) => ListView.separated(
+              itemCount: positions.length,
+              itemBuilder: (context, index) => PositionTile(
+                position: positions[index],
+              ),
+              separatorBuilder: (context, index) => Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Divider(height: 1, thickness: 1)
+              ),
+            )
+          )  ,
         ),
       ],
     );

@@ -1,13 +1,12 @@
 import 'dart:async';
 
+import 'package:flex/models/quote.dart';
+import 'package:flex/state/quotes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../models/security.dart';
 import '../ui/number_currency.dart';
 import '../ui/number_currency_and_percent.dart';
-import '../../state/quotes_state.dart';
 
 class QuoteTile extends StatefulWidget {
   final Security security;
@@ -27,15 +26,15 @@ class QuoteTile extends StatefulWidget {
 }
 
 class _QuoteTileState extends State<QuoteTile> {
-  final QuotesState _quotesState = GetIt.I<QuotesState>();
-  late Timer _timerDelay;
+  Timer? _timerDelay;
   Function? unconnect;
 
   @override
   void initState() {
     super.initState();
+  
     _timerDelay = Timer(Duration(milliseconds: 100), () {
-      unconnect = _quotesState.connectQuote(widget.security.id);  
+      unconnect = context.read<QuotesCubit>().subscribe(widget.security.id);
     });
   }
 
@@ -53,7 +52,7 @@ class _QuoteTileState extends State<QuoteTile> {
 
   @override
   void dispose() {
-    _timerDelay.cancel();
+    _timerDelay?.cancel();
  
     if (unconnect != null) {
       unconnect!();
@@ -72,10 +71,9 @@ class _QuoteTileState extends State<QuoteTile> {
       title: Text(widget.security.name),
       subtitle: Text(widget.security.id),
       selected: widget.selected,
-      trailing: Observer(
-        builder: (_) {
-          final quote = _quotesState.quotes[widget.security.id];
-
+      trailing: BlocSelector<QuotesCubit, Map<String, Quote>, Quote?>(
+        selector: (state) => state[widget.security.id],
+        builder: (_, quote) {
           final last = quote == null ? widget.security.last : quote.last;
           final change = quote == null ?  widget.security.change : quote.change;
 

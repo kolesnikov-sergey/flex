@@ -1,12 +1,10 @@
+import 'package:flex/state/securities.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'chart/chart_view.dart';
 import 'summary.dart';
 import 'order_book/order_book_view.dart';
-import '../../state/securities_state.dart';
 
 class SecurityMobile extends StatefulWidget {
   SecurityMobile({
@@ -24,25 +22,21 @@ class _SecurityMobileState extends State<SecurityMobile> {
     Tab(text: 'СТАКАН')
   ];
 
-  final _securitiesState = GetIt.I<SecuritiesState>();
-
   void _navigateToOrder(double? price) {
     Navigator.pushNamed(context, '/order');
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentSecurity = _securitiesState.current;
-
     return DefaultTabController(
       length: _tabs.length,
       initialIndex: 0,
-      child: Observer(
-        builder: (_) => Scaffold(
+      child: BlocBuilder<SecuritiesCubit, SecuritiesState>(
+        builder: (_, state) => Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             leading: BackButton(),
-            title: Text(_securitiesState.current?.name ?? ''),
+            title: Text(state.current?.name ?? ''),
             bottom: TabBar(tabs: _tabs),
             actions: [
               IconButton(
@@ -53,19 +47,19 @@ class _SecurityMobileState extends State<SecurityMobile> {
           ),
           body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
-            children: currentSecurity == null ? [] : [
+            children: state.current == null ? [] : [
               ChartView(
-                security: currentSecurity,
-                securityType: _securitiesState.securityType,
+                security: state.current!,
+                securityType: state.securityType,
                 onAddOrder: _navigateToOrder,
               ),
               Summary(
-                security: currentSecurity,
+                security: state.current!,
                 onAddOrder: _navigateToOrder,
               ),
               OrderBookView(
-                security: currentSecurity,
-                securityType:  _securitiesState.securityType,
+                security: state.current!,
+                securityType: state.securityType,
                 onAddOrder: _navigateToOrder,
               )
             ]

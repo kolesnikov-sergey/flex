@@ -1,14 +1,12 @@
+import 'package:flex/state/securities.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'chart/chart_view.dart';
 import 'summary.dart';
 import 'order_button.dart';
 import 'order_book/order_book_view.dart';
 import '../order/order_view.dart';
-import '../../state/securities_state.dart';
 
 class SecurityDesktop extends StatefulWidget {
   SecurityDesktop({
@@ -24,9 +22,6 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
     Tab(text: 'СТАКАН'),
     Tab(text: 'СВОДКА'),
   ];
-
-  final _securitiesState = GetIt.I<SecuritiesState>();
-  
 
   void _showOrderDialog([double? price]) {
     showDialog(
@@ -45,15 +40,15 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) => Scaffold(
+    return BlocBuilder<SecuritiesCubit, SecuritiesState>(
+      builder: (_, state) => Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(_securitiesState.current!.name),
+              Text(state.current!.name),
               OrderButton(onPressed: _showOrderDialog),
             ],
           ),
@@ -68,8 +63,8 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
           children: <Widget>[
             Flexible(
               child: ChartView(
-                security: _securitiesState.current!,
-                securityType:  _securitiesState.securityType,
+                security: state.current!,
+                securityType:  state.securityType,
               ),
             ),
             Container(
@@ -85,12 +80,12 @@ class _SecurityDesktopState extends State<SecurityDesktop> {
                   body: TabBarView(
                     children: [
                       OrderBookView(
-                        security: _securitiesState.current!,
-                        securityType:  _securitiesState.securityType,
+                        security: state.current!,
+                        securityType:  state.securityType,
                         onAddOrder: _showOrderDialog,
                       ),
                       Summary(
-                        security: _securitiesState.current!,
+                        security: state.current!,
                       ),
                     ]
                   ),

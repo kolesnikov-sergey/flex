@@ -32,7 +32,7 @@ class _NumberTextFieldState extends State<NumberTextField> {
 
   @override
   void initState() {
-    controller = TextEditingController(text: widget.initialValue?.toStringAsFixed(widget.decimals));
+    controller = TextEditingController(text: widget.initialValue.toStringAsFixed(widget.decimals));
     if(widget.onChange != null) {
       controller.addListener(onEdit);
     }

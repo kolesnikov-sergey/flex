@@ -1,10 +1,17 @@
+import 'package:flex/services/iss/iss_marketdata_service.dart';
+import 'package:flex/services/iss/iss_position_service.dart';
+import 'package:flex/setup.dart';
+import 'package:flex/state/positions.dart';
+import 'package:flex/state/quotes.dart';
+import 'package:flex/state/securities.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'connectors/iss_connector.dart';
 import 'models/layout_type.dart';
 import 'views/app/app.dart';
 import 'views/order/order_view.dart';
 import 'views/security/security_mobile.dart';
-import 'setup.dart';
 
 void main() {
   setup();
@@ -18,6 +25,7 @@ class TradingApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'flex',
+      showPerformanceOverlay: true,
       theme: ThemeData(
         primaryColor: Colors.black,
         appBarTheme: AppBarTheme(
@@ -33,7 +41,14 @@ class TradingApp extends StatelessWidget {
           builder: (_, constraints) {
             return Provider.value(
               value: constraints.maxWidth > 600 ? LayoutType.desktop : LayoutType.mobile,
-              child: child
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(create: (context) => PositionsCubit(IssPositionService())),
+                  BlocProvider(create: (context) => QuotesCubit(IssMarketdataService())),
+                  BlocProvider(create: (context) => SecuritiesCubit(IssConnector()))
+                ],
+                child: child!,
+              ),
             );
           },
         );

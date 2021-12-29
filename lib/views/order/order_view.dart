@@ -1,15 +1,14 @@
+import 'package:flex/models/quote.dart';
+import 'package:flex/state/quotes.dart';
+import 'package:flex/state/securities.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'buy_sell_info.dart';
 import 'order_form.dart';
 import '../../models/order.dart';
 import '../../models/layout_type.dart';
-import '../../state/securities_state.dart';
-import '../../state/quotes_state.dart';
 
 class OrderView extends StatefulWidget {
   final double? price;
@@ -27,15 +26,15 @@ class OrderView extends StatefulWidget {
 }
 
 class _OrderViewState extends State<OrderView> {
-  final _securitiesState = GetIt.I<SecuritiesState>();
-  final _quotesState = GetIt.I<QuotesState>();
   Function? _unconnect;
 
    @override
   void initState() {
-    final securiryId = _securitiesState.current?.id;
+    final cubit = context.read<SecuritiesCubit>();
+    final securiryId = cubit.state.current?.id;
     if (securiryId != null) {
-      _unconnect = _quotesState.connectQuote(securiryId);
+      final quotesCubit = context.read<QuotesCubit>();
+      _unconnect = quotesCubit.subscribe(securiryId);
     }
     
     super.initState();
@@ -54,9 +53,9 @@ class _OrderViewState extends State<OrderView> {
     return DefaultTabController(
       length: OrderView.tabs.length,
       initialIndex: 1,
-      child: Observer(
-        builder: (_) {
-          final security = _securitiesState.current!;
+      child: BlocBuilder<SecuritiesCubit, SecuritiesState>(
+        builder: (_, state) {
+          final security = state.current!;
 
           return Scaffold(
             appBar: AppBar(
@@ -67,9 +66,12 @@ class _OrderViewState extends State<OrderView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BuySellInfo(
-                      security: security,
-                      quote: _quotesState.quotes[security.id],
+                    BlocSelector<QuotesCubit, Map<String, Quote>, Quote?>(
+                      selector: (state) => state[security.id],
+                      builder: (context, state) => BuySellInfo(
+                        security: security,
+                        quote: state,
+                      )
                     ),
                     TabBar(tabs: OrderView.tabs)
                   ],

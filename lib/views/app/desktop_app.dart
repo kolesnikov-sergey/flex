@@ -1,8 +1,6 @@
+import 'package:flex/state/securities.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
-
-import '../../state/securities_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../security/security_desktop.dart';
 import '../quotes/quotes_view.dart';
 import '../account/account.dart';
@@ -13,8 +11,6 @@ class DesktopApp extends StatefulWidget {
 }
 
 class _DesktopAppState extends State<DesktopApp> {
-  final _securitiesState = GetIt.I<SecuritiesState>();
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -33,9 +29,9 @@ class _DesktopAppState extends State<DesktopApp> {
               children: [
                 Flexible(
                   flex: 1,
-                  child: Observer(
-                    builder: (_) {
-                      return _securitiesState.current == null
+                  child: BlocBuilder<SecuritiesCubit, SecuritiesState>(
+                    builder: (_, state) {
+                      return state.current == null
                         ? Scaffold(
                           key: ValueKey('empty'),
                           appBar: AppBar(),
