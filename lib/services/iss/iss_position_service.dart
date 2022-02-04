@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flex/models/position.dart';
-import 'package:flex/services/positions_service.dart';
+import '../../models/position.dart';
+import '../../services/positions_service.dart';
 
 class IssPositionService extends PositionsService {
   final _positions = [

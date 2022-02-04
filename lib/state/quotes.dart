@@ -1,7 +1,7 @@
-import 'package:flex/models/position.dart';
-import 'package:flex/models/quote.dart';
-import 'package:flex/services/marketdata_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../models/quote.dart';
+import '../services/marketdata_service.dart';
 
 class QuotesCubit extends Cubit<Map<String, Quote>> {
   final MarketdataService _marketdataService;
@@ -17,4 +17,11 @@ class QuotesCubit extends Cubit<Map<String, Quote>> {
 
     return () => subscribtion.cancel();
   }
+}
+
+class QuoteSelector extends BlocSelector<QuotesCubit, Map<String, Quote>, Quote?> {
+  QuoteSelector({
+    required BlocWidgetBuilder<Quote?> builder,
+    required String securityId,
+  }) : super(builder: builder, selector: (state) => state[securityId]);
 }

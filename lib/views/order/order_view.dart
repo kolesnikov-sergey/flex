@@ -1,12 +1,11 @@
-import 'package:flex/models/quote.dart';
-import 'package:flex/state/quotes.dart';
-import 'package:flex/state/securities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'buy_sell_info.dart';
 import 'order_form.dart';
+import '../../state/securities.dart';
+import '../../state/quotes.dart';
 import '../../models/order.dart';
 import '../../models/layout_type.dart';
 
@@ -66,8 +65,8 @@ class _OrderViewState extends State<OrderView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BlocSelector<QuotesCubit, Map<String, Quote>, Quote?>(
-                      selector: (state) => state[security.id],
+                    QuoteSelector(
+                      securityId: security.id,
                       builder: (context, state) => BuySellInfo(
                         security: security,
                         quote: state,

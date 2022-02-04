@@ -1,13 +1,8 @@
-import 'dart:async';
-
-import 'package:flex/state/positions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
-import '../../connectors/connector.dart';
+import '../../state/positions.dart';
 import '../../models/position.dart';
-import '../ui/search_text_field.dart';
 import 'position_tile.dart';
 
 final fakePositions = [

@@ -1,8 +1,8 @@
-import 'package:flex/state/securities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
+import '../../state/securities.dart';
 import '../../models/security.dart';
 import '../../models/layout_type.dart';
 import '../ui/flex_dropdown.dart';

@@ -1,6 +1,7 @@
-import 'package:flex/connectors/connector.dart';
-import 'package:flex/models/security.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../models/security.dart';
+import '../../connectors/connector.dart';
 
 class SecuritiesState {
   final List<Security> securities;

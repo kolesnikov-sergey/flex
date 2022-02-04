@@ -1,4 +1,4 @@
-import 'package:flex/models/quote.dart';
+import '../models/quote.dart';
 
 abstract class MarketdataService {
   Stream<Quote> subscribeQuotes(List<String> ids);

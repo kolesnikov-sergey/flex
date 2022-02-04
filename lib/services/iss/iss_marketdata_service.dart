@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:flex/models/quote.dart';
-import 'package:flex/services/marketdata_service.dart';
+import '../../models/quote.dart';
+import '../../services/marketdata_service.dart';
 
 typedef T ParseFn<T>(String body);
 

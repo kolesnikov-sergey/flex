@@ -1,6 +1,6 @@
-import 'package:flex/models/quote.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/quote.dart';
 import '../../models/security.dart';
 import '../ui/number_currency.dart';
 

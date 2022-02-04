@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:flex/models/quote.dart';
-import 'package:flex/state/quotes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../state/quotes.dart';
 import '../../models/security.dart';
 import '../ui/number_currency.dart';
 import '../ui/number_currency_and_percent.dart';
@@ -71,8 +71,8 @@ class _QuoteTileState extends State<QuoteTile> {
       title: Text(widget.security.name),
       subtitle: Text(widget.security.id),
       selected: widget.selected,
-      trailing: BlocSelector<QuotesCubit, Map<String, Quote>, Quote?>(
-        selector: (state) => state[widget.security.id],
+      trailing: QuoteSelector(
+        securityId: widget.security.id,
         builder: (_, quote) {
           final last = quote == null ? widget.security.last : quote.last;
           final change = quote == null ?  widget.security.change : quote.change;

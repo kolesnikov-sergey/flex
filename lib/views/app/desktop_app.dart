@@ -1,6 +1,6 @@
-import 'package:flex/state/securities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../state/securities.dart';
 import '../security/security_desktop.dart';
 import '../quotes/quotes_view.dart';
 import '../account/account.dart';

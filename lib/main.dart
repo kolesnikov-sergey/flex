@@ -1,9 +1,9 @@
-import 'package:flex/services/iss/iss_marketdata_service.dart';
-import 'package:flex/services/iss/iss_position_service.dart';
-import 'package:flex/setup.dart';
-import 'package:flex/state/positions.dart';
-import 'package:flex/state/quotes.dart';
-import 'package:flex/state/securities.dart';
+import 'services/iss/iss_marketdata_service.dart';
+import 'services/iss/iss_position_service.dart';
+import 'setup.dart';
+import 'state/positions.dart';
+import 'state/quotes.dart';
+import 'state/securities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +25,6 @@ class TradingApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'flex',
-      showPerformanceOverlay: true,
       theme: ThemeData(
         primaryColor: Colors.black,
         appBarTheme: AppBarTheme(
